@@ -45,7 +45,7 @@ public class RssParser implements Runnable {
     private static final String TRAJANJE = "trajanje";
     private static final String ZANR = "zanr";
     private static final String PUBDATE = "pubDate";
-    private static final String PLAKAT = "plakat";
+    //private static final String PLAKAT = "plakat";
 
     private XmlPullParserFactory xmlPullParserFactory;
     public volatile boolean done = false;
