@@ -8,7 +8,7 @@
     <string name="date">Date</string>
     <string name="choose_date">Choose date</string>
     <string name="movie_list_fragment_title">Movies list</string>
-    <string name="rss_parsed_ticker">Stiv Cinematique update ticker</string>
-    <string name="rss_parsed_content_title">Stiv Cinematique update</string>
+    <string name="rss_parsed_ticker">Stiv Cinematheque update ticker</string>
+    <string name="rss_parsed_content_title">Stiv Cinematheque update</string>
     <string name="rss_parsed_content_text">Movies list updated</string>
 </resources>
