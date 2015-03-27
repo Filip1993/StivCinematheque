@@ -34,7 +34,6 @@ public class RssParser implements Runnable {
 
     private static final String RSS_URL = "http://www.blitz-cinestar.hr/rss.aspx";
     private static final String TAG = "RssParser";
-    private static final String PUB_DATE_FORMAT = "E MMM dd HH:mm:ss Z yyyy";
 
     private static final String ITEM = "item";
 
@@ -44,8 +43,6 @@ public class RssParser implements Runnable {
     private static final String GLUMCI = "glumci";
     private static final String TRAJANJE = "trajanje";
     private static final String ZANR = "zanr";
-    private static final String PUBDATE = "pubDate";
-    //private static final String PLAKAT = "plakat";
 
     private XmlPullParserFactory xmlPullParserFactory;
     public volatile boolean done = false;
@@ -79,7 +76,7 @@ public class RssParser implements Runnable {
 
             parse(parser);
 
-            Collections.sort(movies);
+            //Collections.sort(movies);
 
             MovieRepository.getInstance(context).insertMovies(movies);
 
@@ -141,10 +138,6 @@ public class RssParser implements Runnable {
                                     break;
                                 case(GLUMCI):
                                     movie.setActors(text);
-                                    break;
-                                case(PUBDATE):
-                                    //movie.setPublishedDate(Utility.formatDate(PUB_DATE_FORMAT, text));
-                                    movie.setPublishedDate(new Date());
                                     break;
                                 case(REDATELJ):
                                     movie.setDirector(text);

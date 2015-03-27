@@ -8,30 +8,23 @@ import java.util.Date;
  */
 public class Movie implements Comparable<Movie> {
 
-    private int idMovie;
+    private long idMovie;
     private String name;
     private String description;
     private String director;
     private String actors;
     private int length;
     private String genre;
-    private Date publishedDate;
     private Date watchedDate;
     private String picturePath;
     private String ticketPath;
     private String impressions;
 
-    //TODO - fix constructor
-    public Movie() {
-        this.idMovie  = (int)(Math.random()*100);
-        watchedDate = new Date();
-    }
-
-    public int getIdMovie() {
+    public long getIdMovie() {
         return idMovie;
     }
 
-    public void setIdMovie(int idMovie) {
+    public void setIdMovie(long idMovie) {
         this.idMovie = idMovie;
     }
 
@@ -81,14 +74,6 @@ public class Movie implements Comparable<Movie> {
 
     public void setGenre(String genre) {
         this.genre = genre;
-    }
-
-    public Date getPublishedDate() {
-        return publishedDate;
-    }
-
-    public void setPublishedDate(Date publishedDate) {
-        this.publishedDate = publishedDate;
     }
 
     public String getPicturePath() {

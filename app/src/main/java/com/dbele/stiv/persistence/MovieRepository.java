@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.dbele.stiv.cinematheque.MovieListActivity;
 import com.dbele.stiv.cinematheque.R;
+import com.dbele.stiv.db.MovieDatabaseHelper;
 import com.dbele.stiv.model.Movie;
 import com.dbele.stiv.rss.RssParser;
 
@@ -25,53 +26,47 @@ public class MovieRepository {
     private Context context;
     private static MovieRepository movieRepositoryInstance;
 
-    private ArrayList<Movie> movies;
+    private static MovieDatabaseHelper dbHelper;
 
     public MovieRepository(Context context) {
         this.context = context;
-        movies = new ArrayList<>();
-
-
+        dbHelper = new MovieDatabaseHelper(context);
     }
+
 
     public static MovieRepository getInstance(Context context) {
         if (movieRepositoryInstance == null) {
             movieRepositoryInstance = new MovieRepository(context.getApplicationContext());
-            Log.v("MovieRepository", "created");
-
         }
         return movieRepositoryInstance;
     }
 
-    //TODO - change to dynamic
-    public Movie getMovie(int idMovie) {
-        for (Movie m : movies) {
-            if (m.getIdMovie() == idMovie) {
-                return m;
-            }
-        }
-        return null;
+    public MovieDatabaseHelper.MovieCursor getMovies(){
+        return dbHelper.queryMovies();
     }
 
-    //TODO - change to dynamic
-    public ArrayList<Movie> getMovies () {
-        return movies;
+    public Movie getMovie(long id) {
+        Movie movie = null;
+        MovieDatabaseHelper.MovieCursor cursor = dbHelper.queryMovie(id);
+        cursor.moveToFirst();
+        if (!cursor.isAfterLast()) {
+            movie = cursor.getMovie();
+        }
+        cursor.close();
+        return movie;
     }
 
     public void insertMovie(Movie movie) {
-        movies.add(movie);
+        dbHelper.insertMovie(movie);
     }
 
     public void insertMovies(ArrayList<Movie> movies) {
-        this.movies = new ArrayList<>();
-        this.movies.addAll(movies);
+        dbHelper.insertMovies(movies);
         Log.v("MovieRepository", "movies inserted");
-
-        sendNotification();
-
+        sendMoviesInsertedNotification();
     }
 
-    private void sendNotification() {
+    private void sendMoviesInsertedNotification() {
         Resources r = context.getResources();
         PendingIntent pi = PendingIntent.getActivity(context, 0, new Intent(context, MovieListActivity.class), 0);
         Notification notification = new NotificationCompat.Builder(context)

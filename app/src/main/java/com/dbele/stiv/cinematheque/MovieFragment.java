@@ -34,7 +34,7 @@ public class MovieFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         getActivity().getWindow().setTitle(getResources().getString(R.string.movie_fragment_title));
-        int idMovie = getActivity().getIntent().getIntExtra(EXTRA_MOVIE_ID, -1);
+        long idMovie = getActivity().getIntent().getLongExtra(EXTRA_MOVIE_ID, -1);
         if (idMovie!=-1){
             movie = MovieRepository.getInstance(getActivity()).getMovie(idMovie);
         } else {
@@ -50,7 +50,7 @@ public class MovieFragment extends Fragment {
         etMovieName.setText(movie.getName()!=null ? movie.getName() : "");
 
         btnChooseDate = (Button)view.findViewById(R.id.btnChooseDate);
-        btnChooseDate.setText(Utility.getFormattedDate("dd/MM/yyyy", movie.getPublishedDate()));
+        //btnChooseDate.setText(Utility.getFormattedDate("dd/MM/yyyy", movie.getPublishedDate()));
         btnChooseDate.setEnabled(false);
 
         ivMoviePic = (ImageView)view.findViewById(R.id.ivMoviePic);
