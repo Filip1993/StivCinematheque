@@ -17,6 +17,17 @@ public class InitFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_init, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         if (!PreferencesHandler.checkIfDbLoaded(getActivity())) {
             new RssParserAsynchTask().execute();
             RssService.setRepeatingService(getActivity());
@@ -28,12 +39,7 @@ public class InitFragment extends Fragment {
     private void startMovieListActivity() {
         Intent intent = new Intent(getActivity(), MovieListActivity.class);
         startActivity(intent);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_init, container, false);
+        getActivity().finish();
     }
 
     private class RssParserAsynchTask extends AsyncTask<Void, Void, Void> {

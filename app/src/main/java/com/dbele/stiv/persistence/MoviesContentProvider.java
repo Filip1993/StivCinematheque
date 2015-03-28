@@ -5,7 +5,10 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.text.TextUtils;
 
 public class MoviesContentProvider extends ContentProvider {
 
@@ -23,22 +26,91 @@ public class MoviesContentProvider extends ContentProvider {
     public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/movie";
 
     private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+
+    public static final String[] MOVIES_LIST_PROJECTION = { MovieDatabaseHelper.COLUMN_ID, MovieDatabaseHelper.COLUMN_NAME,
+            MovieDatabaseHelper.COLUMN_GENRE, MovieDatabaseHelper.COLUMN_PICTURE_PATH };
+
+    public static final String[] MOVIE_PROJECTION = { MovieDatabaseHelper.COLUMN_ID, MovieDatabaseHelper.COLUMN_NAME,
+            MovieDatabaseHelper.COLUMN_DESCRIPTION, MovieDatabaseHelper.COLUMN_DIRECTOR, MovieDatabaseHelper.COLUMN_ACTORS,
+            MovieDatabaseHelper.COLUMN_LENGTH, MovieDatabaseHelper.COLUMN_GENRE, MovieDatabaseHelper.COLUMN_PICTURE_PATH,
+            MovieDatabaseHelper.COLUMN_TICKET_PATH, MovieDatabaseHelper.COLUMN_IMPRESSIONS, MovieDatabaseHelper.COLUMN_WATCHED_DATE };
+
     static {
         sURIMatcher.addURI(AUTHORITY, BASE_PATH, MOVIES);
         sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", MOVIE_ID);
     }
 
 
-    public MoviesContentProvider() {
+    @Override
+    public boolean onCreate() {
+        dbHelper = new MovieDatabaseHelper(getContext());
+        return false;
     }
 
+    @Override
+    public Cursor query(Uri uri, String[] projection, String selection,
+                        String[] selectionArgs, String sortOrder) {
 
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+
+        queryBuilder.setTables(MovieDatabaseHelper.TABLE_NAME);
+        int uriType = sURIMatcher.match(uri);
+        switch (uriType) {
+            case MOVIES:
+                break;
+            case MOVIE_ID:
+                // adding the ID to the original query
+                queryBuilder.appendWhere(MovieDatabaseHelper.COLUMN_ID + "="
+                        + uri.getLastPathSegment());
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor cursor = queryBuilder.query(db, projection, selection,
+                selectionArgs, null, null, sortOrder);
+
+        return cursor;
+    }
+
+    @Override
+    public Uri insert(Uri uri, ContentValues values) {
+        int uriType = sURIMatcher.match(uri);
+        SQLiteDatabase sqlDB = dbHelper.getWritableDatabase();
+        long id = 0;
+        switch (uriType) {
+            case MOVIES:
+                id = sqlDB.insert(MovieDatabaseHelper.TABLE_NAME, null, values);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
+        return Uri.parse(BASE_PATH + "/" + id);
+    }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        // Implement this to handle requests to delete one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
+        int uriType = sURIMatcher.match(uri);
+        SQLiteDatabase sqlDB = dbHelper.getWritableDatabase();
+        int rowsDeleted = 0;
+        switch (uriType) {
+            case MOVIES:
+                rowsDeleted = sqlDB.delete(MovieDatabaseHelper.TABLE_NAME, selection,
+                        selectionArgs);
+                break;
+            case MOVIE_ID:
+                String id = uri.getLastPathSegment();
+                rowsDeleted = sqlDB.delete(MovieDatabaseHelper.TABLE_NAME,
+                        MovieDatabaseHelper.COLUMN_ID + "=" + id, selectionArgs );
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
+        return rowsDeleted;    }
+
 
     @Override
     public String getType(Uri uri) {
@@ -47,24 +119,9 @@ public class MoviesContentProvider extends ContentProvider {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    @Override
-    public Uri insert(Uri uri, ContentValues values) {
-        // TODO: Implement this to handle requests to insert a new row.
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
 
-    @Override
-    public boolean onCreate() {
-        // TODO: Implement this to initialize your content provider on startup.
-        return false;
-    }
 
-    @Override
-    public Cursor query(Uri uri, String[] projection, String selection,
-                        String[] selectionArgs, String sortOrder) {
-        // TODO: Implement this to handle query requests from clients.
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
+
 
     @Override
     public int update(Uri uri, ContentValues values, String selection,

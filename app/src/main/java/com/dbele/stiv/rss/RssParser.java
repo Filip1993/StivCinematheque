@@ -75,7 +75,7 @@ public class RssParser {
 
             parse(parser);
 
-            MovieRepository.getInstance(context).insertMovies(movies);
+            MovieRepository.getInstance(context).loadDatabaseAndNotifyIfNeeded(movies);
 
         } catch (IOException | XmlPullParserException e) {
             Log.d(TAG, "Parse not completed", e);

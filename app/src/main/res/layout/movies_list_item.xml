@@ -20,7 +20,7 @@
             android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvMovieListDirector"
+            android:id="@+id/tvMovieListGenre"
             android:gravity="right"/>
     </TableRow>
 </TableLayout>

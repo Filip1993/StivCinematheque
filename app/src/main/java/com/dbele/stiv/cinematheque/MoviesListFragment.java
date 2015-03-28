@@ -15,14 +15,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dbele.stiv.persistence.MovieDatabaseHelper;
-import com.dbele.stiv.model.Movie;
-import com.dbele.stiv.persistence.MovieRepository;
-
+import com.dbele.stiv.persistence.MoviesContentProvider;
 
 
 public class MoviesListFragment extends ListFragment {
 
-    private MovieDatabaseHelper.MovieCursor moviesCursor;
+    private Cursor cursor;
 
 
     @Override
@@ -30,14 +28,16 @@ public class MoviesListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().setTitle(getResources().getString(R.string.movie_list_fragment_title));
 
-        moviesCursor = MovieRepository.getInstance(getActivity()).getMovies();
-        MoviesCursorAdapter adapter = new MoviesCursorAdapter(getActivity(), moviesCursor);
+        cursor = getActivity().getContentResolver().
+                query(MoviesContentProvider.CONTENT_URI, MoviesContentProvider.MOVIES_LIST_PROJECTION, null, null, MovieDatabaseHelper.COLUMN_NAME);
+
+        MoviesCursorAdapter adapter = new MoviesCursorAdapter(getActivity(), cursor);
         setListAdapter(adapter);
     }
 
     @Override
     public void onDestroy() {
-        moviesCursor.close();
+        cursor.close();
         super.onDestroy();
     }
 
@@ -50,31 +50,27 @@ public class MoviesListFragment extends ListFragment {
 
 
     private static class MoviesCursorAdapter extends CursorAdapter {
-        private MovieDatabaseHelper.MovieCursor movieCursor;
-        public MoviesCursorAdapter(Context context, MovieDatabaseHelper.MovieCursor cursor) {
+        public MoviesCursorAdapter(Context context, Cursor cursor) {
             super(context, cursor, 0);
-            movieCursor = cursor;
         }
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            LayoutInflater inflater = (LayoutInflater)context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            return inflater
-                    .inflate(R.layout.movies_list_item, parent, false);
+            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            return inflater.inflate(R.layout.movies_list_item, parent, false);
         }
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
-            Movie movie = movieCursor.getMovie();
 
             TextView tvMovieListName = (TextView) view.findViewById(R.id.tvMovieListName);
-            TextView tvMovieListDirector = (TextView) view.findViewById(R.id.tvMovieListDirector);
+            TextView tvMovieListGenre = (TextView) view.findViewById(R.id.tvMovieListGenre);
 
-            tvMovieListName.setText(movie.getName());
-            tvMovieListDirector.setText(movie.getDirector());
+            tvMovieListName.setText(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_NAME)));
+            tvMovieListGenre.setText(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_GENRE)));
 
             ImageView ivMovieListPic = (ImageView) view.findViewById(R.id.ivMovieListPic);
-            if (movie.getPicturePath() != null) {
-                Uri pictureUri = Uri.parse(movie.getPicturePath());
+            String picturePath = cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_PICTURE_PATH));
+            if (picturePath != null) {
+                Uri pictureUri = Uri.parse(picturePath);
                 ivMovieListPic.setImageURI(pictureUri);
             } else {
                 ivMovieListPic.setImageResource(R.mipmap.ic_launcher);
@@ -82,6 +78,5 @@ public class MoviesListFragment extends ListFragment {
         }
 
     }
-
 
 }
