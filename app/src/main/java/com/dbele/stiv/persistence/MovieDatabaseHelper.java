@@ -1,4 +1,4 @@
-package com.dbele.stiv.db;
+package com.dbele.stiv.persistence;
 
 import android.content.ContentValues;
 import android.content.Context;

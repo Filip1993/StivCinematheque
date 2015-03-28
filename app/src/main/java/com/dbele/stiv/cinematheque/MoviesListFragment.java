@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.dbele.stiv.db.MovieDatabaseHelper;
+import com.dbele.stiv.persistence.MovieDatabaseHelper;
 import com.dbele.stiv.model.Movie;
 import com.dbele.stiv.persistence.MovieRepository;
 
@@ -39,11 +39,6 @@ public class MoviesListFragment extends ListFragment {
     public void onDestroy() {
         moviesCursor.close();
         super.onDestroy();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     @Override

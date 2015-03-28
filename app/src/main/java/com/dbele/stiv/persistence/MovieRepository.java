@@ -11,11 +11,10 @@ import android.util.Log;
 
 import com.dbele.stiv.cinematheque.MovieListActivity;
 import com.dbele.stiv.cinematheque.R;
-import com.dbele.stiv.db.MovieDatabaseHelper;
 import com.dbele.stiv.model.Movie;
-import com.dbele.stiv.rss.RssParser;
+import com.dbele.stiv.utitlities.NotificationHandler;
+import com.dbele.stiv.utitlities.PreferencesHandler;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -26,7 +25,7 @@ public class MovieRepository {
     private Context context;
     private static MovieRepository movieRepositoryInstance;
 
-    private static MovieDatabaseHelper dbHelper;
+    private MovieDatabaseHelper dbHelper;
 
     public MovieRepository(Context context) {
         this.context = context;
@@ -63,23 +62,16 @@ public class MovieRepository {
     public void insertMovies(ArrayList<Movie> movies) {
         dbHelper.insertMovies(movies);
         Log.v("MovieRepository", "movies inserted");
-        sendMoviesInsertedNotification();
+
+        if (!PreferencesHandler.checkIfDbLoaded(context)) {
+            PreferencesHandler.setDbLoaded(context);
+        } else {
+            NotificationHandler.sendMoviesInsertedNotification(context);
+        }
+
     }
 
-    private void sendMoviesInsertedNotification() {
-        Resources r = context.getResources();
-        PendingIntent pi = PendingIntent.getActivity(context, 0, new Intent(context, MovieListActivity.class), 0);
-        Notification notification = new NotificationCompat.Builder(context)
-                .setTicker(r.getString(R.string.rss_parsed_ticker))
-                .setSmallIcon(android.R.drawable.ic_menu_report_image)
-                .setContentTitle(r.getString(R.string.rss_parsed_content_title))
-                .setContentText(r.getString(R.string.rss_parsed_content_text))
-                .setContentIntent(pi)
-                .setAutoCancel(true)
-                .build();
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notification);
-    }
+
 
 
 

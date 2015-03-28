@@ -25,7 +25,7 @@ import java.util.Set;
 /**
  * Created by dbele on 3/24/2015.
  */
-public class RssParser implements Runnable {
+public class RssParser {
 
     private Context context;
     private ArrayList<Movie> movies = new ArrayList<>();
@@ -53,10 +53,9 @@ public class RssParser implements Runnable {
 
     public static void upadateDatabaseFromRssFeed(Context context) {
         RssParser p =  new RssParser(context);
-        new Thread(p).start();
+        p.run();
     }
 
-    @Override
     public void run() {
         InputStream stream = null;
         try {
@@ -75,8 +74,6 @@ public class RssParser implements Runnable {
             parser.setInput(stream, null);
 
             parse(parser);
-
-            //Collections.sort(movies);
 
             MovieRepository.getInstance(context).insertMovies(movies);
 
@@ -130,6 +127,7 @@ public class RssParser implements Runnable {
                                     movie.setDescription(Utility.extractDescription(text));
                                     if (movies.contains(movie)) {
                                         String fileUrl = Utility.extractImagePathFromDescription(text);
+                                        //Log.v("RSSParser", fileUrl);
                                         String picturePath = Utility.downloadImageAndStore(context, fileUrl, "movie_" + (idMovieName++));
                                         if (picturePath != null) {
                                             movie.setPicturePath(picturePath);
@@ -152,16 +150,6 @@ public class RssParser implements Runnable {
                                         movie.setLength(0);
                                     }
                                     break;
-
-//                                case(PLAKAT):
-//                                    if (movies.contains(movie)) {
-//                                        String fileUrl = text;
-//                                        String picturePath = Utility.downloadImageAndStore(context, fileUrl, "movie_" + (idMovieName++));
-//                                        if (picturePath != null) {
-//                                            movie.setPicturePath(picturePath);
-//                                        }
-//                                    }
-//                                    break;
                             }
 
                         }
