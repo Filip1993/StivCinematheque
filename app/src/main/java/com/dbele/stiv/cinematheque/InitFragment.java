@@ -7,12 +7,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.dbele.stiv.rss.RssParser;
 import com.dbele.stiv.utitlities.PreferencesHandler;
 
 
 public class InitFragment extends Fragment {
+
+    private View view;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,18 +28,26 @@ public class InitFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_init, container, false);
+        view = inflater.inflate(R.layout.fragment_init, container, false);
+        return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
         if (!PreferencesHandler.checkIfDbLoaded(getActivity())) {
+            startAnimation();
             new RssParserAsynchTask().execute();
             RssService.setRepeatingService(getActivity());
         } else {
             startMovieListActivity();
         }
+    }
+
+    private void startAnimation() {
+        final ImageView myImage = (ImageView)view.findViewById(R.id.animatedImage);
+        final Animation myRotation = AnimationUtils.loadAnimation(getActivity(), R.anim.image_rotation);
+        myImage.startAnimation(myRotation);
     }
 
     private void startMovieListActivity() {
