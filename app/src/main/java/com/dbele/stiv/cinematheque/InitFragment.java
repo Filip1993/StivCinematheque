@@ -67,7 +67,9 @@ public class InitFragment extends Fragment {
     }
 
     private void cleanAndFinish() {
-        mediaPlayer.stop();
+        if (mediaPlayer!=null) {
+            mediaPlayer.stop();
+        }
         getActivity().finish();
     }
 

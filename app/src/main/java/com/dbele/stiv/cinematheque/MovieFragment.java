@@ -27,44 +27,23 @@ import java.util.Date;
 public class MovieFragment extends Fragment {
 
     public static final String EXTRA_MOVIE_ID = "com.dbele.stiv.cinematheque.extra.movie.id";
+    public static final String EXTRA_MOVIE_POSITION = "com.dbele.stiv.cinematheque.extra.movie.position";
 
     private Movie movie;
     private EditText etMovieName;
     private Button btnChooseDate;
     private ImageView ivMoviePic;
 
+    public static MovieFragment createMovieFragment(Movie movie) {
+        MovieFragment movieFragment = new MovieFragment();
+        movieFragment.movie = movie;
+        return movieFragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         getActivity().getWindow().setTitle(getResources().getString(R.string.movie_fragment_title));
-
-        long idMovie = getActivity().getIntent().getLongExtra(EXTRA_MOVIE_ID, -1);
-
-        Cursor cursor =  getActivity().getContentResolver().query(Uri.parse(MoviesContentProvider.CONTENT_URI + "/" + idMovie),
-                MoviesContentProvider.MOVIE_PROJECTION, null, null, null);
-
-        if(cursor!=null) {
-            cursor.moveToNext();
-        }
-        movie = new Movie();
-
-        movie.setIdMovie(cursor.getLong(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_ID)));
-        movie.setName(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_NAME)));
-        movie.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_DESCRIPTION)));
-
-        movie.setDirector(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_DIRECTOR)));
-        movie.setActors(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_ACTORS)));
-        movie.setLength(cursor.getInt(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_LENGTH)));
-        movie.setGenre(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_GENRE)));
-        movie.setPicturePath(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_PICTURE_PATH)));
-        movie.setTicketPath(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_TICKET_PATH)));
-        long watchedDate = cursor.getLong(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_WATCHED_DATE));
-
-        if (watchedDate>0) {
-            movie.setWatchedDate(new Date(watchedDate));
-        }
-
     }
 
     @Override

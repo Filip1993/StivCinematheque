@@ -3,6 +3,8 @@ package com.dbele.stiv.utitlities;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Environment;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -22,6 +24,9 @@ import java.util.Date;
  * Created by dbele on 3/23/2015.
  */
 public class Utility {
+
+    private static final int MOVIE_PICTURE_WIDTH = 240;
+    private static final int MOVIE_PICTURE_HEIGHT = 405;
 
     public static CharSequence getFormattedDate(CharSequence pattern, Date date) {
         DateFormat df = new DateFormat();
@@ -86,11 +91,24 @@ public class Utility {
            is = conn.getInputStream();
            fos = new FileOutputStream(file);
 
+
+           BitmapFactory.Options options=new BitmapFactory.Options();
+           Bitmap bm = BitmapFactory.decodeStream(is,null,options);
+
+           Bitmap resizedBitmap = getResizedBitmap(bm, MOVIE_PICTURE_WIDTH, MOVIE_PICTURE_HEIGHT);
+
+           ByteArrayOutputStream bos = new ByteArrayOutputStream();
+           resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 100 , bos);
+           byte[] buffer = bos.toByteArray();
+
+           fos.write(buffer);
+           /*
            byte[] buffer = new byte[1024];
            int len;
            while ((len = is.read(buffer))!= -1) {
                fos.write(buffer, 0, len);
            }
+           */
            return file.getAbsolutePath();
        } catch(Exception e) {
             return null;
@@ -108,6 +126,21 @@ public class Utility {
 
        }
    }
+
+    public static Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+
+        Matrix matrix = new Matrix();
+
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        return resizedBitmap;
+    }
+
 
 }
 

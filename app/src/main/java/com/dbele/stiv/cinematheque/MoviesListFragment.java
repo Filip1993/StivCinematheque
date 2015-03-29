@@ -43,8 +43,9 @@ public class MoviesListFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Intent intent = new Intent(getActivity(), MovieActivity.class);
-        intent.putExtra(MovieFragment.EXTRA_MOVIE_ID, id);
+        Intent intent = new Intent(getActivity(), MoviePagerActivity.class);
+        //intent.putExtra(MovieFragment.EXTRA_MOVIE_ID, id);
+        intent.putExtra(MovieFragment.EXTRA_MOVIE_POSITION, position);
         startActivity(intent);
     }
 
