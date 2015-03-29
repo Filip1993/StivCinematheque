@@ -1,6 +1,7 @@
 package com.dbele.stiv.cinematheque;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,8 @@ import com.dbele.stiv.utitlities.PreferencesHandler;
 public class InitFragment extends Fragment {
 
     private View view;
+    private MediaPlayer mediaPlayer;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class InitFragment extends Fragment {
         super.onResume();
         if (!PreferencesHandler.checkIfDbLoaded(getActivity())) {
             startAnimation();
+            playIntroMusic();
             new RssParserAsynchTask().execute();
             RssService.setRepeatingService(getActivity());
         } else {
@@ -44,8 +48,14 @@ public class InitFragment extends Fragment {
         }
     }
 
+    private void playIntroMusic() {
+        mediaPlayer = MediaPlayer.create(getActivity(), R.raw.intro_looper);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
+    }
+
     private void startAnimation() {
-        final ImageView myImage = (ImageView)view.findViewById(R.id.animatedImage);
+        final ImageView myImage = (ImageView) view.findViewById(R.id.animatedImage);
         final Animation myRotation = AnimationUtils.loadAnimation(getActivity(), R.anim.image_rotation);
         myImage.startAnimation(myRotation);
     }
@@ -53,6 +63,11 @@ public class InitFragment extends Fragment {
     private void startMovieListActivity() {
         Intent intent = new Intent(getActivity(), MovieListActivity.class);
         startActivity(intent);
+        cleanAndFinish();
+    }
+
+    private void cleanAndFinish() {
+        mediaPlayer.stop();
         getActivity().finish();
     }
 
