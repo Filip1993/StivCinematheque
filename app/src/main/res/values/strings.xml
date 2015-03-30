@@ -11,13 +11,8 @@
     <string name="rss_parsed_content_title">Stiv Cinematheque update</string>
     <string name="rss_parsed_content_text">Movies list updated</string>
 
-    <string name="title_activity_welcome">WelcomeActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_movie_pager">Movie Pager</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_movie_pager">MoviePagerActivity</string>
+    <string name="unable_to_load_data_on_init">Please connect to network in order to transmit data</string>
 
-    <string name="hello_world">Hello world!</string>
 </resources>

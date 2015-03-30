@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.dbele.stiv.rss.RssParser;
+import com.dbele.stiv.utitlities.ConnectivityHandler;
 import com.dbele.stiv.utitlities.PreferencesHandler;
 
 
@@ -39,6 +41,11 @@ public class InitFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (!PreferencesHandler.checkIfDbLoaded(getActivity())) {
+            if (!ConnectivityHandler.deviceIsConnected(getActivity())){
+                Toast.makeText(getActivity(), R.string.unable_to_load_data_on_init, Toast.LENGTH_LONG).show();
+                getActivity().finish();
+                return;
+            }
             startAnimation();
             playIntroMusic();
             new RssParserAsynchTask().execute();

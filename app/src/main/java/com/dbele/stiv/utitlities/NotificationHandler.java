@@ -21,11 +21,12 @@ public class NotificationHandler {
         PendingIntent pi = PendingIntent.getActivity(context, 0, new Intent(context, MovieListActivity.class), 0);
         Notification notification = new NotificationCompat.Builder(context)
                 .setTicker(r.getString(R.string.rss_parsed_ticker))
-                .setSmallIcon(android.R.drawable.ic_menu_report_image)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(r.getString(R.string.rss_parsed_content_title))
                 .setContentText(r.getString(R.string.rss_parsed_content_text))
                 .setContentIntent(pi)
                 .setAutoCancel(true)
+                .setDefaults(Notification.DEFAULT_SOUND)
                 .build();
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notification);

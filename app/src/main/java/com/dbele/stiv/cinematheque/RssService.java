@@ -8,6 +8,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.dbele.stiv.rss.RssParser;
+import com.dbele.stiv.utitlities.ConnectivityHandler;
 
 import java.util.Calendar;
 
@@ -23,7 +24,9 @@ public class RssService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.v("Service", "parsing rss");
-        RssParser.upadateDatabaseFromRssFeed(this);
+        if (ConnectivityHandler.deviceIsConnected(getApplicationContext())){
+            RssParser.upadateDatabaseFromRssFeed(this);
+        }
     }
 
     public static void setRepeatingService(Context context) {
