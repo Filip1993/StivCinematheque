@@ -40,11 +40,6 @@ public class MoviePagerActivity extends FragmentActivity {
         setCurrentItem();
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt(MovieFragment.EXTRA_MOVIE_POSITION, moviePosition);
-    }
-
     private void handleViewPagerAdapter() {
         FragmentManager fm = getSupportFragmentManager();
         movieViewPager.setAdapter(new FragmentStatePagerAdapter(fm) {
