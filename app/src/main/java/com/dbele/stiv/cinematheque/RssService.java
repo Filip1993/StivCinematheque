@@ -8,6 +8,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.dbele.stiv.rss.RssParser;
+import com.dbele.stiv.utitlities.ActivityHandler;
 import com.dbele.stiv.utitlities.ConnectivityHandler;
 
 import java.util.Calendar;
@@ -15,7 +16,7 @@ import java.util.Calendar;
 
 public class RssService extends IntentService {
 
-    private static final int SERVICE_INTERVAL = 1000 * 60 * 60 * 24;
+    private static final int SERVICE_INTERVAL = 1000 * 60 * 60 * 12;
 
     public RssService() {
         super("RssService");
@@ -24,7 +25,10 @@ public class RssService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.v("Service", "parsing rss");
-        if (ConnectivityHandler.deviceIsConnected(getApplicationContext())){
+
+        boolean isInForeGround = ActivityHandler.applicationIsInForeground(getApplicationContext());
+
+        if (ConnectivityHandler.deviceIsConnected(getApplicationContext()) && !isInForeGround){
             RssParser.upadateDatabaseFromRssFeed(this);
         }
     }

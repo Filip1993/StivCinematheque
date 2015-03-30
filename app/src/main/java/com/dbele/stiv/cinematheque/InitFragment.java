@@ -23,6 +23,7 @@ public class InitFragment extends Fragment {
     private View view;
     private MediaPlayer mediaPlayer;
 
+    private boolean interrupted = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,10 +50,10 @@ public class InitFragment extends Fragment {
             startAnimation();
             playIntroMusic();
             new RssParserAsynchTask().execute();
-            RssService.setRepeatingService(getActivity());
         } else {
             startMovieListActivity();
         }
+        RssService.setRepeatingService(getActivity());
     }
 
     private void playIntroMusic() {
@@ -80,6 +81,16 @@ public class InitFragment extends Fragment {
         getActivity().finish();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mediaPlayer!=null) {
+            mediaPlayer.stop();
+        }
+        interrupted = true;
+
+    }
+
     private class RssParserAsynchTask extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -90,7 +101,9 @@ public class InitFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            startMovieListActivity();
+            if (!interrupted) {
+                startMovieListActivity();
+            }
         }
     }
 
