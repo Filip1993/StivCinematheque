@@ -1,5 +1,6 @@
 package com.dbele.stiv.cinematheque;
 
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,7 +27,6 @@ import java.util.Date;
 
 public class MovieFragment extends Fragment {
 
-    public static final String EXTRA_MOVIE_ID = "com.dbele.stiv.cinematheque.extra.movie.id";
     public static final String EXTRA_MOVIE_POSITION = "com.dbele.stiv.cinematheque.extra.movie.position";
 
     private Movie movie;
@@ -41,6 +41,16 @@ public class MovieFragment extends Fragment {
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        ViewGroup viewGroup = (ViewGroup) getView();
+        viewGroup.removeAllViewsInLayout();
+        View view = onCreateView(inflater, viewGroup, null);
+        viewGroup.addView(view);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().setTitle(getResources().getString(R.string.movie_fragment_title));
@@ -48,6 +58,7 @@ public class MovieFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
 
         etMovieName = (EditText)view.findViewById(R.id.etMovieName);
