@@ -86,6 +86,7 @@ public class InitFragment extends Fragment {
         super.onPause();
         if (mediaPlayer!=null) {
             mediaPlayer.stop();
+            mediaPlayer.release();
         }
         interrupted = true;
 
