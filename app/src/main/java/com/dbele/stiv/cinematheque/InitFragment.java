@@ -71,14 +71,6 @@ public class InitFragment extends Fragment {
     private void startMovieListActivity() {
         Intent intent = new Intent(getActivity(), MovieListActivity.class);
         startActivity(intent);
-        cleanAndFinish();
-    }
-
-    private void cleanAndFinish() {
-        if (mediaPlayer!=null) {
-            mediaPlayer.stop();
-        }
-        getActivity().finish();
     }
 
     @Override
@@ -89,7 +81,7 @@ public class InitFragment extends Fragment {
             mediaPlayer.release();
         }
         interrupted = true;
-
+        getActivity().finish();
     }
 
     private class RssParserAsynchTask extends AsyncTask<Void, Void, Void> {
