@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v4.app.NotificationCompat;
 
-import com.dbele.stiv.cinematheque.MovieListActivity;
+import com.dbele.stiv.cinematheque.HostActivity;
 import com.dbele.stiv.cinematheque.R;
 
 /**
@@ -18,7 +18,7 @@ public class NotificationHandler {
 
     public static void sendMoviesInsertedNotification(Context context) {
         Resources r = context.getResources();
-        PendingIntent pi = PendingIntent.getActivity(context, 0, new Intent(context, MovieListActivity.class), 0);
+        PendingIntent pi = PendingIntent.getActivity(context, 0, new Intent(context, HostActivity.class), 0);
         Notification notification = new NotificationCompat.Builder(context)
                 .setTicker(r.getString(R.string.rss_parsed_ticker))
                 .setSmallIcon(R.mipmap.ic_launcher)

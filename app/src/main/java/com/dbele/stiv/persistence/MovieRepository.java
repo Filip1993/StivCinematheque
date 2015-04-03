@@ -1,18 +1,9 @@
 package com.dbele.stiv.persistence;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.database.Cursor;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.dbele.stiv.cinematheque.MovieListActivity;
-import com.dbele.stiv.cinematheque.R;
 import com.dbele.stiv.model.Movie;
 import com.dbele.stiv.utitlities.NotificationHandler;
 import com.dbele.stiv.utitlities.PreferencesHandler;

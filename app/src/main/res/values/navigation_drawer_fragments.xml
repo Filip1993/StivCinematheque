@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="nav_fragments">
+        <item>com.dbele.stiv.cinematheque.MoviesListFragment</item>
+        <item>com.dbele.stiv.cinematheque.AboutFragment</item>
+    </array>
+</resources>
