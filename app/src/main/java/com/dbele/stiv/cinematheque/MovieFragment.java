@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dbele.stiv.model.Movie;
 import com.dbele.stiv.persistence.MovieDatabaseHelper;
@@ -30,7 +31,8 @@ public class MovieFragment extends Fragment {
     public static final String EXTRA_MOVIE_POSITION = "com.dbele.stiv.cinematheque.extra.movie.position";
 
     private Movie movie;
-    private EditText etMovieName;
+    private TextView tvMovieName;
+    private TextView tvMovieDesc;
     private Button btnChooseDate;
     private ImageView ivMoviePic;
 
@@ -61,8 +63,12 @@ public class MovieFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
 
-        etMovieName = (EditText)view.findViewById(R.id.etMovieName);
-        etMovieName.setText(movie.getName()!=null ? movie.getName() : "");
+        tvMovieName = (TextView)view.findViewById(R.id.tvMovieName);
+        tvMovieName.setText(movie.getName()!=null ? movie.getName() : "");
+
+        tvMovieDesc = (TextView)view.findViewById(R.id.tvMovieDesc);
+        tvMovieDesc.setText(movie.getDescription()!=null ? movie.getDescription() : "");
+
 
         btnChooseDate = (Button)view.findViewById(R.id.btnChooseDate);
         //btnChooseDate.setText(Utility.getFormattedDate("dd/MM/yyyy", movie.getPublishedDate()));

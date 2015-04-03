@@ -3,27 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.dbele.stiv.cinematheque.MovieFragment">
+    tools:context="com.dbele.stiv.cinematheque.MovieFragment">\
+
+    <ImageView
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:adjustViewBounds="true"
+        android:id="@+id/ivMoviePic"
+        android:src="@mipmap/ic_launcher"
+        />
 
 
     <TextView
+        android:id="@+id/tvMovieName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/name"
         style="?android:listSeparatorTextViewStyle"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/etMovieName"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="@string/enter_movie_name"/>
     <TextView
+        android:id="@+id/tvMovieDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/date"
         style="?android:listSeparatorTextViewStyle"/>
+
+
 
     <Button
         android:layout_width="wrap_content"
@@ -33,11 +39,7 @@
         android:layout_marginRight="16dp"
         android:id="@+id/btnChooseDate" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:id="@+id/ivMoviePic"/>
+
 
 </LinearLayout>
 

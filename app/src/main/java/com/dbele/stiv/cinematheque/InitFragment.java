@@ -51,7 +51,7 @@ public class InitFragment extends Fragment {
             playIntroMusic();
             new RssParserAsynchTask().execute();
         } else {
-            startMovieListActivity();
+            startHostActivity();
         }
         RssService.setRepeatingService(getActivity());
     }
@@ -68,8 +68,8 @@ public class InitFragment extends Fragment {
         myImage.startAnimation(myRotation);
     }
 
-    private void startMovieListActivity() {
-        Intent intent = new Intent(getActivity(), MovieListActivity.class);
+    private void startHostActivity() {
+        Intent intent = new Intent(getActivity(), HostActivity.class);
         startActivity(intent);
     }
 
@@ -95,7 +95,7 @@ public class InitFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             if (!interrupted) {
-                startMovieListActivity();
+                startHostActivity();
             }
         }
     }
