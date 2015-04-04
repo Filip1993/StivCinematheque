@@ -32,8 +32,10 @@ public class MovieFragment extends Fragment {
 
     private Movie movie;
     private TextView tvMovieName;
+    private TextView tvMovieGenre;
     private TextView tvMovieDesc;
-    private Button btnChooseDate;
+    private TextView tvMovieDirector;
+    private TextView tvMovieActors;
     private ImageView ivMoviePic;
 
     public static MovieFragment createMovieFragment(Movie movie) {
@@ -55,7 +57,7 @@ public class MovieFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().getWindow().setTitle(getResources().getString(R.string.movie_fragment_title));
+        //getActivity().getWindow().setTitle(getResources().getString(R.string.movie_fragment_title));
     }
 
     @Override
@@ -63,16 +65,28 @@ public class MovieFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
 
+        fillData(view);
+
+        return view;
+
+
+    }
+
+    private void fillData(View view) {
         tvMovieName = (TextView)view.findViewById(R.id.tvMovieName);
         tvMovieName.setText(movie.getName()!=null ? movie.getName() : "");
 
         tvMovieDesc = (TextView)view.findViewById(R.id.tvMovieDesc);
         tvMovieDesc.setText(movie.getDescription()!=null ? movie.getDescription() : "");
 
+        tvMovieGenre = (TextView)view.findViewById(R.id.tvMovieGenre);
+        tvMovieGenre.setText(movie.getGenre()!=null ? movie.getGenre() : "");
 
-        btnChooseDate = (Button)view.findViewById(R.id.btnChooseDate);
-        //btnChooseDate.setText(Utility.getFormattedDate("dd/MM/yyyy", movie.getPublishedDate()));
-        btnChooseDate.setEnabled(false);
+        tvMovieDirector = (TextView)view.findViewById(R.id.tvMovieDirector);
+        tvMovieDirector.setText(movie.getDirector()!=null ? movie.getDirector() : "");
+
+        tvMovieActors = (TextView)view.findViewById(R.id.tvMovieActors);
+        tvMovieActors.setText(movie.getActors()!=null ? movie.getActors() : "");
 
         ivMoviePic = (ImageView)view.findViewById(R.id.ivMoviePic);
         if (movie.getPicturePath()!=null) {
@@ -83,11 +97,6 @@ public class MovieFragment extends Fragment {
         } else {
             ivMoviePic.setImageResource(R.mipmap.ic_launcher);
         }
-
-
-        return view;
-
-
     }
 
 }

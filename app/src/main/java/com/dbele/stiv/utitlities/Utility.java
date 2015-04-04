@@ -25,7 +25,7 @@ import java.util.Date;
  */
 public class Utility {
 
-    private static final int MOVIE_PICTURE_WIDTH = 240;
+    private static final int MOVIE_PICTURE_WIDTH = 252;
     private static final int MOVIE_PICTURE_HEIGHT = 405;
 
     public static CharSequence getFormattedDate(CharSequence pattern, Date date) {
