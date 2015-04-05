@@ -54,6 +54,12 @@
             android:name=".HostActivity"
             android:label="@string/title_activity_host" >
         </activity>
+
+        <service
+            android:name=".BackgroundMusicService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>

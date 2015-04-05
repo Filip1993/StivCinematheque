@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.dbele.stiv.model.NavigationItem;
+import com.dbele.stiv.utitlities.BackgroundMusicHandler;
 
 import java.util.ArrayList;
 
@@ -130,6 +132,12 @@ public class HostActivity extends Activity {
                         .replace(R.id.content_frame, fragment)
                         .commit();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BackgroundMusicHandler.handleMusicPlay(this);
     }
 
 

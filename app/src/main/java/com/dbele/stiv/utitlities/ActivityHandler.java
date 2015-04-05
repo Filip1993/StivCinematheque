@@ -24,7 +24,7 @@ public class ActivityHandler {
 
 
     @SuppressWarnings("deprecation")
-    public static boolean isInForeground(Context context) {
+    private static boolean isInForeground(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<android.app.ActivityManager.RunningTaskInfo> services = activityManager.getRunningTasks(Integer.MAX_VALUE);
         boolean isForeground = false;

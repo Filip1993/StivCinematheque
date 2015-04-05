@@ -37,9 +37,6 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
         return foreground;
     }
 
-    public boolean isBackground(){
-        return !foreground;
-    }
 
     @Override
     public void onActivityResumed(Activity activity) {

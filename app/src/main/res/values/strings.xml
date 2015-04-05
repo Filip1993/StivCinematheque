@@ -5,6 +5,9 @@
     <string name="enter_movie_name">Enter movie name</string>
     <string name="name">Name</string>
     <string name="date">Date</string>
+    <string name="genre">Genre</string>
+    <string name="director">Director</string>
+    <string name="actors">Actors</string>
     <string name="choose_date">Choose date</string>
     <string name="movie_list_fragment_title">Movies list</string>
     <string name="rss_parsed_ticker">Stiv Cinematheque update ticker</string>
@@ -16,16 +19,12 @@
     <string name="drawer_open">Slider Menu Opened</string>
     <string name="drawer_close">Slider Menu Closed</string>
 
-
-
-
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="title_activity_host">HostActivity</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="genre">Genre</string>
-    <string name="director">Director</string>
-    <string name="actors">Actors</string>
+    <string name="summary_background_music_preference">Do you want a background music?</string>
+    <string name="background_music">Background music</string>
+    <string name="background_music_key">background_music_key</string>
 
 
 </resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:title="Personal preferences">
+
+        <CheckBoxPreference
+            android:key="@string/background_music_key"
+            android:title="@string/background_music"
+            android:summary="@string/summary_background_music_preference" />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>
