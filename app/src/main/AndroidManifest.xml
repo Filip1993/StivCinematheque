@@ -51,6 +51,7 @@
             android:label="@string/title_activity_movie_pager" >
         </activity>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".HostActivity"
             android:label="@string/title_activity_host" >
         </activity>
