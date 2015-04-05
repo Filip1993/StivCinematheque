@@ -1,10 +1,10 @@
 package com.dbele.stiv.cinematheque;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.res.TypedArray;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
@@ -17,7 +17,7 @@ import com.dbele.stiv.model.NavigationItem;
 import java.util.ArrayList;
 
 
-public class HostActivity extends FragmentActivity {
+public class HostActivity extends Activity {
 
     private DrawerLayout drawerLayout;
     private ListView drawerList;
@@ -118,7 +118,7 @@ public class HostActivity extends FragmentActivity {
     }
 
     private void handleFragment(String className) {
-        FragmentManager fm = getSupportFragmentManager();
+        FragmentManager fm = getFragmentManager();
         Fragment fragment = null;
         try{
             fragment = (Fragment)Class.forName(className).newInstance();
