@@ -2,6 +2,7 @@
 <resources>
     <string-array name="nav_drawer_items">
         <item>Movie list</item>
+        <item>Maps</item>
         <item>Preferences</item>
         <item>About</item>
     </string-array>

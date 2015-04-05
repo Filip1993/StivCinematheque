@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
@@ -67,8 +68,15 @@ public class HostActivity extends Activity {
         drawerList.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        displayView(position);
+                    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                        drawerLayout.closeDrawer(drawerList);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                displayView(position);
+                            }
+                        }, 300);
+
                     }
                 }
 

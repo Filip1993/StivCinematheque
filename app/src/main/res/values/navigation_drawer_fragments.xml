@@ -2,6 +2,7 @@
 <resources>
     <array name="nav_fragments">
         <item>com.dbele.stiv.cinematheque.MoviesListFragment</item>
+        <item>com.dbele.stiv.cinematheque.MapFragment</item>
         <item>com.dbele.stiv.cinematheque.PreferencesFragment</item>
         <item>com.dbele.stiv.cinematheque.AboutFragment</item>
     </array>

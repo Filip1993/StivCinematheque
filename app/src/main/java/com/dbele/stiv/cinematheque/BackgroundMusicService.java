@@ -24,7 +24,7 @@ public class BackgroundMusicService extends Service {
     }
 
     private void startPlayer() {
-        player = MediaPlayer.create(this, R.raw.mexo);
+        player = MediaPlayer.create(this, R.raw.mex);
         player.setLooping(true); // Set looping
         player.setVolume(100, 100);
     }
