@@ -43,7 +43,13 @@ public class RssService extends IntentService {
         calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH)+1);
         calendar.set(Calendar.HOUR_OF_DAY, 2);
         calendar.set(Calendar.MINUTE, 30);
+
         alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), SERVICE_INTERVAL, pendingIntent);
+
+//        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH));
+//        calendar.set(Calendar.HOUR_OF_DAY, 9);
+//        calendar.set(Calendar.MINUTE, 30);
+//        alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 1000*60*5, pendingIntent);
         //alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), 1000*60*5, pendingIntent);
     }
 
