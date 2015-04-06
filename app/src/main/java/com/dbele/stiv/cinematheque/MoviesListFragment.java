@@ -74,7 +74,7 @@ public class MoviesListFragment extends ListFragment {
                 Uri pictureUri = Uri.parse(picturePath);
                 ivMovieListPic.setImageURI(pictureUri);
             } else {
-                ivMovieListPic.setImageResource(R.mipmap.ic_launcher);
+                ivMovieListPic.setImageResource(R.drawable.launcher);
             }
         }
 

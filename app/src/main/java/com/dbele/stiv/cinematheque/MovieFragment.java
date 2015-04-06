@@ -95,7 +95,7 @@ public class MovieFragment extends Fragment {
             //Log.v("MF picture path", pictureUri.getPath());
             ivMoviePic.setImageURI(pictureUri);
         } else {
-            ivMoviePic.setImageResource(R.mipmap.ic_launcher);
+            ivMoviePic.setImageResource(R.drawable.launcher);
         }
     }
 

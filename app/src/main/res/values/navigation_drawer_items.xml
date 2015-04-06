@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="nav_drawer_items">
-        <item>Movie list</item>
+        <item>Movies list</item>
         <item>Maps</item>
         <item>Preferences</item>
         <item>About</item>

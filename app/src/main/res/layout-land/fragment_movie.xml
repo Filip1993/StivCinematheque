@@ -19,8 +19,7 @@
                 android:layout_width="@dimen/movie_jpg_width"
                 android:layout_height="@dimen/movie_jpg_height"
                 android:adjustViewBounds="true"
-                android:padding="5dp"
-                android:src="@mipmap/ic_launcher" />
+                android:padding="5dp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
