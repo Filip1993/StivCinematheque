@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.dbele.stiv.json.JSONParser;
+import com.dbele.stiv.model.Cinema;
+import com.dbele.stiv.persistence.CinemaRepository;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdate;
@@ -16,10 +19,25 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
+
 public class MapFragment extends Fragment {
 
     MapView mapView;
     GoogleMap map;
+
+    ArrayList<Cinema> cinemas;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initCinemas();
+    }
+
+    private void initCinemas() {
+        cinemas = CinemaRepository.getCinemas(getActivity());
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_map, container, false);
