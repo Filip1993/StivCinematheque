@@ -17,7 +17,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
@@ -54,6 +56,13 @@ public class MapFragment extends Fragment {
                     map = mapView.getMap();
                     map.getUiSettings().setMyLocationButtonEnabled(false);
                     map.setMyLocationEnabled(true);
+                    for(Cinema cinema : cinemas) {
+                        map.addMarker(new MarkerOptions()
+                                .position(new LatLng(cinema.getLat(), cinema.getLng()))
+                                .title(cinema.getName())
+                                .icon(BitmapDescriptorFactory
+                                        .fromResource(R.drawable.map_cinema)));
+                    }
                     CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(45.81, 15.96), 12);
                     map.animateCamera(cameraUpdate);
                 }

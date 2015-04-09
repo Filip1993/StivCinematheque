@@ -54,11 +54,11 @@ public class MovieRepository {
 
         Log.v("MovieRepository", "movies inserted");
 
-        handleDBLoadedState();
+        handleDBLoadedStateAndNotifyIfNeeded();
 
     }
 
-    private void handleDBLoadedState() {
+    private void handleDBLoadedStateAndNotifyIfNeeded() {
         if (!PreferencesHandler.checkIfDbLoaded(context)) {
             PreferencesHandler.setDbLoaded(context);
         } else {

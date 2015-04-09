@@ -21,7 +21,7 @@ public class NotificationHandler {
         PendingIntent pi = PendingIntent.getActivity(context, 0, new Intent(context, HostActivity.class), 0);
         Notification notification = new NotificationCompat.Builder(context)
                 .setTicker(r.getString(R.string.rss_parsed_ticker))
-                .setSmallIcon(R.drawable.launcher)
+                .setSmallIcon(R.drawable.notification)
                 .setContentTitle(r.getString(R.string.rss_parsed_content_title))
                 .setContentText(r.getString(R.string.rss_parsed_content_text))
                 .setContentIntent(pi)
