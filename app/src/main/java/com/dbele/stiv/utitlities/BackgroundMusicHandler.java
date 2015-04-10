@@ -24,10 +24,7 @@ public class BackgroundMusicHandler {
     }
 
     public static void handleMusicPlay(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean playMusic = preferences.getBoolean(context.getResources().getString(R.string.background_music_key), false);
-
-        if (playMusic) {
+        if (PreferencesHandler.shouldPlayBackgroundMusic(context)) {
             startBackgroundMusicService(context);
         } else {
             stopBackgroundService();

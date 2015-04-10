@@ -22,9 +22,13 @@
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="title_activity_host">HostActivity</string>
 
-    <string name="summary_background_music_preference">Do you want a background music?</string>
+    <string name="summary_background_music_preference">Do you want background music?</string>
     <string name="background_music">Background music</string>
     <string name="background_music_key">background_music_key</string>
+
+    <string name="summary_only_on_wifi_preference">Do you want updates only on WIFI?</string>
+    <string name="only_on_wifi">Movie updates</string>
+    <string name="only_on_wifi_key">only_on_wifi_key</string>
 
 
 </resources>

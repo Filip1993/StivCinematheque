@@ -3,6 +3,9 @@ package com.dbele.stiv.utitlities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import com.dbele.stiv.cinematheque.R;
 
 
 /**
@@ -23,5 +26,15 @@ public class PreferencesHandler {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(DB_LOADED, true);
         editor.commit();
+    }
+
+    public static boolean shouldPlayBackgroundMusic(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getBoolean(context.getResources().getString(R.string.background_music_key), false);
+    }
+
+    public static boolean shouldPullUpdatesOnlyOnWIFI(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getBoolean(context.getResources().getString(R.string.only_on_wifi_key), false);
     }
 }

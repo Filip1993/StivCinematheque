@@ -62,7 +62,7 @@
         <activity
             android:configChanges="orientation|screenSize"
             android:name=".HostActivity"
-            android:label="@string/title_activity_host" >
+            android:label="@string/title_activity_host">
         </activity>
 
         <service

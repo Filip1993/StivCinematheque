@@ -7,10 +7,10 @@
         <CheckBoxPreference
             android:key="@string/background_music_key"
             android:title="@string/background_music"
-            android:summary="@string/summary_background_music_preference"
-        />
-
+            android:summary="@string/summary_background_music_preference"/>
+        <CheckBoxPreference
+            android:key="@string/only_on_wifi_key"
+            android:title="@string/only_on_wifi"
+            android:summary="@string/summary_only_on_wifi_preference"/>
     </PreferenceCategory>
-
-
 </PreferenceScreen>
