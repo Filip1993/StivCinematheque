@@ -50,7 +50,7 @@ public class RssService extends IntentService {
 //        calendar.set(Calendar.HOUR_OF_DAY, 9);
 //        calendar.set(Calendar.MINUTE, 30);
 //        alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 1000*60*5, pendingIntent);
-        //alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), 1000*60*5, pendingIntent);
+        //alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), 1000*60*1, pendingIntent);
     }
 
 

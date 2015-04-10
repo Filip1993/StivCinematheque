@@ -15,6 +15,7 @@ public class Cinema {
     private String properties;
     private double lat;
     private double lng;
+    private String picture;
 
     public static Cinema createCinema(JSONObject jsonObject){
         Cinema cinema = new Cinema();
@@ -26,10 +27,15 @@ public class Cinema {
             cinema.properties = jsonObject.getString("properties");
             cinema.lat = jsonObject.getDouble("lat");
             cinema.lng = jsonObject.getDouble("lng");
+            cinema.picture = jsonObject.getString("picture");
         } catch (JSONException e) {
             Log.e(Cinema.class.getName(), "unable to create Cinema from JSON", e);
         }
         return cinema;
+    }
+
+    public String getPicture() {
+        return picture;
     }
 
     public double getLng() {

@@ -57,7 +57,7 @@ public class InitFragment extends Fragment {
     }
 
     private void playIntroMusic() {
-        mediaPlayer = MediaPlayer.create(getActivity(), R.raw.intro_looper);
+        mediaPlayer = MediaPlayer.create(getActivity(), R.raw.looper);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
     }
