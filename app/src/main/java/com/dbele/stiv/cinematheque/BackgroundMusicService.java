@@ -47,7 +47,7 @@ public class BackgroundMusicService extends Service {
                 boolean shouldPlay = BackgroundMusicHandler.getShouldPlay();
                 while( isInForeground && shouldPlay) {
                     try {
-                        Thread.sleep(600);
+                        Thread.sleep(300);
                     } catch (InterruptedException e) {
                         Log.e(getClass().getName(), "Exception", e);
 
