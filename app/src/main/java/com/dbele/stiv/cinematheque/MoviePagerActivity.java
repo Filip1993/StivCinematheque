@@ -30,7 +30,7 @@ public class MoviePagerActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         ActionBar actionBar = getActionBar();
-        if(actionBar!=null) {
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(Boolean.TRUE);
         }
 
@@ -38,7 +38,7 @@ public class MoviePagerActivity extends FragmentActivity {
         movieViewPager.setId(R.id.movieViewPager);
         setContentView(movieViewPager);
 
-        if (getIntent().getIntExtra(MovieFragment.EXTRA_MOVIE_POSITION, -1)!=-1) {
+        if (getIntent().getIntExtra(MovieFragment.EXTRA_MOVIE_POSITION, -1) != -1) {
             moviePosition = getIntent().getIntExtra(MovieFragment.EXTRA_MOVIE_POSITION, -1);
         }
 
@@ -57,6 +57,7 @@ public class MoviePagerActivity extends FragmentActivity {
             public int getCount() {
                 return cursor.getCount();
             }
+
             @Override
             public Fragment getItem(int pos) {
                 Movie movie = createMovieFromCursor(pos);
@@ -64,17 +65,22 @@ public class MoviePagerActivity extends FragmentActivity {
             }
         });
 
-        movieViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            public void onPageScrollStateChanged(int state) { }
-            public void onPageScrolled(int pos, float posOffset, int posOffsetPixels) { }
-            public void onPageSelected(int pos) {
-                Movie movie = createMovieFromCursor(pos);
-                if (movie.getName() != null) {
-                    setTitle(movie.getName());
-                }
-            }
-        });
+        movieViewPager.setOnPageChangeListener(onPageChangeListener);
+        onPageChangeListener.onPageSelected(0);
     }
+
+    private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
+        public void onPageScrollStateChanged(int state) {
+        }
+        public void onPageScrolled(int pos, float posOffset, int posOffsetPixels) {
+        }
+        public void onPageSelected(int pos) {
+            Movie movie = createMovieFromCursor(pos);
+            if (movie.getName() != null) {
+                setTitle(movie.getName());
+            }
+        }
+    };
 
     private void setCurrentItem() {
         movieViewPager.setCurrentItem(moviePosition);
@@ -93,7 +99,7 @@ public class MoviePagerActivity extends FragmentActivity {
         movie.setPicturePath(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_PICTURE_PATH)));
         movie.setTicketPath(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_TICKET_PATH)));
         long watchedDate = cursor.getLong(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_WATCHED_DATE));
-        if (watchedDate>0) {
+        if (watchedDate > 0) {
             movie.setWatchedDate(new Date(watchedDate));
         }
         return movie;

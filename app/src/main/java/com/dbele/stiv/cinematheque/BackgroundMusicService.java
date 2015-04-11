@@ -54,10 +54,10 @@ public class BackgroundMusicService extends Service {
                     }
                     isInForeground = ActivityHandler.applicationIsInForeground(getApplicationContext());
                     shouldPlay = BackgroundMusicHandler.getShouldPlay();
-                    Log.e("isInForeground", isInForeground+"");
-                    Log.e("isPlaying", shouldPlay+"");
+                    //Log.e("isInForeground", isInForeground+"");
+                    //Log.e("isPlaying", shouldPlay+"");
                 }
-                Log.e("Bacground service ", "stopping");
+                //Log.e("Bacground service ", "stopping");
                 stopSelf();
             }
         }).start();
