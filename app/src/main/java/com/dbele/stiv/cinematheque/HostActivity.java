@@ -157,5 +157,4 @@ public class HostActivity extends Activity {
         BackgroundMusicHandler.handleMusicPlay(this);
     }
 
-
 }

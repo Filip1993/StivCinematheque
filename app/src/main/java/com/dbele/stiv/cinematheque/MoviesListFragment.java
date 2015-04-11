@@ -15,16 +15,17 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.dbele.stiv.persistence.MovieDatabaseHelper;
 import com.dbele.stiv.persistence.MoviesContentProvider;
 
-
 public class MoviesListFragment extends ListFragment {
 
     private Cursor cursor;
-
+    private SearchView searchView;
+    private MoviesCursorAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,17 +39,46 @@ public class MoviesListFragment extends ListFragment {
 
         setHasOptionsMenu(Boolean.TRUE);
 
-        cursor = getActivity().getContentResolver().
-                query(MoviesContentProvider.CONTENT_URI, MoviesContentProvider.MOVIES_LIST_PROJECTION, null, null, MovieDatabaseHelper.COLUMN_NAME);
+        setCursor(null, null);
 
-        MoviesCursorAdapter adapter = new MoviesCursorAdapter(getActivity(), cursor);
+        adapter = new MoviesCursorAdapter(getActivity(), cursor);
         setListAdapter(adapter);
+    }
+
+    private void setCursor(String selection, String[] selectionArgs) {
+        cursor = getActivity().getContentResolver().
+                query(MoviesContentProvider.CONTENT_URI, MoviesContentProvider.MOVIES_LIST_PROJECTION, selection, selectionArgs, MovieDatabaseHelper.COLUMN_NAME);
+        if (adapter!=null) {
+            adapter.swapCursor(cursor);
+            //adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_list_movies, menu);
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        setupSearchView();
+
+    }
+
+    private void setupSearchView() {
+        searchView.setIconifiedByDefault(true);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                setCursor(MovieDatabaseHelper.SELECTION_NAME, new String[] {newText + "%"});
+                return true;
+            }
+        });
+
+
     }
 
     @Override
@@ -60,8 +90,7 @@ public class MoviesListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Intent intent = new Intent(getActivity(), MoviePagerActivity.class);
-        //intent.putExtra(MovieFragment.EXTRA_MOVIE_ID, id);
-        intent.putExtra(MovieFragment.EXTRA_MOVIE_POSITION, position);
+        intent.putExtra(MovieFragment.EXTRA_MOVIE_ID, id);
         startActivity(intent);
     }
 
@@ -90,7 +119,7 @@ public class MoviesListFragment extends ListFragment {
                 Uri pictureUri = Uri.parse(picturePath);
                 ivMovieListPic.setImageURI(pictureUri);
             } else {
-                ivMovieListPic.setImageResource(R.drawable.launcher);
+                ivMovieListPic.setImageResource(R.drawable.logo);
             }
         }
 

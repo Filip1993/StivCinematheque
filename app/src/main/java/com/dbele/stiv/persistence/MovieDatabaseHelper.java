@@ -35,6 +35,8 @@ public class MovieDatabaseHelper extends SQLiteOpenHelper {
     private static final String DROP_TABLE_STMT = "drop table " + TABLE_NAME;
     private static String CREATE_TABLE_STMT = null;
 
+    public static final String SELECTION_NAME = COLUMN_NAME + " like ?";
+
     private static final String DELETE_MOVIES_STMT = "delete from " + TABLE_NAME;
 
     static {

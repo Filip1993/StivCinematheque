@@ -38,6 +38,9 @@
     <string name="about_author">Daniel Bele</string>
     <string name="about_music_credits">Mihael Bele</string>
 
-
+    <string name="search">Search</string>
+    <string name="watched">Watched</string>
+    <string name="notwatched">Not Watched</string>
+    <string name="all">All</string>
 
 </resources>

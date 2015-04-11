@@ -9,4 +9,6 @@
     <color name="cinema_infowindow_text">#272727</color>
     <color name="light_blue">#779ECB</color>
     <color name="text_color">#c5c4c4</color>
+    <color name="background">#333333</color>
+    <color name="white">#ffffff</color>
 </resources>

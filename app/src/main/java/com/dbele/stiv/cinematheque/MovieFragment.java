@@ -29,6 +29,7 @@ import java.util.Date;
 public class MovieFragment extends Fragment {
 
     public static final String EXTRA_MOVIE_POSITION = "com.dbele.stiv.cinematheque.extra.movie.position";
+    public static final String EXTRA_MOVIE_ID = "com.dbele.stiv.cinematheque.extra.movie.id";
 
     private Movie movie;
     private TextView tvMovieName;

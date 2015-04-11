@@ -38,13 +38,16 @@ public class MoviePagerActivity extends FragmentActivity {
         movieViewPager.setId(R.id.movieViewPager);
         setContentView(movieViewPager);
 
-        if (getIntent().getIntExtra(MovieFragment.EXTRA_MOVIE_POSITION, -1) != -1) {
-            moviePosition = getIntent().getIntExtra(MovieFragment.EXTRA_MOVIE_POSITION, -1);
+        long movieId = -1;
+        if (getIntent().getLongExtra(MovieFragment.EXTRA_MOVIE_ID, -1) != -1) {
+            movieId = getIntent().getLongExtra(MovieFragment.EXTRA_MOVIE_ID, -1);
         }
 
         cursor = this.getContentResolver().
                 query(MoviesContentProvider.CONTENT_URI, MoviesContentProvider.MOVIE_PROJECTION,
                         null, null, MovieDatabaseHelper.COLUMN_NAME);
+
+        moviePosition = calculatePostionById(movieId);
 
         handleViewPagerAdapter();
         setCurrentItem();
@@ -85,6 +88,19 @@ public class MoviePagerActivity extends FragmentActivity {
     private void setCurrentItem() {
         movieViewPager.setCurrentItem(moviePosition);
     }
+
+    private int calculatePostionById(long movieId) {
+
+        int position = 0;
+        while (cursor.moveToNext()) {
+            if (cursor.getLong(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_ID)) == movieId) {
+                return position;
+            }
+            position++;
+        }
+        return 0;
+    }
+
 
     private Movie createMovieFromCursor(int pos) {
         cursor.moveToPosition(pos);

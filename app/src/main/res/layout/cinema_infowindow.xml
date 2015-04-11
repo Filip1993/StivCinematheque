@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="200dp"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
-
+    android:orientation="horizontal"
+    android:background="@color/white"
+    >
     <ImageView
         android:id="@+id/cinema_marker_icon"
         android:layout_width="120dp"
@@ -14,24 +15,28 @@
         android:paddingLeft="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/white">
         <TextView
             android:id="@+id/cinema_marker_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/cinema_infowindow_text"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:background="@color/white"/>
         <TextView
             android:id="@+id/cinema_marker_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/cinema_infowindow_text"
-            android:textStyle="italic"/>
+            android:textStyle="italic"
+            android:background="@color/white"/>
         <TextView
             android:id="@+id/cinema_marker_properties"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/cinema_infowindow_text"/>
+            android:textColor="@color/cinema_infowindow_text"
+            android:background="@color/white"/>
     </LinearLayout>
 </LinearLayout>
 
