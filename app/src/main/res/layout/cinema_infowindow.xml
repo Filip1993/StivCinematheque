@@ -8,8 +8,7 @@
         android:id="@+id/cinema_marker_icon"
         android:layout_width="120dp"
         android:adjustViewBounds="true"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:paddingLeft="5dp"

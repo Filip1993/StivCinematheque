@@ -9,10 +9,10 @@ import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.dbele.stiv.model.NavigationItem;
 import com.dbele.stiv.utitlities.BackgroundMusicHandler;
@@ -43,6 +43,8 @@ public class HostActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host);
+
+        //getActionBar().setBackgroundDrawable(null);
 
         //mTitle = mDrawerTitle = getTitle();
 
@@ -87,11 +89,8 @@ public class HostActivity extends Activity {
                 navigationItems);
         drawerList.setAdapter(adapter);
 
-        /*
-        // enabling action bar app icon and behaving it as toggle button
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-*/
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
+
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
                 //R.mipmap.ic_launcher, //nav menu toggle icon
                 R.string.app_name, // nav drawer open - description for accessibility
@@ -139,6 +138,16 @@ public class HostActivity extends Activity {
                 fm.beginTransaction()
                         .replace(R.id.content_frame, fragment)
                         .commit();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                displayView(0);
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

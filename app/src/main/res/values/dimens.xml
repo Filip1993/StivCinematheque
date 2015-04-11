@@ -11,4 +11,6 @@
 
     <dimen name="movie_left_column">50dp</dimen>
 
+    <dimen name="about_left_column">100dp</dimen>
+
 </resources>

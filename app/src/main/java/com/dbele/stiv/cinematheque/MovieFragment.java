@@ -57,19 +57,13 @@ public class MovieFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getActivity().getWindow().setTitle(getResources().getString(R.string.movie_fragment_title));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
-
         fillData(view);
-
         return view;
-
-
     }
 
     private void fillData(View view) {

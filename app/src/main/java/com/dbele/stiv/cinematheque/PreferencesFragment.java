@@ -1,5 +1,6 @@
 package com.dbele.stiv.cinematheque;
 
+import android.app.ActionBar;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
@@ -13,6 +14,10 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getActivity().getActionBar();
+        if(actionBar!=null) {
+            actionBar.setDisplayHomeAsUpEnabled(Boolean.TRUE);
+        }
         addPreferencesFromResource(R.xml.preferences);
 
     }
@@ -36,4 +41,5 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
             BackgroundMusicHandler.handleMusicPlay(getActivity());
         }
     }
+
 }

@@ -1,12 +1,30 @@
 <resources>
 
-    <!--ThemeOverlay.AppCompat.Dark.ActionBar-->
+<!--
     <style name="AppTheme" parent="Platform.AppCompat">
         <item name="android:windowNoTitle">false</item>
         <item name="android:windowTitleStyle">@style/ActionBarTitle</item>
         <item name="windowActionBar">true</item>
         <item name="android:windowTitleSize">39dp</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/checkbox</item>
+    </style>
+
+
+    <style name="ActionBarTitle">
+        <item name="android:textColor">#c0c0c0</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
+-->
+    <style name="AppTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:listChoiceIndicatorMultiple">@drawable/checkbox</item>
+        <item name="android:actionBarStyle">@style/AppTheme.ActionBar</item>
+        <item name="android:textColor">@color/text_color</item>
+    </style>
+
+    <style name="AppTheme.ActionBar" parent="android:Widget.ActionBar">
+        <item name="android:background">@drawable/actionbar_background</item>
     </style>
 
     <style name="Theme.Transparent" parent="android:Theme">
@@ -25,14 +43,8 @@
     </style>
 
 
-    <style name="MovieTitles">
-        <item name="android:textColor">#779ECB</item>
-    </style>
-
-    <style name="ActionBarTitle">
-        <item name="android:textColor">#c0c0c0</item>
-        <item name="android:paddingLeft">5dp</item>
-        <item name="android:textSize">15dp</item>
+    <style name="Titles">
+        <item name="android:textColor">@color/light_blue</item>
     </style>
 
 </resources>

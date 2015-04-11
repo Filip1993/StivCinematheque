@@ -30,5 +30,14 @@
     <string name="only_on_wifi">Movie updates</string>
     <string name="only_on_wifi_key">only_on_wifi_key</string>
 
+    <string name="about_purpose_key">Purpose</string>
+    <string name="about_author_key">Author</string>
+    <string name="about_music_credits_key">Music credits</string>
+
+    <string name="about_purpose">Project used on course for attendants. It covers concepts presented during training sessions</string>
+    <string name="about_author">Daniel Bele</string>
+    <string name="about_music_credits">Mihael Bele</string>
+
+
 
 </resources>

@@ -1,5 +1,6 @@
 package com.dbele.stiv.cinematheque;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -40,6 +41,10 @@ public class MapFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getActivity().getActionBar();
+        if(actionBar!=null) {
+            actionBar.setDisplayHomeAsUpEnabled(Boolean.TRUE);
+        }
         initCinemas();
     }
 

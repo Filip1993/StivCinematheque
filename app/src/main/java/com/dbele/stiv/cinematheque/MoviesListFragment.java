@@ -1,5 +1,6 @@
 package com.dbele.stiv.cinematheque;
 
+import android.app.ActionBar;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
@@ -28,11 +31,24 @@ public class MoviesListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().setTitle(getResources().getString(R.string.movie_list_fragment_title));
 
+        ActionBar actionBar = getActivity().getActionBar();
+        if(actionBar!=null) {
+            actionBar.setDisplayHomeAsUpEnabled(Boolean.FALSE);
+        }
+
+        setHasOptionsMenu(Boolean.TRUE);
+
         cursor = getActivity().getContentResolver().
                 query(MoviesContentProvider.CONTENT_URI, MoviesContentProvider.MOVIES_LIST_PROJECTION, null, null, MovieDatabaseHelper.COLUMN_NAME);
 
         MoviesCursorAdapter adapter = new MoviesCursorAdapter(getActivity(), cursor);
         setListAdapter(adapter);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_list_movies, menu);
     }
 
     @Override

@@ -47,17 +47,17 @@ public class BackgroundMusicService extends Service {
                 boolean shouldPlay = BackgroundMusicHandler.getShouldPlay();
                 while( isInForeground && shouldPlay) {
                     try {
-                        Thread.sleep(300);
+                        Thread.sleep(600);
                     } catch (InterruptedException e) {
                         Log.e(getClass().getName(), "Exception", e);
 
                     }
                     isInForeground = ActivityHandler.applicationIsInForeground(getApplicationContext());
                     shouldPlay = BackgroundMusicHandler.getShouldPlay();
-                    //Log.e("isInForeground", isInForeground+"");
-                    //Log.e("isPlaying", shouldPlay+"");
+                    Log.e("isInForeground", isInForeground+"");
+                    Log.e("isPlaying", shouldPlay+"");
                 }
-                //Log.e("Bacground service ", "stopping");
+                Log.e("Bacground service ", "stopping");
                 stopSelf();
             }
         }).start();
