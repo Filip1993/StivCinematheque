@@ -101,12 +101,14 @@ public class RssParser {
             int idMovieName = 0;
             while (event != XmlPullParser.END_DOCUMENT) {
                 String name=parser.getName();
+
                 switch (event){
                     case XmlPullParser.START_TAG:
                         if(ITEM.equals(name)) {
                             movie = new Movie();
                             //avoiding duplicate names for movies
                             itemsStarted = true;
+                            movie.setWatched(idMovieName%2);
                         }
                         break;
                     case XmlPullParser.TEXT:

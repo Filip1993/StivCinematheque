@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
@@ -39,7 +40,7 @@ public class MoviesListFragment extends ListFragment {
 
         setHasOptionsMenu(Boolean.TRUE);
 
-        setCursor(null, null);
+        setCursor(MovieDatabaseHelper.SELECTION_ALL, null);
 
         adapter = new MoviesCursorAdapter(getActivity(), cursor);
         setListAdapter(adapter);
@@ -125,4 +126,20 @@ public class MoviesListFragment extends ListFragment {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_watched:
+                setCursor(MovieDatabaseHelper.SELECTION_WATCHED, null);
+                break;
+            case R.id.action_notwatched:
+                setCursor(MovieDatabaseHelper.SELECTION_NOT_WATCHED, null);
+                break;
+            case R.id.action_all:
+                setCursor(MovieDatabaseHelper.SELECTION_ALL, null);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

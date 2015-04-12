@@ -19,6 +19,24 @@ public class Movie implements Comparable<Movie> {
     private String picturePath;
     private String ticketPath;
     private String impressions;
+    private int watched;
+    private int archived;
+
+    public int getWatched() {
+        return watched;
+    }
+
+    public void setWatched(int watched) {
+        this.watched = watched;
+    }
+
+    public int getArchived() {
+        return archived;
+    }
+
+    public void setArchived(int archived) {
+        this.archived = archived;
+    }
 
     public long getIdMovie() {
         return idMovie;
