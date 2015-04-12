@@ -2,8 +2,7 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:stretchColumns="1"
-    >
+    android:stretchColumns="1">
     <TableRow>
         <ImageView
             android:layout_width="@dimen/movie_list_jpg_width"
