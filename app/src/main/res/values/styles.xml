@@ -21,10 +21,15 @@
         <item name="android:listChoiceIndicatorMultiple">@drawable/checkbox</item>
         <item name="android:actionBarStyle">@style/AppTheme.ActionBar</item>
         <item name="android:textColor">@color/text_color</item>
+        <item name="android:popupMenuStyle">@style/AppTheme.PopupMenu</item>
     </style>
 
     <style name="AppTheme.ActionBar" parent="android:Widget.ActionBar">
         <item name="android:background">@drawable/actionbar_background</item>
+    </style>
+
+    <style name="AppTheme.PopupMenu" parent="@android:style/Widget.Holo.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/app_background</item>
     </style>
 
     <style name="Theme.Transparent" parent="android:Theme">
