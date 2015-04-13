@@ -45,7 +45,7 @@ public class MoviePagerActivity extends FragmentActivity {
 
         cursor = this.getContentResolver().
                 query(MoviesContentProvider.CONTENT_URI, MoviesContentProvider.MOVIE_PROJECTION,
-                        null, null, MovieDatabaseHelper.COLUMN_NAME);
+                        MovieDatabaseHelper.SELECTION_ALL_BUT_ARCHIVED, null, MovieDatabaseHelper.COLUMN_NAME);
 
         moviePosition = calculatePostionById(movieId);
 
@@ -118,6 +118,8 @@ public class MoviePagerActivity extends FragmentActivity {
         if (watchedDate > 0) {
             movie.setWatchedDate(new Date(watchedDate));
         }
+        movie.setWatched(cursor.getInt(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_WATCHED)));
+        movie.setArchived(cursor.getInt(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_ARCHIVED)));
         return movie;
     }
 

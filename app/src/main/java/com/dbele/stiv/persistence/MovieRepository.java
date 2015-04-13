@@ -34,7 +34,7 @@ public class MovieRepository {
 
     public void loadDatabaseAndNotifyIfNeeded(ArrayList<Movie> movies) {
 
-        context.getContentResolver().delete(MoviesContentProvider.CONTENT_URI, null, null);
+        context.getContentResolver().delete(MoviesContentProvider.CONTENT_URI, MovieDatabaseHelper.DELETE_NOT_WATCHED_NOT_ARCHIVED, null);
 
         for(Movie movie : movies) {
             ContentValues contentValues = new ContentValues();

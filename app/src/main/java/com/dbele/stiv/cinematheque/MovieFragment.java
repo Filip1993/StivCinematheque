@@ -1,5 +1,6 @@
 package com.dbele.stiv.cinematheque;
 
+import android.content.ContentValues;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ public class MovieFragment extends Fragment {
     public static final String EXTRA_MOVIE_ID = "com.dbele.stiv.cinematheque.extra.movie.id";
 
     private Movie movie;
+    private CheckBox cbWatched;
     private TextView tvMovieName;
     private TextView tvMovieGenre;
     private TextView tvMovieDesc;
@@ -68,6 +71,17 @@ public class MovieFragment extends Fragment {
     }
 
     private void fillData(View view) {
+        cbWatched = (CheckBox)view.findViewById(R.id.cbWatched);
+        cbWatched.setChecked(movie.getWatched()==1);
+        cbWatched.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(MovieDatabaseHelper.COLUMN_WATCHED, cbWatched.isChecked());
+                updateMovie(contentValues);
+            }
+        });
+
         tvMovieName = (TextView)view.findViewById(R.id.tvMovieName);
         tvMovieName.setText(movie.getName()!=null ? movie.getName() : "");
 
@@ -85,13 +99,19 @@ public class MovieFragment extends Fragment {
 
         ivMoviePic = (ImageView)view.findViewById(R.id.ivMoviePic);
         if (movie.getPicturePath()!=null) {
-
             Uri pictureUri = Uri.parse(movie.getPicturePath());
-            //Log.v("MF picture path", pictureUri.getPath());
             ivMoviePic.setImageURI(pictureUri);
         } else {
-            ivMoviePic.setImageResource(R.drawable.launcher);
+            ivMoviePic.setImageResource(R.drawable.logo);
         }
+    }
+
+    private int updateMovie(ContentValues contentValues) {
+        int rowsUpdated  = getActivity().getContentResolver().
+                update(Uri.parse(MoviesContentProvider.CONTENT_URI+"/"+movie.getIdMovie()),
+                        contentValues, null, null);
+        return rowsUpdated;
+
     }
 
 }

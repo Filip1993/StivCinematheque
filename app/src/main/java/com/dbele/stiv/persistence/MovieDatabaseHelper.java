@@ -24,7 +24,7 @@ public class MovieDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_DESCRIPTION = "description";
-    public static final String COLUMN_DIRECTOR= "director";
+    public static final String COLUMN_DIRECTOR = "director";
     public static final String COLUMN_ACTORS = "actors";
     public static final String COLUMN_LENGTH = "length";
     public static final String COLUMN_GENRE = "genre";
@@ -37,14 +37,17 @@ public class MovieDatabaseHelper extends SQLiteOpenHelper {
     private static final String DROP_TABLE_STMT = "drop table " + TABLE_NAME;
     private static String CREATE_TABLE_STMT = null;
 
-    private static final String COLUMN_ARCHIVED_APPENDIX = COLUMN_ARCHIVED +" = 0";
-    private static final String COLUMN_WATCHED_NOT_APPENDIX = COLUMN_WATCHED +" = 0";
-    private static final String COLUMN_WATCHED_APPENDIX = COLUMN_WATCHED +" = 1";
+    private static final String COLUMN_ARCHIVED_APPENDIX = COLUMN_ARCHIVED + " = 0";
+    private static final String COLUMN_WATCHED_NOT_APPENDIX = COLUMN_WATCHED + " = 0";
+    private static final String COLUMN_WATCHED_APPENDIX = COLUMN_WATCHED + " = 1";
 
     public static final String SELECTION_NAME = COLUMN_NAME + " like ? and " + COLUMN_ARCHIVED_APPENDIX;
-    public static final String SELECTION_ALL = COLUMN_ARCHIVED_APPENDIX;
+    public static final String SELECTION_ALL_BUT_ARCHIVED = COLUMN_ARCHIVED_APPENDIX;
     public static final String SELECTION_WATCHED = COLUMN_ARCHIVED_APPENDIX + " and " + COLUMN_WATCHED_APPENDIX;
     public static final String SELECTION_NOT_WATCHED = COLUMN_ARCHIVED_APPENDIX + " and " + COLUMN_WATCHED_NOT_APPENDIX;
+    public static final String SELECTION_ARCHIVED_WATCHED = COLUMN_ARCHIVED + " = 1 or " + COLUMN_WATCHED_APPENDIX;
+
+    public static final String DELETE_NOT_WATCHED_NOT_ARCHIVED = COLUMN_ARCHIVED_APPENDIX + " and " + COLUMN_WATCHED_NOT_APPENDIX;
 
     private static final String DELETE_MOVIES_STMT = "delete from " + TABLE_NAME + " where watched = 0 and archived = 0";
 
@@ -74,7 +77,8 @@ public class MovieDatabaseHelper extends SQLiteOpenHelper {
     public MovieDatabaseHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
     }
-        @Override
+
+    @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_STMT);
     }

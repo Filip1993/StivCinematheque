@@ -26,6 +26,22 @@
                 android:layout_height="@dimen/movie_jpg_height"
                 android:orientation="vertical"
                 android:padding="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/Titles"
+                        android:layout_width="@dimen/movie_left_column"
+                        android:layout_height="wrap_content"
+                        android:text="@string/watched"/>
+
+                    <CheckBox
+                        android:id="@+id/cbWatched"
+                        android:layout_marginLeft="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -39,7 +55,7 @@
 
                     <TextView
                         android:id="@+id/tvMovieName"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp" />
                 </LinearLayout>
@@ -56,9 +72,10 @@
 
                     <TextView
                         android:id="@+id/tvMovieGenre"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -73,7 +90,7 @@
 
                     <TextView
                         android:id="@+id/tvMovieDirector"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp" />
                 </LinearLayout>
@@ -90,7 +107,7 @@
 
                     <TextView
                         android:id="@+id/tvMovieActors"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp" />
                 </LinearLayout>

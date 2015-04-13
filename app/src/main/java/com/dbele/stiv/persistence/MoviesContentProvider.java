@@ -22,18 +22,22 @@ public class MoviesContentProvider extends ContentProvider {
     private static final String BASE_PATH = "movies";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
 
-    public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/movies";
-    public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/movie";
+//    public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/movies";
+//    public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/movie";
 
     private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     public static final String[] MOVIES_LIST_PROJECTION = { MovieDatabaseHelper.COLUMN_ID, MovieDatabaseHelper.COLUMN_NAME,
-            MovieDatabaseHelper.COLUMN_GENRE, MovieDatabaseHelper.COLUMN_PICTURE_PATH };
+            MovieDatabaseHelper.COLUMN_WATCHED, MovieDatabaseHelper.COLUMN_PICTURE_PATH };
 
     public static final String[] MOVIE_PROJECTION = { MovieDatabaseHelper.COLUMN_ID, MovieDatabaseHelper.COLUMN_NAME,
             MovieDatabaseHelper.COLUMN_DESCRIPTION, MovieDatabaseHelper.COLUMN_DIRECTOR, MovieDatabaseHelper.COLUMN_ACTORS,
             MovieDatabaseHelper.COLUMN_LENGTH, MovieDatabaseHelper.COLUMN_GENRE, MovieDatabaseHelper.COLUMN_PICTURE_PATH,
-            MovieDatabaseHelper.COLUMN_TICKET_PATH, MovieDatabaseHelper.COLUMN_IMPRESSIONS, MovieDatabaseHelper.COLUMN_WATCHED_DATE };
+            MovieDatabaseHelper.COLUMN_TICKET_PATH, MovieDatabaseHelper.COLUMN_IMPRESSIONS, MovieDatabaseHelper.COLUMN_WATCHED,
+            MovieDatabaseHelper.COLUMN_ARCHIVED, MovieDatabaseHelper.COLUMN_WATCHED_DATE };
+
+    public static final String[] MOVIE_NAMES_PROJECTION = { MovieDatabaseHelper.COLUMN_NAME };
+
 
     static {
         sURIMatcher.addURI(AUTHORITY, BASE_PATH, MOVIES);
@@ -126,7 +130,26 @@ public class MoviesContentProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
-        // TODO: Implement this to handle requests to update one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
+        int uriType = sURIMatcher.match(uri);
+        SQLiteDatabase sqlDB = dbHelper.getWritableDatabase();
+        int updateCount = 0;
+        switch (uriType) {
+            case MOVIES:
+                break;
+            case MOVIE_ID:
+                String id = uri.getLastPathSegment();
+                String where = MovieDatabaseHelper.COLUMN_ID + " = " + id;
+
+                if (!TextUtils.isEmpty(selection)) {
+                    where += " AND " + selection;
+                }
+
+                updateCount = sqlDB.update(MovieDatabaseHelper.TABLE_NAME, values, where, selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
+        return updateCount;
     }
 }

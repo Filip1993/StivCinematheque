@@ -1,10 +1,13 @@
 package com.dbele.stiv.rss;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
 
 import com.dbele.stiv.model.Movie;
+import com.dbele.stiv.persistence.MovieDatabaseHelper;
 import com.dbele.stiv.persistence.MovieRepository;
+import com.dbele.stiv.persistence.MoviesContentProvider;
 import com.dbele.stiv.utitlities.Utility;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -47,16 +50,31 @@ public class RssParser {
     private XmlPullParserFactory xmlPullParserFactory;
     public volatile boolean done = false;
 
+    private static ArrayList<String> watched_archived_movies;
+
     public RssParser(Context context) {
         this.context = context;
     }
 
     public static void upadateDatabaseFromRssFeed(Context context) {
+        populateWatchedArchivedMovies(context);
         RssParser p =  new RssParser(context);
         p.run();
     }
 
+    private static void populateWatchedArchivedMovies(Context context) {
+        watched_archived_movies = new ArrayList<>();
+        Cursor cursor = context.getContentResolver().
+                query(MoviesContentProvider.CONTENT_URI, MoviesContentProvider.MOVIE_NAMES_PROJECTION,
+                        MovieDatabaseHelper.SELECTION_ARCHIVED_WATCHED, null, MovieDatabaseHelper.COLUMN_NAME);
+        while(cursor.moveToNext()) {
+            watched_archived_movies.add(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_NAME)));
+        }
+    }
+
     public void run() {
+
+
         InputStream stream = null;
         try {
             URL url = new URL(RSS_URL);
@@ -108,7 +126,7 @@ public class RssParser {
                             movie = new Movie();
                             //avoiding duplicate names for movies
                             itemsStarted = true;
-                            movie.setWatched(idMovieName%2);
+                            //movie.setWatched(idMovieName%2);
                         }
                         break;
                     case XmlPullParser.TEXT:
@@ -120,8 +138,11 @@ public class RssParser {
                         if(itemsStarted) {
                             switch (name) {
                                 case(TITLE):
+                                    if(text.length() > 39) {
+                                        text = text.substring(0, 36) + "...";
+                                    }
                                     movie.setName(text);
-                                    if (movieNames.add(movie.getName())) {
+                                    if (!watched_archived_movies.contains(movie.getName()) && movieNames.add(movie.getName())) {
                                         movies.add(movie);
                                     }
                                     break;
@@ -130,7 +151,7 @@ public class RssParser {
                                     if (movies.contains(movie)) {
                                         String fileUrl = Utility.extractImagePathFromDescription(text);
                                         //Log.v("RSSParser", fileUrl);
-                                        String picturePath = Utility.downloadImageAndStore(context, fileUrl, "movie_" + (idMovieName++));
+                                        String picturePath = Utility.downloadImageAndStore(context, fileUrl, "movie_" + (movie.getName().hashCode()));
                                         if (picturePath != null) {
                                             movie.setPicturePath(picturePath);
                                         }
