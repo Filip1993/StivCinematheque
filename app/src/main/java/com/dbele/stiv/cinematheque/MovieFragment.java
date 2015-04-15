@@ -214,7 +214,7 @@ public class MovieFragment extends Fragment {
         contentValues.put(MovieDatabaseHelper.COLUMN_IMPRESSIONS, movie.getImpressions());
         updateMovie(contentValues);
 
-        tvImpressions.setText(movie.getImpressions());
+        tvImpressions.setText(movie.getImpressions()!=null ? movie.getImpressions() : getResources().getString(R.string.insert_impressions, ""));
     }
 
     public String getMovieImpressions() {
