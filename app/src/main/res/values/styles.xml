@@ -24,7 +24,6 @@
         <item name="android:popupMenuStyle">@style/AppTheme.PopupMenu</item>
     </style>
 
-
     <style name="AppTheme.ActionBar" parent="android:Widget.ActionBar">
         <item name="android:background">@drawable/actionbar_background</item>
     </style>

@@ -28,19 +28,24 @@
                 android:padding="5dp">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="39dp">
 
                     <TextView
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/tvWatched"
                         style="@style/Titles"
                         android:layout_width="@dimen/movie_left_column"
                         android:layout_height="wrap_content"
                         android:text="@string/watched"/>
 
                     <CheckBox
+                        android:layout_gravity="center_vertical"
                         android:id="@+id/cbWatched"
                         android:layout_marginLeft="8dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:scaleX="1.18"
+                        android:scaleY="1.18"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -127,5 +132,59 @@
             android:layout_height="wrap_content"
             android:padding="5dp" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llPersonalDetails"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:textColor="@color/text_color"
+                android:text="@string/personal_details" />
+            <LinearLayout
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivWatchedDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/watched_date"
+                    android:clickable="true"/>
+
+                <TextView
+                    android:id="@+id/tvDateWatched"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@string/insert_date"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivImpressions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/impressions"
+                    android:clickable="true"/>
+
+                <TextView
+                    android:id="@+id/tvImpressions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@string/insert_impressions"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+     </LinearLayout>
 </ScrollView>

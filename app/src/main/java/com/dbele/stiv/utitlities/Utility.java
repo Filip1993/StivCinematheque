@@ -28,6 +28,9 @@ public class Utility {
     private static final int MOVIE_PICTURE_WIDTH = 252;
     private static final int MOVIE_PICTURE_HEIGHT = 405;
 
+    public static final String DATE_WATCHED_FORMAT = "dd-MM-yyyy";
+
+
     public static CharSequence getFormattedDate(CharSequence pattern, Date date) {
         DateFormat df = new DateFormat();
         return df.format(pattern, date);

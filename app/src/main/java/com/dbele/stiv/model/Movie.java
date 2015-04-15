@@ -15,7 +15,7 @@ public class Movie implements Comparable<Movie> {
     private String actors;
     private int length;
     private String genre;
-    private Date watchedDate;
+    private long watchedDate;
     private String picturePath;
     private String ticketPath;
     private String impressions;
@@ -118,11 +118,11 @@ public class Movie implements Comparable<Movie> {
         this.impressions = impressions;
     }
 
-    public Date getWatchedDate() {
+    public long getWatchedDate() {
         return watchedDate;
     }
 
-    public void setWatchedDate(Date watchedDate) {
+    public void setWatchedDate(long watchedDate) {
         this.watchedDate = watchedDate;
     }
 

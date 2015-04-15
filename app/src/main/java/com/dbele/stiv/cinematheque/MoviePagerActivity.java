@@ -114,10 +114,8 @@ public class MoviePagerActivity extends FragmentActivity {
         movie.setGenre(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_GENRE)));
         movie.setPicturePath(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_PICTURE_PATH)));
         movie.setTicketPath(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_TICKET_PATH)));
-        long watchedDate = cursor.getLong(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_WATCHED_DATE));
-        if (watchedDate > 0) {
-            movie.setWatchedDate(new Date(watchedDate));
-        }
+        movie.setWatchedDate(cursor.getLong(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_WATCHED_DATE)));
+        movie.setImpressions(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_IMPRESSIONS)));
         movie.setWatched(cursor.getInt(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_WATCHED)));
         movie.setArchived(cursor.getInt(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_ARCHIVED)));
         return movie;
