@@ -116,6 +116,9 @@ public class MovieFragment extends Fragment {
     private void showDatePicker() {
         DatePickerFragment datePickerFragment = new DatePickerFragment();
         Calendar calendar = Calendar.getInstance();
+        if(movie.getWatchedDate()!=0) {
+            calendar.setTimeInMillis(movie.getWatchedDate());
+        }
         Bundle args = new Bundle();
         args.putInt(DatePickerFragment.DATE_YEAR, calendar.get(Calendar.YEAR));
         args.putInt(DatePickerFragment.DATE_MONTH, calendar.get(Calendar.MONTH));
@@ -137,8 +140,10 @@ public class MovieFragment extends Fragment {
         calendar.set(Calendar.MONTH, monthOfYear);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
+        movie.setWatchedDate(calendar.getTimeInMillis());
+
         ContentValues contentValues = new ContentValues();
-        contentValues.put(MovieDatabaseHelper.COLUMN_WATCHED_DATE, calendar.getTimeInMillis());
+        contentValues.put(MovieDatabaseHelper.COLUMN_WATCHED_DATE, movie.getWatchedDate());
         updateMovie(contentValues);
 
         tvWatchedDate.setText(Utility.getFormattedDate(Utility.DATE_WATCHED_FORMAT, calendar.getTime()));

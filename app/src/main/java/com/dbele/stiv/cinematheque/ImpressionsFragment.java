@@ -19,6 +19,7 @@ public class ImpressionsFragment extends DialogFragment {
     private ImageView ivImpressionsDone;
     private MovieFragment movieFragment;
 
+
     public static ImpressionsFragment newInstance(MovieFragment movieFragment) {
         ImpressionsFragment frag = new ImpressionsFragment();
         frag.movieFragment = movieFragment;
