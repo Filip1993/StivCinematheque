@@ -42,7 +42,7 @@ public class ImpressionsFragment extends DialogFragment {
         ivImpressionsDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                movieFragment.setMovieImpressions(tvImpressions.getText().toString());
+                movieFragment.setMovieImpressions(tvImpressions.getText().toString().length() > 0 ? tvImpressions.getText().toString() : null);
                 getDialog().dismiss();
             }
         });
