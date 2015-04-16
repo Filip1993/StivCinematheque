@@ -8,6 +8,9 @@ import java.util.Date;
  */
 public class Movie implements Comparable<Movie> {
 
+    public static final String MOVIE_JPG_PREFIX = "movie_";
+    public static final String TICKET_JPG_PREFIX = "ticket_";
+
     private long idMovie;
     private String name;
     private String description;

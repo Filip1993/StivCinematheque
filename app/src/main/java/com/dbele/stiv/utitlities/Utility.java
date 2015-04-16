@@ -28,6 +28,9 @@ public class Utility {
     private static final int MOVIE_PICTURE_WIDTH = 252;
     private static final int MOVIE_PICTURE_HEIGHT = 405;
 
+    private static final int MOVIE_TICKET_WIDTH = 512;
+    private static final int MOVIE_TICKET_HEIGHT = 768;
+
     public static final String DATE_WATCHED_FORMAT = "dd-MM-yyyy";
 
 
@@ -142,6 +145,38 @@ public class Utility {
 
         Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
         return resizedBitmap;
+    }
+
+    public static String storeBitmap(Context context, String fileName, Bitmap bitmap) {
+
+        FileOutputStream fos = null;
+        try {
+            File dir = context.getApplicationContext().getExternalFilesDir(null);
+            File file = new File(dir, "/" + fileName + ".jpg");
+            if (file.exists()) {
+                file.delete();
+            }
+
+            fos = new FileOutputStream(file);
+
+            Bitmap resizedBitmap = getResizedBitmap(bitmap, MOVIE_TICKET_WIDTH, MOVIE_TICKET_HEIGHT);
+
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 100 , bos);
+            byte[] buffer = bos.toByteArray();
+
+            fos.write(buffer);
+            return file.getAbsolutePath();
+        } catch(Exception e) {
+            return null;
+        } finally {
+            if (fos!=null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {}
+            }
+
+        }
     }
 
 

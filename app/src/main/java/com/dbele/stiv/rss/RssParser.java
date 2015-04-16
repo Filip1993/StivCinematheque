@@ -19,8 +19,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -151,7 +149,7 @@ public class RssParser {
                                     if (movies.contains(movie)) {
                                         String fileUrl = Utility.extractImagePathFromDescription(text);
                                         //Log.v("RSSParser", fileUrl);
-                                        String picturePath = Utility.downloadImageAndStore(context, fileUrl, "movie_" + (movie.getName().hashCode()));
+                                            String picturePath = Utility.downloadImageAndStore(context, fileUrl, Movie.MOVIE_JPG_PREFIX + (movie.getName().hashCode()));
                                         if (picturePath != null) {
                                             movie.setPicturePath(picturePath);
                                         }

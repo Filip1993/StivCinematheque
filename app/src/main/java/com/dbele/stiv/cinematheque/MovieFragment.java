@@ -2,9 +2,12 @@ package com.dbele.stiv.cinematheque;
 
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,10 +18,12 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dbele.stiv.model.Movie;
 import com.dbele.stiv.persistence.MovieDatabaseHelper;
 import com.dbele.stiv.persistence.MoviesContentProvider;
+import com.dbele.stiv.utitlities.CameraHandler;
 import com.dbele.stiv.utitlities.Utility;
 
 import java.util.Calendar;
@@ -28,6 +33,7 @@ import java.util.Date;
 public class MovieFragment extends Fragment {
 
     public static final String EXTRA_MOVIE_ID = "com.dbele.stiv.cinematheque.extra.movie.id";
+    private static final int TAKE_PHOTO = 1;
 
     private Movie movie;
     private CheckBox cbWatched;
@@ -41,7 +47,12 @@ public class MovieFragment extends Fragment {
     private TextView tvWatchedDate;
     private ImageView ivImpressions;
     private TextView tvImpressions;
+    private ImageView ivTakePhoto;
+    private ImageView ivTicket;
+
     private LinearLayout llPersonalDetails;
+
+    private Bitmap ticketBitmap;
 
 
     public static MovieFragment createMovieFragment(Movie movie) {
@@ -106,6 +117,53 @@ public class MovieFragment extends Fragment {
             }
         });
 
+        ivTakePhoto = (ImageView) view.findViewById(R.id.ivTakePhoto);
+        ivTicket = (ImageView) view.findViewById(R.id.ivTicket);
+        ivTakePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePhoto();
+            }
+        });
+        ivTicket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePhoto();
+            }
+        });
+
+    }
+
+    private void takePhoto() {
+        if (CameraHandler.deviceCanUseCamera(getActivity())) {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent, TAKE_PHOTO);
+        } else {
+            Toast.makeText(getActivity(), R.string.cannot_take_photos, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == TAKE_PHOTO && resultCode == getActivity().RESULT_OK && data != null){
+            Bundle extras = data.getExtras();
+            ticketBitmap = (Bitmap) extras.get("data");
+            setTicket(ticketBitmap);
+
+        }
+    }
+
+    private void setTicket(Bitmap ticketBitmap) {
+        String ticketPath = Utility.storeBitmap(getActivity(), Movie.TICKET_JPG_PREFIX + (movie.getName().hashCode()), ticketBitmap);
+        movie.setTicketPath(ticketPath);
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MovieDatabaseHelper.COLUMN_TICKET_PATH, movie.getTicketPath());
+        updateMovie(contentValues);
+
+        ivTicket.setImageURI(null);
+        Uri ticketUri = Uri.parse(movie.getTicketPath());
+        ivTicket.setImageURI(ticketUri);
     }
 
     private void showImpressionsDialog() {
@@ -185,6 +243,12 @@ public class MovieFragment extends Fragment {
             ivMoviePic.setImageURI(pictureUri);
         } else {
             ivMoviePic.setImageResource(R.drawable.logo);
+        }
+
+        ivTicket = (ImageView) view.findViewById(R.id.ivTicket);
+        if (movie.getTicketPath() != null) {
+            Uri ticketUri = Uri.parse(movie.getTicketPath());
+            ivTicket.setImageURI(ticketUri);
         }
 
         tvWatchedDate = (TextView) view.findViewById(R.id.tvDateWatched);
