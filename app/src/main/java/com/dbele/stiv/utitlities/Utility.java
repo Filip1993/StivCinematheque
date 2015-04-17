@@ -171,6 +171,8 @@ public class Utility {
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 100 , bos);
+
+
             byte[] buffer = bos.toByteArray();
 
 

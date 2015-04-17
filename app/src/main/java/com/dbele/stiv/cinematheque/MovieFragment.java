@@ -165,6 +165,8 @@ public class MovieFragment extends Fragment {
             Bundle extras = data.getExtras();
             ticketBitmap = (Bitmap) extras.get("data");
             setTicket(ticketBitmap);
+            //delete original image
+            getActivity().getContentResolver().delete(data.getData(), null, null);
 
         }
     }
