@@ -45,9 +45,6 @@ public class MoviesListFragment extends ListFragment {
         getActivity().getWindow().setTitle(getResources().getString(R.string.movie_list_fragment_title));
 
         ActionBar actionBar = getActivity().getActionBar();
-        if(actionBar!=null) {
-            actionBar.setDisplayHomeAsUpEnabled(Boolean.FALSE);
-        }
 
         loaderManager = getLoaderManager();
 

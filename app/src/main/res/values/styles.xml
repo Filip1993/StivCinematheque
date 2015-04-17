@@ -1,27 +1,28 @@
 <resources>
 
-<!--
-    <style name="AppTheme" parent="Platform.AppCompat">
-        <item name="android:windowNoTitle">false</item>
-        <item name="android:windowTitleStyle">@style/ActionBarTitle</item>
-        <item name="windowActionBar">true</item>
-        <item name="android:windowTitleSize">39dp</item>
-        <item name="android:listChoiceIndicatorMultiple">@drawable/checkbox</item>
-    </style>
+    <!--
+        <style name="AppTheme" parent="Platform.AppCompat">
+            <item name="android:windowNoTitle">false</item>
+            <item name="android:windowTitleStyle">@style/ActionBarTitle</item>
+            <item name="windowActionBar">true</item>
+            <item name="android:windowTitleSize">39dp</item>
+            <item name="android:listChoiceIndicatorMultiple">@drawable/checkbox</item>
+        </style>
 
 
-    <style name="ActionBarTitle">
-        <item name="android:textColor">#c0c0c0</item>
-        <item name="android:paddingLeft">5dp</item>
-        <item name="android:textSize">15dp</item>
-    </style>
+        <style name="ActionBarTitle">
+            <item name="android:textColor">#c0c0c0</item>
+            <item name="android:paddingLeft">5dp</item>
+            <item name="android:textSize">15dp</item>
+        </style>
 
--->
+    -->
     <style name="AppTheme" parent="android:Theme.Holo">
         <item name="android:listChoiceIndicatorMultiple">@drawable/checkbox</item>
         <item name="android:actionBarStyle">@style/AppTheme.ActionBar</item>
         <item name="android:textColor">@color/text_color</item>
         <item name="android:popupMenuStyle">@style/AppTheme.PopupMenu</item>
+        <item name="android:homeAsUpIndicator">@drawable/navigation</item>
     </style>
 
     <style name="AppTheme.ActionBar" parent="android:Widget.ActionBar">

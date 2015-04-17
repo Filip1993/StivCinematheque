@@ -1,6 +1,7 @@
 package com.dbele.stiv.cinematheque;
 
 import android.app.ActionBar;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 
 import com.dbele.stiv.model.Movie;
@@ -32,6 +34,11 @@ public class MoviePagerActivity extends FragmentActivity {
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(Boolean.TRUE);
+            int upId = Resources.getSystem().getIdentifier("up", "id", "android");
+            if (upId > 0) {
+                ImageView up = (ImageView) findViewById(upId);
+                up.setImageResource(R.drawable.back);
+            }
         }
 
         movieViewPager = new ViewPager(this);
