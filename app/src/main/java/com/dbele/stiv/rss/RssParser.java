@@ -8,6 +8,7 @@ import com.dbele.stiv.model.Movie;
 import com.dbele.stiv.persistence.MovieDatabaseHelper;
 import com.dbele.stiv.persistence.MovieRepository;
 import com.dbele.stiv.persistence.MoviesContentProvider;
+import com.dbele.stiv.utitlities.ImagesHandler;
 import com.dbele.stiv.utitlities.Utility;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -149,7 +150,7 @@ public class RssParser {
                                     if (movies.contains(movie)) {
                                         String fileUrl = Utility.extractImagePathFromDescription(text);
                                         //Log.v("RSSParser", fileUrl);
-                                            String picturePath = Utility.downloadImageAndStore(context, fileUrl, Movie.MOVIE_JPG_PREFIX + (movie.getName().hashCode()));
+                                            String picturePath = ImagesHandler.downloadImageAndStore(context, fileUrl, Movie.MOVIE_JPG_PREFIX + (movie.getName().hashCode()));
                                         if (picturePath != null) {
                                             movie.setPicturePath(picturePath);
                                         }

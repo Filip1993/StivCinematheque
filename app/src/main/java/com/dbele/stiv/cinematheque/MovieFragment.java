@@ -13,8 +13,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -25,8 +23,10 @@ import android.widget.Toast;
 import com.dbele.stiv.model.Movie;
 import com.dbele.stiv.persistence.MovieDatabaseHelper;
 import com.dbele.stiv.persistence.MoviesContentProvider;
+import com.dbele.stiv.utitlities.AnimationHandler;
 import com.dbele.stiv.utitlities.BackgroundMusicHandler;
 import com.dbele.stiv.utitlities.CameraHandler;
+import com.dbele.stiv.utitlities.ImagesHandler;
 import com.dbele.stiv.utitlities.PreferencesHandler;
 import com.dbele.stiv.utitlities.Utility;
 
@@ -177,7 +177,7 @@ public class MovieFragment extends Fragment {
     }
 
     private void setTicket(Bitmap ticketBitmap) {
-        String ticketPath = Utility.storeBitmap(getActivity(), Movie.TICKET_JPG_PREFIX + (movie.getName().hashCode()), ticketBitmap);
+        String ticketPath = ImagesHandler.storeBitmap(getActivity(), Movie.TICKET_JPG_PREFIX + (movie.getName().hashCode()), ticketBitmap);
         movie.setTicketPath(ticketPath);
 
         ContentValues contentValues = new ContentValues();
@@ -280,19 +280,12 @@ public class MovieFragment extends Fragment {
 
     private void showHidePersonalDetails() {
         if(movie.getWatched()==0) {
-            Animation out = AnimationUtils.makeOutAnimation(getActivity(), true);
-            llPersonalDetails.startAnimation(out);
-            llPersonalDetails.setVisibility(View.INVISIBLE);
+            AnimationHandler.startOutAnimation(getActivity(), llPersonalDetails);
         } else {
-            Animation in = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in);
-            llPersonalDetails.startAnimation(in);
-            llPersonalDetails.setVisibility(View.VISIBLE);
-            animateArrow();
-        }
-    }
+            AnimationHandler.startFadeInAnimation(getActivity(), llPersonalDetails);
+            AnimationHandler.startBlinkAnimation(getActivity(), ivArrow);
 
-    private void animateArrow() {
-        ivArrow.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.blink));
+        }
     }
 
     private int updateMovie(ContentValues contentValues) {

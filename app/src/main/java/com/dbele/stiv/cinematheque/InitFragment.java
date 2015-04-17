@@ -8,12 +8,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.dbele.stiv.rss.RssParser;
+import com.dbele.stiv.utitlities.AnimationHandler;
 import com.dbele.stiv.utitlities.ConnectivityHandler;
 import com.dbele.stiv.utitlities.PreferencesHandler;
 
@@ -64,9 +63,10 @@ public class InitFragment extends Fragment {
 
     private void startAnimation() {
         final ImageView myImage = (ImageView) view.findViewById(R.id.animatedImage);
-        final Animation myRotation = AnimationUtils.loadAnimation(getActivity(), R.anim.rotation);
-        myImage.startAnimation(myRotation);
+        AnimationHandler.startRotatingAnimation(getActivity(), myImage);
     }
+
+
 
     private void startHostActivity() {
         Intent intent = new Intent(getActivity(), HostActivity.class);
