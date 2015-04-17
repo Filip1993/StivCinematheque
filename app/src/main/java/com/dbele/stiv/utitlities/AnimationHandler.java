@@ -13,9 +13,9 @@ import com.dbele.stiv.cinematheque.R;
  */
 public class AnimationHandler {
 
-    public static void startRotatingAnimation(Context context, ImageView myImage) {
+    public static void startRotatingAnimation(Context context, View view) {
         final Animation myRotation = AnimationUtils.loadAnimation(context, R.anim.rotation);
-        myImage.startAnimation(myRotation);
+        view.startAnimation(myRotation);
     }
 
     public static void startOutAnimation(Context context, View view) {
