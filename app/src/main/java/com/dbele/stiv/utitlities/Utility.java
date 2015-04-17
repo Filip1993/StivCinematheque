@@ -159,11 +159,20 @@ public class Utility {
 
             fos = new FileOutputStream(file);
 
-            Bitmap resizedBitmap = getResizedBitmap(bitmap, MOVIE_TICKET_WIDTH, MOVIE_TICKET_HEIGHT);
+            int newHeight = MOVIE_TICKET_HEIGHT;
+            int newWeight = MOVIE_TICKET_WIDTH;
+
+            if(bitmap.getHeight()<bitmap.getWidth()) {
+                newHeight = MOVIE_TICKET_WIDTH;
+                newWeight = MOVIE_TICKET_HEIGHT;
+            }
+
+            Bitmap resizedBitmap = getResizedBitmap(bitmap, newWeight, newHeight);
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 100 , bos);
             byte[] buffer = bos.toByteArray();
+
 
             fos.write(buffer);
             return file.getAbsolutePath();

@@ -13,6 +13,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -49,6 +51,7 @@ public class MovieFragment extends Fragment {
     private TextView tvImpressions;
     private ImageView ivTakePhoto;
     private ImageView ivTicket;
+    private ImageView ivArrow;
 
     private LinearLayout llPersonalDetails;
 
@@ -79,22 +82,40 @@ public class MovieFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
-        llPersonalDetails = (LinearLayout) view.findViewById(R.id.llPersonalDetails);
+        fetchViews(view);
         fillData(view);
         setupListeners(view);
         return view;
     }
 
-    private void setupListeners(View view) {
+    private void fetchViews(View view) {
+        llPersonalDetails = (LinearLayout) view.findViewById(R.id.llPersonalDetails);
+        cbWatched = (CheckBox) view.findViewById(R.id.cbWatched);
+        ivArrow = (ImageView) view.findViewById(R.id.ivArrow);
+        tvMovieName = (TextView) view.findViewById(R.id.tvMovieName);
+        tvMovieDesc = (TextView) view.findViewById(R.id.tvMovieDesc);
+        tvMovieGenre = (TextView) view.findViewById(R.id.tvMovieGenre);
+        tvMovieDirector = (TextView) view.findViewById(R.id.tvMovieDirector);
+        tvMovieActors = (TextView) view.findViewById(R.id.tvMovieActors);
+        ivMoviePic = (ImageView) view.findViewById(R.id.ivMoviePic);
+        ivTicket = (ImageView) view.findViewById(R.id.ivTicket);
+        tvWatchedDate = (TextView) view.findViewById(R.id.tvDateWatched);
+        tvImpressions = (TextView) view.findViewById(R.id.tvImpressions);
         ivWatchedDate = (ImageView) view.findViewById(R.id.ivWatchedDate);
+        tvWatchedDate = (TextView) view.findViewById(R.id.tvDateWatched);
+        ivImpressions = (ImageView) view.findViewById(R.id.ivImpressions);
+        tvImpressions = (TextView) view.findViewById(R.id.tvImpressions);
+        ivTakePhoto = (ImageView) view.findViewById(R.id.ivTakePhoto);
+        ivTicket = (ImageView) view.findViewById(R.id.ivTicket);
+    }
+
+    private void setupListeners(View view) {
         ivWatchedDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePicker();
             }
         });
-
-        tvWatchedDate = (TextView) view.findViewById(R.id.tvDateWatched);
         tvWatchedDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,14 +123,12 @@ public class MovieFragment extends Fragment {
             }
         });
 
-        ivImpressions = (ImageView) view.findViewById(R.id.ivImpressions);
         ivImpressions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showImpressionsDialog();
             }
         });
-        tvImpressions = (TextView) view.findViewById(R.id.tvImpressions);
         tvImpressions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,8 +136,6 @@ public class MovieFragment extends Fragment {
             }
         });
 
-        ivTakePhoto = (ImageView) view.findViewById(R.id.ivTakePhoto);
-        ivTicket = (ImageView) view.findViewById(R.id.ivTicket);
         ivTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,7 +148,6 @@ public class MovieFragment extends Fragment {
                 takePhoto();
             }
         });
-
     }
 
     private void takePhoto() {
@@ -209,7 +225,6 @@ public class MovieFragment extends Fragment {
 
 
     private void fillData(View view) {
-        cbWatched = (CheckBox) view.findViewById(R.id.cbWatched);
         cbWatched.setChecked(movie.getWatched() == 1);
         cbWatched.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,22 +237,16 @@ public class MovieFragment extends Fragment {
             }
         });
 
-        tvMovieName = (TextView) view.findViewById(R.id.tvMovieName);
         tvMovieName.setText(movie.getName() != null ? movie.getName() : "");
 
-        tvMovieDesc = (TextView) view.findViewById(R.id.tvMovieDesc);
         tvMovieDesc.setText(movie.getDescription() != null ? movie.getDescription() : "");
 
-        tvMovieGenre = (TextView) view.findViewById(R.id.tvMovieGenre);
         tvMovieGenre.setText(movie.getGenre() != null ? movie.getGenre() : "");
 
-        tvMovieDirector = (TextView) view.findViewById(R.id.tvMovieDirector);
         tvMovieDirector.setText(movie.getDirector() != null ? movie.getDirector() : "");
 
-        tvMovieActors = (TextView) view.findViewById(R.id.tvMovieActors);
         tvMovieActors.setText(movie.getActors() != null ? movie.getActors() : "");
 
-        ivMoviePic = (ImageView) view.findViewById(R.id.ivMoviePic);
         if (movie.getPicturePath() != null) {
             Uri pictureUri = Uri.parse(movie.getPicturePath());
             ivMoviePic.setImageURI(pictureUri);
@@ -245,27 +254,38 @@ public class MovieFragment extends Fragment {
             ivMoviePic.setImageResource(R.drawable.logo);
         }
 
-        ivTicket = (ImageView) view.findViewById(R.id.ivTicket);
         if (movie.getTicketPath() != null) {
             Uri ticketUri = Uri.parse(movie.getTicketPath());
             ivTicket.setImageURI(ticketUri);
         }
 
-        tvWatchedDate = (TextView) view.findViewById(R.id.tvDateWatched);
         if (movie.getWatchedDate() != 0) {
             tvWatchedDate.setText(Utility.getFormattedDate(Utility.DATE_WATCHED_FORMAT, new Date(movie.getWatchedDate())));
         }
 
-        tvImpressions = (TextView) view.findViewById(R.id.tvImpressions);
         if (movie.getImpressions() != null) {
             tvImpressions.setText(movie.getImpressions());
         }
 
-        showHidePersonalDetails();
+        llPersonalDetails.setVisibility(movie.getWatched() == 1 ? View.VISIBLE : View.INVISIBLE);
+
     }
 
     private void showHidePersonalDetails() {
-        llPersonalDetails.setVisibility(movie.getWatched() == 1 ? View.VISIBLE : View.INVISIBLE);
+        if(movie.getWatched()==0) {
+            Animation out = AnimationUtils.makeOutAnimation(getActivity(), true);
+            llPersonalDetails.startAnimation(out);
+            llPersonalDetails.setVisibility(View.INVISIBLE);
+        } else {
+            Animation in = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in);
+            llPersonalDetails.startAnimation(in);
+            llPersonalDetails.setVisibility(View.VISIBLE);
+            animateArrow();
+        }
+    }
+
+    private void animateArrow() {
+        ivArrow.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.blink));
     }
 
     private int updateMovie(ContentValues contentValues) {

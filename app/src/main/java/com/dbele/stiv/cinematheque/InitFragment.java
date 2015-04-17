@@ -64,7 +64,7 @@ public class InitFragment extends Fragment {
 
     private void startAnimation() {
         final ImageView myImage = (ImageView) view.findViewById(R.id.animatedImage);
-        final Animation myRotation = AnimationUtils.loadAnimation(getActivity(), R.anim.image_rotation);
+        final Animation myRotation = AnimationUtils.loadAnimation(getActivity(), R.anim.rotation);
         myImage.startAnimation(myRotation);
     }
 
