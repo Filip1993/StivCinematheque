@@ -25,7 +25,9 @@ import android.widget.Toast;
 import com.dbele.stiv.model.Movie;
 import com.dbele.stiv.persistence.MovieDatabaseHelper;
 import com.dbele.stiv.persistence.MoviesContentProvider;
+import com.dbele.stiv.utitlities.BackgroundMusicHandler;
 import com.dbele.stiv.utitlities.CameraHandler;
+import com.dbele.stiv.utitlities.PreferencesHandler;
 import com.dbele.stiv.utitlities.Utility;
 
 import java.util.Calendar;
@@ -154,6 +156,8 @@ public class MovieFragment extends Fragment {
         if (CameraHandler.deviceCanUseCamera(getActivity())) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(intent, TAKE_PHOTO);
+
+            PreferencesHandler.setContinuePlaying(getActivity(), BackgroundMusicHandler.getShouldPlay());
         } else {
             Toast.makeText(getActivity(), R.string.cannot_take_photos, Toast.LENGTH_LONG).show();
         }
@@ -167,8 +171,9 @@ public class MovieFragment extends Fragment {
             setTicket(ticketBitmap);
             //delete original image
             getActivity().getContentResolver().delete(data.getData(), null, null);
-
         }
+        PreferencesHandler.setContinuePlaying(getActivity(), false);
+
     }
 
     private void setTicket(Bitmap ticketBitmap) {

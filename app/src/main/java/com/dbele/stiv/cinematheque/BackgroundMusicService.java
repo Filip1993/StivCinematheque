@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.dbele.stiv.utitlities.ActivityHandler;
 import com.dbele.stiv.utitlities.BackgroundMusicHandler;
+import com.dbele.stiv.utitlities.PreferencesHandler;
 
 public class BackgroundMusicService extends Service {
 
@@ -45,12 +46,12 @@ public class BackgroundMusicService extends Service {
                 //Log.e("Bacground service", "running");
                 boolean isInForeground = ActivityHandler.applicationIsInForeground(getApplicationContext());
                 boolean shouldPlay = BackgroundMusicHandler.getShouldPlay();
-                while( isInForeground && shouldPlay) {
+                boolean continuePlaying = PreferencesHandler.checkIfToContinuePlaying(getApplicationContext());
+                while((isInForeground && shouldPlay) || continuePlaying) {
                     try {
                         Thread.sleep(210);
                     } catch (InterruptedException e) {
                         Log.e(getClass().getName(), "Exception", e);
-
                     }
                     isInForeground = ActivityHandler.applicationIsInForeground(getApplicationContext());
                     if (!isInForeground) {
@@ -58,22 +59,23 @@ public class BackgroundMusicService extends Service {
                             Thread.sleep(60);
                         } catch (InterruptedException e) {
                             Log.e(getClass().getName(), "Exception", e);
+                        }
+                        isInForeground = ActivityHandler.applicationIsInForeground(getApplicationContext());
+                        if (!isInForeground) {
+                            try {
+                                Thread.sleep(30);
+                            } catch (InterruptedException e) {
+                                Log.e(getClass().getName(), "Exception", e);
 
+                            }
+                            isInForeground = ActivityHandler.applicationIsInForeground(getApplicationContext());
                         }
                     }
-                    isInForeground = ActivityHandler.applicationIsInForeground(getApplicationContext());
-                    if (!isInForeground) {
-                        try {
-                            Thread.sleep(30);
-                        } catch (InterruptedException e) {
-                            Log.e(getClass().getName(), "Exception", e);
-
-                        }
-                    }
-                    isInForeground = ActivityHandler.applicationIsInForeground(getApplicationContext());
                     shouldPlay = BackgroundMusicHandler.getShouldPlay();
+                    continuePlaying = PreferencesHandler.checkIfToContinuePlaying(getApplicationContext());
 //                    Log.e("isInForeground", isInForeground+"");
 //                    Log.e("isPlaying", shouldPlay+"");
+//                    Log.e("continuePlaying", continuePlaying+"");
                 }
                 //Log.e("Bacground service ", "stopping");
                 stopSelf();
