@@ -36,7 +36,7 @@
                         style="@style/Titles"
                         android:layout_width="@dimen/movie_left_column"
                         android:layout_height="wrap_content"
-                        android:text="@string/watched"/>
+                        android:text="@string/watched_movie"/>
 
                     <CheckBox
                         android:layout_gravity="center_vertical"
@@ -133,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
-            android:text="Description" />
+            android:text="@string/description" />
 
         <TextView
             android:id="@+id/tvMovieDesc"

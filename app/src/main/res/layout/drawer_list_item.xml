@@ -9,8 +9,7 @@
         android:id="@+id/icon"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/desc_list_item_icon"/>
+        android:adjustViewBounds="true" />
 
     <TextView
         android:id="@+id/title"

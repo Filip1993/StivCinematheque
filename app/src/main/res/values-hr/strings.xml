@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">Stiv Cinematheque</string>
+    <string name="watched_movie">Gledan</string>
+    <string name="name">Naziv</string>
+    <string name="genre">Žanr</string>
+    <string name="director">Redatelj</string>
+    <string name="actors">Glumci</string>
+    <string name="description">Opis</string>
+    <string name="movie_list_fragment_title">Filmovi</string>
+    <string name="rss_parsed_ticker">Stiv Cinematheque filmovi osviježeni</string>
+    <string name="rss_parsed_content_title">Filmovi su osviježeni</string>
+    <string name="rss_parsed_content_text">Molim vas provjerite filmove</string>
+    <string name="unable_to_load_data_on_init">Molim vas da se spojite na mrežu kako bi omogućili izmjenu podataka</string>
+
+    <string name="drawer_open">Navigacijski Meni Otvoren</string>
+    <string name="drawer_close">Navigacijski Meni Zatvoren</string>
+
+    <string name="summary_background_music_preference">Želite li pozadinsku muziku?</string>
+    <string name="background_music">Pozadinska muzika</string>
+    <string name="background_music_key">background_music_key</string>
+
+    <string name="summary_only_on_wifi_preference">Želite li osvježavanje filmova samo kada ste na WIFI mreži?</string>
+    <string name="only_on_wifi">Osvježavanje filmova</string>
+    <string name="only_on_wifi_key">only_on_wifi_key</string>
+
+    <string name="about_purpose_key">Svrha</string>
+    <string name="about_author_key">Autor</string>
+    <string name="about_music_credits_key">Muzika</string>
+
+    <string name="about_purpose">Projekt korišten na programu obrazovanja s polaznicima. Pokriva koncepte predstavljene tijekom.</string>
+    <string name="about_author">Daniel Bele</string>
+    <string name="about_music_credits">Mihael Bele</string>
+
+    <string name="search">Pretraga</string>
+    <string name="watched">Gledani</string>
+    <string name="notwatched">Propušteni</string>
+    <string name="all">Svi</string>
+
+    <string name="context_menu_delete">Želite li obrisati ovaj film?</string>
+    <string name="delete">Obriši</string>
+    <string name="cancel">Odustani</string>
+    <string name="personal_details">Osobni detalji</string>
+    <string name="insert_date">Molim vas unesite datum</string>
+    <string name="insert_impressions">Molim vas unesite dojmove</string>
+    <string name="done">Gotovo</string>
+    <string name="choose_cinema">Molim vas odaberite kino</string>
+
+    <string name="cannot_take_photos">Nažalost, vaš uređaj ne može slikati</string>
+
+    <string name="drawer_movies">Filmovi</string>
+    <string name="drawer_cinemas">Kina</string>
+    <string name="drawer_settings">Postavke</string>
+    <string name="drawer_about">O nama</string>
+
+
+</resources>

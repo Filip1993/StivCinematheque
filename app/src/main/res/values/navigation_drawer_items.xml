@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="nav_drawer_items">
-        <item>Movies list</item>
-        <item>Maps</item>
-        <item>Preferences</item>
-        <item>About</item>
+        <item>@string/drawer_movies</item>
+        <item>@string/drawer_cinemas</item>
+        <item>@string/drawer_settings</item>
+        <item>@string/drawer_about</item>
     </string-array>
 </resources>

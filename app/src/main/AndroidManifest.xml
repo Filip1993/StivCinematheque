@@ -58,13 +58,11 @@
 
         <activity
             android:name=".MoviePagerActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_movie_pager" >
+            android:configChanges="orientation|screenSize">
         </activity>
         <activity
             android:configChanges="orientation|screenSize"
-            android:name=".HostActivity"
-            android:label="@string/title_activity_host">
+            android:name=".HostActivity">
         </activity>
 
         <service

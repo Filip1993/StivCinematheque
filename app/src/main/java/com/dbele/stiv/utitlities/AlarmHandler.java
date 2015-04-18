@@ -14,7 +14,7 @@ public class AlarmHandler {
     public static void setRepeatingService(Context context, Calendar calendar, int serviceInterval, PendingIntent pendingIntent) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), serviceInterval, pendingIntent);
-        //alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), 1000*60*2, pendingIntent);
+        ///alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), 1000*60*2, pendingIntent);
     }
 
 }
