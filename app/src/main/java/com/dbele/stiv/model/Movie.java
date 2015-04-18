@@ -25,6 +25,16 @@ public class Movie implements Comparable<Movie> {
     private int watched;
     private int archived;
 
+    public String getCinemaName() {
+        return cinemaName;
+    }
+
+    public void setCinemaName(String cinemaName) {
+        this.cinemaName = cinemaName;
+    }
+
+    private String cinemaName;
+
     public int getWatched() {
         return watched;
     }

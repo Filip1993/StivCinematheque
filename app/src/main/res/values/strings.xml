@@ -50,6 +50,7 @@
     <string name="insert_date">Please insert date</string>
     <string name="insert_impressions">Please insert impressions</string>
     <string name="done">Done</string>
+    <string name="choose_cinema">Please choose cinema</string>
 
     <string name="cannot_take_photos">Unfortunately, your device cannot take photos</string>
 

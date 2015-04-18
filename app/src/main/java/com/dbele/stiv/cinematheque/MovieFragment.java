@@ -13,14 +13,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dbele.stiv.model.Movie;
+import com.dbele.stiv.persistence.CinemaRepository;
 import com.dbele.stiv.persistence.MovieDatabaseHelper;
 import com.dbele.stiv.persistence.MoviesContentProvider;
 import com.dbele.stiv.utitlities.AnimationHandler;
@@ -30,6 +34,7 @@ import com.dbele.stiv.utitlities.ImagesHandler;
 import com.dbele.stiv.utitlities.PreferencesHandler;
 import com.dbele.stiv.utitlities.Utility;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -54,11 +59,14 @@ public class MovieFragment extends Fragment {
     private ImageView ivTakePhoto;
     private ImageView ivTicket;
     private ImageView ivArrow;
+    private Spinner spCinemaNames;
 
     private LinearLayout llPersonalDetails;
 
     private Bitmap ticketBitmap;
+    private ArrayList<String> cinemaSpinnerNames;
 
+    private boolean spinnerAvoidSelection = true;
 
     public static MovieFragment createMovieFragment(Movie movie) {
         MovieFragment movieFragment = new MovieFragment();
@@ -109,6 +117,7 @@ public class MovieFragment extends Fragment {
         tvImpressions = (TextView) view.findViewById(R.id.tvImpressions);
         ivTakePhoto = (ImageView) view.findViewById(R.id.ivTakePhoto);
         ivTicket = (ImageView) view.findViewById(R.id.ivTicket);
+        spCinemaNames = (Spinner) view.findViewById(R.id.spCinemaNames);
     }
 
     private void setupListeners(View view) {
@@ -150,6 +159,34 @@ public class MovieFragment extends Fragment {
                 takePhoto();
             }
         });
+
+        spCinemaNames.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (spinnerAvoidSelection) {
+                    spinnerAvoidSelection = false;
+                    return;
+                }
+                if (position == 0) {
+                    setCinemaName(null);
+                } else {
+                    setCinemaName(cinemaSpinnerNames.get(position));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+
+    private void setCinemaName(String cinemaName) {
+        movie.setCinemaName(cinemaName);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MovieDatabaseHelper.COLUMN_CINEMANAME, movie.getCinemaName());
+        updateMovie(contentValues);
     }
 
     private void takePhoto() {
@@ -276,6 +313,19 @@ public class MovieFragment extends Fragment {
 
         llPersonalDetails.setVisibility(movie.getWatched() == 1 ? View.VISIBLE : View.INVISIBLE);
 
+        cinemaSpinnerNames = CinemaRepository.getCinemaNames(getActivity());
+        cinemaSpinnerNames.add(0, getResources().getString(R.string.choose_cinema));
+
+
+        ArrayAdapter<String> arrayAdapter =
+                new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, cinemaSpinnerNames);
+        arrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+        spCinemaNames.setAdapter(arrayAdapter);
+
+        if (movie.getCinemaName()!=null) {
+            spCinemaNames.setSelection(cinemaSpinnerNames.indexOf(movie.getCinemaName()));
+        }
+
     }
 
     private void showHidePersonalDetails() {
@@ -296,6 +346,8 @@ public class MovieFragment extends Fragment {
 
     }
 
+
+
     public void setMovieImpressions(String impressions) {
         movie.setImpressions(impressions);
 
@@ -309,5 +361,6 @@ public class MovieFragment extends Fragment {
     public String getMovieImpressions() {
         return movie.getImpressions();
     }
+
 
 }

@@ -20,4 +20,12 @@ public class CinemaRepository {
         }
         return cinemas;
     }
+
+    public static ArrayList<String> getCinemaNames(Context context) {
+        ArrayList<String> cinemaNames = new ArrayList<>();
+        for (Cinema cinema : getCinemas(context)) {
+            cinemaNames.add(cinema.getName());
+        }
+        return cinemaNames;
+    }
 }
