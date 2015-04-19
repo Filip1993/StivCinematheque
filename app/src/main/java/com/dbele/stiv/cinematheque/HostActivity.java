@@ -67,7 +67,7 @@ public class HostActivity extends Activity {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                displayView(position);
+                                displayView(position-1);
                             }
                         }, 300);
 
@@ -75,6 +75,10 @@ public class HostActivity extends Activity {
                 }
 
         );
+
+        ImageView imageView =  new ImageView(this);
+        imageView.setImageResource(R.drawable.navigation_drawer_header);
+        drawerList.addHeaderView(imageView, null, false);
 
         adapter = new NavDrawerListAdapter(getApplicationContext(),
                 navigationItems);
@@ -94,6 +98,7 @@ public class HostActivity extends Activity {
 
             public void onDrawerOpened(View view) {
                 super.onDrawerOpened(view);
+
             }
         };
 
@@ -112,8 +117,7 @@ public class HostActivity extends Activity {
     }
 
     private void displayView(int position) {
-
-        drawerList.setItemChecked(position, true);
+        drawerList.setItemChecked(position+1, true);
         drawerList.setSelection(position);
         setTitle(navMenuTitles[position]);
         drawerLayout.closeDrawer(drawerList);
