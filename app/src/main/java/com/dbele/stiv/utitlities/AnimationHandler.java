@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import com.dbele.stiv.cinematheque.R;
@@ -17,6 +18,21 @@ public class AnimationHandler {
         final Animation myRotation = AnimationUtils.loadAnimation(context, R.anim.rotation);
         view.startAnimation(myRotation);
     }
+
+
+    public static void startRotatingAnimation(float currentDegree, float nextDegree, int duration, View view) {
+        final RotateAnimation rotateAnimation = new RotateAnimation(
+                currentDegree,
+                nextDegree,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF,
+                0.5f);
+
+        rotateAnimation.setDuration(duration);
+        rotateAnimation.setFillAfter(true);
+        view.startAnimation(rotateAnimation);
+    }
+
 
     public static void startOutAnimation(Context context, View view) {
         Animation out = AnimationUtils.makeOutAnimation(context, true);
@@ -33,7 +49,6 @@ public class AnimationHandler {
     public static void startBlinkAnimation(Context context, View view) {
         view.startAnimation(AnimationUtils.loadAnimation(context, R.anim.blink));
     }
-
 
 
 }

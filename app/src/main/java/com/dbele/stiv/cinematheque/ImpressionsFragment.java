@@ -15,7 +15,7 @@ import android.widget.ImageView;
  */
 public class ImpressionsFragment extends DialogFragment {
 
-    private EditText tvImpressions;
+    private EditText etImpressions;
     private ImageView ivImpressionsDone;
     private MovieFragment movieFragment;
 
@@ -23,7 +23,6 @@ public class ImpressionsFragment extends DialogFragment {
     public static ImpressionsFragment newInstance(MovieFragment movieFragment) {
         ImpressionsFragment frag = new ImpressionsFragment();
         frag.movieFragment = movieFragment;
-        //frag.setStyle(DialogFragment.STYLE_, R.style.AppTheme_PopupMenu);
         return frag;
     }
 
@@ -31,19 +30,19 @@ public class ImpressionsFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_impressions, container);
-        tvImpressions = (EditText) view.findViewById(R.id.tvImpressions);
+        etImpressions = (EditText) view.findViewById(R.id.tvImpressions);
         if (movieFragment.getMovieImpressions()!=null) {
-            tvImpressions.setText(movieFragment.getMovieImpressions());
+            etImpressions.setText(movieFragment.getMovieImpressions());
         }
         getDialog().setTitle(R.string.insert_impressions);
-        tvImpressions.requestFocus();
+        etImpressions.requestFocus();
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         ivImpressionsDone = (ImageView) view.findViewById(R.id.ivImpressionsDone);
         ivImpressionsDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                movieFragment.setMovieImpressions(tvImpressions.getText().toString().length() > 0 ? tvImpressions.getText().toString() : null);
+                movieFragment.setMovieImpressions(etImpressions.getText().toString().length() > 0 ? etImpressions.getText().toString() : null);
                 getDialog().dismiss();
             }
         });

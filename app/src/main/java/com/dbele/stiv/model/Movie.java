@@ -24,6 +24,24 @@ public class Movie implements Comparable<Movie> {
     private String impressions;
     private int watched;
     private int archived;
+    private float degree;
+    private String rank;
+
+    public float getDegree() {
+        return degree;
+    }
+
+    public void setDegree(float degree) {
+        this.degree = degree;
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
 
     public String getCinemaName() {
         return cinemaName;

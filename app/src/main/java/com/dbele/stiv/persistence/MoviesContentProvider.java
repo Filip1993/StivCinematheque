@@ -34,6 +34,7 @@ public class MoviesContentProvider extends ContentProvider {
             MovieDatabaseHelper.COLUMN_DESCRIPTION, MovieDatabaseHelper.COLUMN_DIRECTOR, MovieDatabaseHelper.COLUMN_ACTORS,
             MovieDatabaseHelper.COLUMN_LENGTH, MovieDatabaseHelper.COLUMN_GENRE, MovieDatabaseHelper.COLUMN_PICTURE_PATH,
             MovieDatabaseHelper.COLUMN_CINEMANAME, MovieDatabaseHelper.COLUMN_TICKET_PATH,
+            MovieDatabaseHelper.COLUMN_RANK, MovieDatabaseHelper.COLUMN_DEGREE,
             MovieDatabaseHelper.COLUMN_IMPRESSIONS, MovieDatabaseHelper.COLUMN_WATCHED,
             MovieDatabaseHelper.COLUMN_ARCHIVED, MovieDatabaseHelper.COLUMN_WATCHED_DATE};
 

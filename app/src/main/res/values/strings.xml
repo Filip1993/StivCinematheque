@@ -43,15 +43,24 @@
     <string name="personal_details">Personal details</string>
     <string name="insert_date">Please insert date</string>
     <string name="insert_impressions">Please insert impressions</string>
+    <string name="set_rank">Please set rank</string>
+    <string name="set_rank_title">Set rank by clicking hand</string>
     <string name="done">Done</string>
     <string name="choose_cinema">Please choose cinema</string>
 
     <string name="cannot_take_photos">Unfortunately, your device cannot take photos</string>
+    <string name="cannot_use_accelerometer">Unfortunately, your device cannot use accelerometer</string>
 
     <string name="drawer_movies">Movies</string>
     <string name="drawer_cinemas">Cinemas</string>
     <string name="drawer_settings">Settings</string>
     <string name="drawer_about">About</string>
+
+    <string name="rank_bad">Bad</string>
+    <string name="rank_notbad">Not bad</string>
+    <string name="rank_good">Good</string>
+    <string name="rank_verygood">Very good</string>
+    <string name="rank_excellent">Excellent</string>
 
 
 </resources>

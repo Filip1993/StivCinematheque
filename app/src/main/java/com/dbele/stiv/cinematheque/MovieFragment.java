@@ -60,6 +60,9 @@ public class MovieFragment extends Fragment {
     private ImageView ivTicket;
     private ImageView ivArrow;
     private Spinner spCinemaNames;
+    private ImageView ivSetRank;
+    private ImageView ivRank;
+    private TextView tvRank;
 
     private LinearLayout llPersonalDetails;
 
@@ -118,6 +121,10 @@ public class MovieFragment extends Fragment {
         ivTakePhoto = (ImageView) view.findViewById(R.id.ivTakePhoto);
         ivTicket = (ImageView) view.findViewById(R.id.ivTicket);
         spCinemaNames = (Spinner) view.findViewById(R.id.spCinemaNames);
+        ivSetRank = (ImageView) view.findViewById(R.id.ivSetRank);
+        ivRank = (ImageView) view.findViewById(R.id.ivRank);
+        tvRank = (TextView) view.findViewById(R.id.tvRank);
+
     }
 
     private void setupListeners(View view) {
@@ -179,7 +186,30 @@ public class MovieFragment extends Fragment {
 
             }
         });
+        ivSetRank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRankSetter();
+            }
+        });
+        tvRank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRankSetter();
+            }
+        });
+        ivRank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRankSetter();
+            }
+        });
 
+    }
+
+    private void showRankSetter() {
+        SetRankFragment setRankFragment = SetRankFragment.newInstance(this);
+        setRankFragment.show(getFragmentManager(), null);
     }
 
     private void setCinemaName(String cinemaName) {
@@ -326,6 +356,17 @@ public class MovieFragment extends Fragment {
             spCinemaNames.setSelection(cinemaSpinnerNames.indexOf(movie.getCinemaName()));
         }
 
+
+        if (movie.getRank()!=null) {
+            tvRank.setText(movie.getRank());
+        }
+        if (movie.getDegree()!=0) {
+            ivRank.setImageResource(R.drawable.thumb);
+            AnimationHandler.startRotatingAnimation(0, movie.getDegree(), 250, ivRank);
+        }
+
+
+
     }
 
     private void showHidePersonalDetails() {
@@ -346,8 +387,6 @@ public class MovieFragment extends Fragment {
 
     }
 
-
-
     public void setMovieImpressions(String impressions) {
         movie.setImpressions(impressions);
 
@@ -358,8 +397,35 @@ public class MovieFragment extends Fragment {
         tvImpressions.setText(movie.getImpressions()!=null ? movie.getImpressions() : getResources().getString(R.string.insert_impressions, ""));
     }
 
+
     public String getMovieImpressions() {
         return movie.getImpressions();
+    }
+
+    public String getMovieRank() {
+        return movie.getRank();
+    }
+
+    public void setMovieRank(String rank) {
+        movie.setRank(rank);
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MovieDatabaseHelper.COLUMN_RANK, movie.getRank());
+        updateMovie(contentValues);
+
+        tvRank.setText(movie.getRank()!=null ? movie.getRank() : getResources().getString(R.string.set_rank, ""));
+    }
+
+    public void setMovieDegree(float degree) {
+        movie.setDegree(degree);
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MovieDatabaseHelper.COLUMN_DEGREE, movie.getDegree());
+        updateMovie(contentValues);
+
+        ivRank.setImageResource(R.drawable.thumb);
+        AnimationHandler.startRotatingAnimation(0, movie.getDegree(), 250, ivRank);
+
     }
 
 

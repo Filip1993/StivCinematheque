@@ -48,6 +48,8 @@ public class MovieRepository {
             contentValues.put(MovieDatabaseHelper.COLUMN_WATCHED_DATE, movie.getWatchedDate());
             contentValues.put(MovieDatabaseHelper.COLUMN_CINEMANAME, movie.getCinemaName());
             contentValues.put(MovieDatabaseHelper.COLUMN_TICKET_PATH, movie.getTicketPath());
+            contentValues.put(MovieDatabaseHelper.COLUMN_RANK, movie.getRank());
+            contentValues.put(MovieDatabaseHelper.COLUMN_DEGREE, movie.getDegree());
             contentValues.put(MovieDatabaseHelper.COLUMN_ARCHIVED, movie.getArchived());
             contentValues.put(MovieDatabaseHelper.COLUMN_WATCHED, movie.getWatched());
             contentValues.put(MovieDatabaseHelper.COLUMN_IMPRESSIONS, movie.getImpressions());

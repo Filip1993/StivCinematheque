@@ -157,16 +157,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageView
+                    android:id="@+id/ivSetRank"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/cinema_popcorn"
+                    android:src="@drawable/movie_rank"
                     android:clickable="true"/>
 
-                <Spinner
-                    android:id="@+id/spCinemaNames"
+                <TextView
+                    android:id="@+id/tvRank"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"/>
+                    android:padding="5dp"
+                    android:text="@string/set_rank"
+                    />
+                <ImageView
+                    android:id="@+id/ivRank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
                 android:paddingLeft="10dp"
@@ -189,6 +196,25 @@
                     android:padding="5dp"
                     android:text="@string/insert_date"
                     />
+            </LinearLayout>
+            <LinearLayout
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/cinema_popcorn"
+                    android:clickable="true"/>
+
+                <Spinner
+                    android:id="@+id/spCinemaNames"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"/>
+
             </LinearLayout>
             <LinearLayout
                 android:paddingLeft="10dp"

@@ -32,6 +32,8 @@ public class MovieDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PICTURE_PATH = "picture_path";
     public static final String COLUMN_TICKET_PATH = "ticket_path";
     public static final String COLUMN_IMPRESSIONS = "impressions";
+    public static final String COLUMN_RANK = "rank";
+    public static final String COLUMN_DEGREE = "degree";
     public static final String COLUMN_WATCHED = "watched";
     public static final String COLUMN_ARCHIVED = "archived";
     public static final String COLUMN_CINEMANAME = "cinemaname";
@@ -66,8 +68,10 @@ public class MovieDatabaseHelper extends SQLiteOpenHelper {
         sb.append(COLUMN_GENRE + " varchar(50), ");
         sb.append(COLUMN_WATCHED_DATE + " integer, ");
         sb.append(COLUMN_PICTURE_PATH + " varchar(100), ");
-        sb.append(COLUMN_CINEMANAME + " verchar(20), ");
+        sb.append(COLUMN_CINEMANAME + " varchar(20), ");
         sb.append(COLUMN_TICKET_PATH + " varchar(100), ");
+        sb.append(COLUMN_RANK + " varchar(10), ");
+        sb.append(COLUMN_DEGREE + " real, ");
         sb.append(COLUMN_WATCHED + " integer, ");
         sb.append(COLUMN_ARCHIVED + " integer, ");
         sb.append(COLUMN_IMPRESSIONS + " varchar(200) )");
