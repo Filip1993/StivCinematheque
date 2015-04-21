@@ -50,6 +50,7 @@
 
     <string name="cannot_take_photos">Unfortunately, your device cannot take photos</string>
     <string name="cannot_use_accelerometer">Unfortunately, your device cannot use accelerometer</string>
+    <string name="no_googleplayservices">Unfortunately, no google play services</string>
 
     <string name="drawer_movies">Movies</string>
     <string name="drawer_cinemas">Cinemas</string>

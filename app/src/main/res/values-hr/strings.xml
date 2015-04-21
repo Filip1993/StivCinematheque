@@ -49,6 +49,7 @@
 
     <string name="cannot_take_photos">Nažalost, vaš uređaj ne može slikati</string>
     <string name="cannot_use_accelerometer">Nažalost, vaš uređaj nema akcelerometar</string>
+    <string name="no_googleplayservices">Nažalost, nemate google play services</string>
 
 
     <string name="drawer_movies">Filmovi</string>

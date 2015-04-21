@@ -21,13 +21,11 @@ public class InitFragment extends Fragment {
 
     private View view;
     private MediaPlayer mediaPlayer;
-
     private boolean interrupted = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -55,24 +53,6 @@ public class InitFragment extends Fragment {
         RssService.setRepeatingService(getActivity());
     }
 
-    private void playIntroMusic() {
-        mediaPlayer = MediaPlayer.create(getActivity(), R.raw.looper);
-        mediaPlayer.setLooping(true);
-        mediaPlayer.start();
-    }
-
-    private void startAnimation() {
-        final ImageView myImage = (ImageView) view.findViewById(R.id.animatedImage);
-        AnimationHandler.startRotatingAnimation(getActivity(), myImage);
-    }
-
-
-
-    private void startHostActivity() {
-        Intent intent = new Intent(getActivity(), HostActivity.class);
-        startActivity(intent);
-    }
-
     @Override
     public void onPause() {
         super.onPause();
@@ -84,8 +64,23 @@ public class InitFragment extends Fragment {
         getActivity().finish();
     }
 
-    private class RssParserAsynchTask extends AsyncTask<Void, Void, Void> {
+    private void playIntroMusic() {
+        mediaPlayer = MediaPlayer.create(getActivity(), R.raw.looper);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
+    }
 
+    private void startAnimation() {
+        final ImageView myImage = (ImageView) view.findViewById(R.id.animatedImage);
+        AnimationHandler.startRotatingAnimation(getActivity(), myImage);
+    }
+
+    private void startHostActivity() {
+        Intent intent = new Intent(getActivity(), HostActivity.class);
+        startActivity(intent);
+    }
+
+    private class RssParserAsynchTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
             RssParser.upadateDatabaseFromRssFeed(getActivity());

@@ -2,7 +2,6 @@ package com.dbele.stiv.cinematheque;
 
 import android.app.ActionBar;
 import android.app.Fragment;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dbele.stiv.json.JSONParser;
 import com.dbele.stiv.model.Cinema;
 import com.dbele.stiv.persistence.CinemaRepository;
 import com.google.android.gms.common.ConnectionResult;
@@ -33,8 +31,6 @@ import java.util.Map;
 public class MapFragment extends Fragment {
 
     private MapView mapView;
-    private GoogleMap map;
-
     private ArrayList<Cinema> cinemas;
     private Map<Marker, Cinema> markerImagesMap;
 
@@ -48,40 +44,48 @@ public class MapFragment extends Fragment {
         initCinemas();
     }
 
-    private void initCinemas() {
-        cinemas = CinemaRepository.getCinemas(getActivity());
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_map, container, false);
-
         markerImagesMap = new HashMap<>();
-
         MapsInitializer.initialize(getActivity());
-
-        switch (GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity()) )
-        {
+        switch (GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity()) ) {
             case ConnectionResult.SUCCESS:
                 handleMap(savedInstanceState, v);
                 break;
-            case ConnectionResult.SERVICE_MISSING:
-                Toast.makeText(getActivity(), "SERVICE MISSING", Toast.LENGTH_SHORT).show();
-                break;
-            case ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED:
-                Toast.makeText(getActivity(), "UPDATE REQUIRED", Toast.LENGTH_SHORT).show();
-                break;
-            default: Toast.makeText(getActivity(), GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity()), Toast.LENGTH_SHORT).show();
+            default:
+                Toast.makeText(getActivity(), R.string.no_googleplayservices, Toast.LENGTH_SHORT).show();
         }
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        mapView.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
+    private void initCinemas() {
+        cinemas = CinemaRepository.getCinemas(getActivity());
     }
 
     private void handleMap(Bundle savedInstanceState, View v) {
         mapView = (MapView) v.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
-        if(mapView!=null)
-        {
-            map = mapView.getMap();
+        if(mapView!=null) {
+            GoogleMap map = mapView.getMap();
             map.getUiSettings().setMyLocationButtonEnabled(false);
             map.setMyLocationEnabled(true);
             for(Cinema cinema : cinemas) {
@@ -113,26 +117,9 @@ public class MapFragment extends Fragment {
                     return v;
                 }
             });
-
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(45.81, 15.96), 12);
             map.animateCamera(cameraUpdate);
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mapView.onResume();
-    }
-    @Override
-    public void onDestroy() {
-        mapView.onDestroy();
-        super.onDestroy();
-    }
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
     }
 
 }

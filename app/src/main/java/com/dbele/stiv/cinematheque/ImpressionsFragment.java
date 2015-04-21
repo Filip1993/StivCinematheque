@@ -6,17 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-/**
- * Created by dbele on 4/15/2015.
- */
 public class ImpressionsFragment extends DialogFragment {
 
     private EditText etImpressions;
-    private ImageView ivImpressionsDone;
     private MovieFragment movieFragment;
 
 
@@ -38,7 +33,7 @@ public class ImpressionsFragment extends DialogFragment {
         etImpressions.requestFocus();
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        ivImpressionsDone = (ImageView) view.findViewById(R.id.ivImpressionsDone);
+        ImageView ivImpressionsDone = (ImageView) view.findViewById(R.id.ivImpressionsDone);
         ivImpressionsDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
