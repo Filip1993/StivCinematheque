@@ -12,22 +12,14 @@ import com.dbele.stiv.utitlities.PreferencesHandler;
 
 public class BackgroundMusicService extends Service {
 
-    MediaPlayer player;
+    private MediaPlayer player;
     public IBinder onBind(Intent arg0) {
-
         return null;
     }
     @Override
     public void onCreate() {
         super.onCreate();
-        startPlayer();
-
-    }
-
-    private void startPlayer() {
-        player = MediaPlayer.create(this, R.raw.mex);
-        player.setLooping(true); // Set looping
-        player.setVolume(100, 100);
+        createPlayer();
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -36,14 +28,32 @@ public class BackgroundMusicService extends Service {
             BackgroundMusicHandler.setShouldPlay(true);
             startListeningThread();
         }
-        return 1;
+        return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        stopPlayer();
+    }
+
+    private void createPlayer() {
+        player = MediaPlayer.create(this, R.raw.mex);
+        player.setLooping(true); // Set looping
+        player.setVolume(100, 100);
+    }
+
+    private void stopPlayer() {
+        if (player!=null && player.isPlaying()) {
+            player.stop();
+            player.release();
+        }
+        BackgroundMusicHandler.setShouldPlay(false);
     }
 
     private void startListeningThread() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                //Log.e("Bacground service", "running");
                 boolean isInForeground = ActivityHandler.applicationIsInForeground(getApplicationContext());
                 boolean shouldPlay = BackgroundMusicHandler.getShouldPlay();
                 boolean continuePlaying = PreferencesHandler.checkIfToContinuePlaying(getApplicationContext());
@@ -73,27 +83,10 @@ public class BackgroundMusicService extends Service {
                     }
                     shouldPlay = BackgroundMusicHandler.getShouldPlay();
                     continuePlaying = PreferencesHandler.checkIfToContinuePlaying(getApplicationContext());
-//                    Log.e("isInForeground", isInForeground+"");
-//                    Log.e("isPlaying", shouldPlay+"");
-//                    Log.e("continuePlaying", continuePlaying+"");
                 }
-                //Log.e("Bacground service ", "stopping");
                 stopSelf();
             }
         }).start();
-    }
-
-
-    @Override
-    public void onDestroy() {
-        stopPlayer();
-    }
-
-    private void stopPlayer() {
-        if (player!=null && player.isPlaying())
-        player.stop();
-        player.release();
-        BackgroundMusicHandler.setShouldPlay(false);
     }
 
 }

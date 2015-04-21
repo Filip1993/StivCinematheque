@@ -9,9 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by dbele on 4/3/2015.
- */
 public class AboutFragment extends Fragment {
 
     @Override
@@ -28,9 +25,13 @@ public class AboutFragment extends Fragment {
         super.onConfigurationChanged(newConfig);
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         ViewGroup viewGroup = (ViewGroup) getView();
-        viewGroup.removeAllViewsInLayout();
-        View view = onCreateView(inflater, viewGroup, null);
-        viewGroup.addView(view);
+        if(viewGroup!=null) {
+            viewGroup.removeAllViewsInLayout();
+            View view = onCreateView(inflater, viewGroup, null);
+            if (view!=null) {
+                viewGroup.addView(view);
+            }
+        }
     }
 
 }

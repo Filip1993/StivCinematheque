@@ -3,21 +3,26 @@ package com.dbele.stiv.cinematheque;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 
-/**
- * Created by dbele on 4/15/2015.
- */
+
 public class DatePickerFragment extends DialogFragment {
+
     DatePickerDialog.OnDateSetListener ondateSet;
 
-    public static final String DATE_YEAR = "datepickerfragment.year";
-    public static final String DATE_MONTH = "datepickerfragment.month";
-    public static final String DATE_DAY = "datepickerfragment.day";
+    public static final String DATE_YEAR = "com.dbele.stiv.cinematheque.datepickerfragment.year";
+    public static final String DATE_MONTH = "com.dbele.stiv.cinematheque.datepickerfragment.month";
+    public static final String DATE_DAY = "com.dbele.stiv.cinematheque.datepickerfragment.day";
 
-    private int year, month, day;
+    private int year;
+    private int month;
+    private int day;
 
-    public DatePickerFragment() {
+    @Override
+    @NonNull
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        return new DatePickerDialog(getActivity(), ondateSet, year, month, day);
     }
 
     public void setCallBack(DatePickerDialog.OnDateSetListener ondate) {
@@ -30,10 +35,5 @@ public class DatePickerFragment extends DialogFragment {
         year = args.getInt(DATE_YEAR);
         month = args.getInt(DATE_MONTH);
         day = args.getInt(DATE_DAY);
-    }
-
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return new DatePickerDialog(getActivity(), ondateSet, year, month, day);
     }
 }

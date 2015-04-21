@@ -1,8 +1,6 @@
 package com.dbele.stiv.cinematheque;
 
-/**
- * Created by dbele on 3/30/2015.
- */
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Application;
@@ -26,9 +24,7 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
 
     public static Foreground get(){
         if (instance == null) {
-            throw new IllegalStateException(
-                    "Foreground is not initialised - invoke " +
-                            "at least once with parameterised init/get");
+            throw new IllegalStateException("Foreground is not initialised");
         }
         return instance;
     }
