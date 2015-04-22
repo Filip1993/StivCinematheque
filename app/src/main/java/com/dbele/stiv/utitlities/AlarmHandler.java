@@ -3,12 +3,8 @@ package com.dbele.stiv.utitlities;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
-
 import java.util.Calendar;
 
-/**
- * Created by dbele on 4/17/2015.
- */
 public class AlarmHandler {
 
     public static void setRepeatingService(Context context, Calendar calendar, int serviceInterval, PendingIntent pendingIntent) {
@@ -16,5 +12,4 @@ public class AlarmHandler {
         alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), serviceInterval, pendingIntent);
         ///alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), 1000*60*2, pendingIntent);
     }
-
 }

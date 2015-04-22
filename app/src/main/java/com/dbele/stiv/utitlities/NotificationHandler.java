@@ -1,21 +1,17 @@
 package com.dbele.stiv.utitlities;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
-
 import com.dbele.stiv.cinematheque.HostActivity;
 import com.dbele.stiv.cinematheque.R;
 
-/**
- * Created by dbele on 3/28/2015.
- */
 public class NotificationHandler {
 
     public static void sendMoviesInsertedNotification(Context context) {
@@ -30,7 +26,7 @@ public class NotificationHandler {
                 .setAutoCancel(true)
                 .setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" +  R.raw.notification))
                 .build();
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Activity.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notification);
     }
 }

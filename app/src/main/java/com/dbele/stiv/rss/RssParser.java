@@ -3,18 +3,15 @@ package com.dbele.stiv.rss;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
-
 import com.dbele.stiv.model.Movie;
 import com.dbele.stiv.persistence.MovieDatabaseHelper;
 import com.dbele.stiv.persistence.MovieRepository;
 import com.dbele.stiv.persistence.MoviesContentProvider;
 import com.dbele.stiv.utitlities.ImagesHandler;
 import com.dbele.stiv.utitlities.Utility;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -23,22 +20,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-
-/**
- * Created by dbele on 3/24/2015.
- */
 public class RssParser {
-
-    private Context context;
-    private ArrayList<Movie> movies = new ArrayList<>();
-
-    private Set<String> movieNames = new HashSet<>();
 
     private static final String RSS_URL = "http://www.blitz-cinestar.hr/rss.aspx";
     private static final String TAG = "RssParser";
-
     private static final String ITEM = "item";
-
     private static final String TITLE = "title";
     private static final String DESCRIPTION = "description";
     private static final String REDATELJ = "redatelj";
@@ -46,8 +32,9 @@ public class RssParser {
     private static final String TRAJANJE = "trajanje";
     private static final String ZANR = "zanr";
 
-    private XmlPullParserFactory xmlPullParserFactory;
-    public volatile boolean done = false;
+    private Context context;
+    private ArrayList<Movie> movies = new ArrayList<>();
+    private Set<String> movieNames = new HashSet<>();
 
     private static ArrayList<String> watched_archived_movies;
 
@@ -69,31 +56,17 @@ public class RssParser {
         while(cursor.moveToNext()) {
             watched_archived_movies.add(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_NAME)));
         }
+        cursor.close();
     }
 
     public void run() {
-
-
         InputStream stream = null;
         try {
-            URL url = new URL(RSS_URL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000);
-            conn.setConnectTimeout(15000);
-            conn.setRequestMethod("GET");
-            conn.setDoInput(true);
-
-            conn.connect();
+            HttpURLConnection conn = getHttpURLConnection();
             stream = conn.getInputStream();
-            xmlPullParserFactory = XmlPullParserFactory.newInstance();
-            XmlPullParser parser = xmlPullParserFactory.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(stream, null);
-
+            XmlPullParser parser = getXmlPullParser(stream);
             parse(parser);
-
             MovieRepository.getInstance(context).loadDatabaseAndNotifyIfNeeded(movies);
-
         } catch (IOException | XmlPullParserException e) {
             Log.d(TAG, "Parse not completed", e);
         } finally {
@@ -107,15 +80,32 @@ public class RssParser {
         }
     }
 
+    private HttpURLConnection getHttpURLConnection() throws IOException {
+        URL url = new URL(RSS_URL);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setReadTimeout(10000);
+        conn.setConnectTimeout(15000);
+        conn.setRequestMethod("GET");
+        conn.setDoInput(true);
+        conn.connect();
+        return conn;
+    }
+
+    private XmlPullParser getXmlPullParser(InputStream stream) throws XmlPullParserException {
+        XmlPullParserFactory xmlPullParserFactory = XmlPullParserFactory.newInstance();
+        XmlPullParser parser = xmlPullParserFactory.newPullParser();
+        parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+        parser.setInput(stream, null);
+        return parser;
+    }
+
     public void parse(XmlPullParser parser) {
         int event;
         String text=null;
-
         boolean itemsStarted = false;
         try {
             event = parser.getEventType();
             Movie movie = null;
-            int idMovieName = 0;
             while (event != XmlPullParser.END_DOCUMENT) {
                 String name=parser.getName();
 
@@ -123,9 +113,7 @@ public class RssParser {
                     case XmlPullParser.START_TAG:
                         if(ITEM.equals(name)) {
                             movie = new Movie();
-                            //avoiding duplicate names for movies
                             itemsStarted = true;
-                            //movie.setWatched(idMovieName%2);
                         }
                         break;
                     case XmlPullParser.TEXT:
@@ -134,10 +122,10 @@ public class RssParser {
                         }
                         break;
                     case XmlPullParser.END_TAG:
-                        if(itemsStarted) {
+                        if(itemsStarted && movie!=null) {
                             switch (name) {
                                 case(TITLE):
-                                    if(text.length() > 39) {
+                                    if(text!=null && text.length() > 39) {
                                         text = text.substring(0, 36) + "...";
                                     }
                                     movie.setName(text);
@@ -149,7 +137,6 @@ public class RssParser {
                                     movie.setDescription(Utility.extractDescription(text));
                                     if (movies.contains(movie)) {
                                         String fileUrl = Utility.extractImagePathFromDescription(text);
-                                        //Log.v("RSSParser", fileUrl);
                                             String picturePath = ImagesHandler.downloadImageAndStore(context, fileUrl, Movie.MOVIE_JPG_PREFIX + (movie.getName().hashCode()));
                                         if (picturePath != null) {
                                             movie.setPicturePath(picturePath);
@@ -173,17 +160,12 @@ public class RssParser {
                                     }
                                     break;
                             }
-
                         }
                 }
                 event = parser.next();
             }
-            done = false;
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            done = true;
         }
     }
-
 }

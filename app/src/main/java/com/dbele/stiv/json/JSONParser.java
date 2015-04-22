@@ -2,23 +2,15 @@ package com.dbele.stiv.json;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.dbele.stiv.model.Cinema;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONTokener;
-
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-/**
- * Created by dbele on 4/7/2015.
- */
 public class JSONParser {
 
     private static final String FILENAME = "cinemas_json.txt";
@@ -30,7 +22,6 @@ public class JSONParser {
         try {
             reader = new BufferedReader(
                     new InputStreamReader(context.getAssets().open(FILENAME), ENCODING));
-
             StringBuilder jsonString = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {

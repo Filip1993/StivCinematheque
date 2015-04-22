@@ -1,20 +1,9 @@
 package com.dbele.stiv.persistence;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.dbele.stiv.model.Movie;
-
-import java.util.ArrayList;
-import java.util.Date;
-
-/**
- * Created by dbele on 3/27/2015.
- */
 public class MovieDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "movies.db";
@@ -87,12 +76,9 @@ public class MovieDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_STMT);
     }
 
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(DROP_TABLE_STMT);
         onCreate(db);
     }
-
-
 }

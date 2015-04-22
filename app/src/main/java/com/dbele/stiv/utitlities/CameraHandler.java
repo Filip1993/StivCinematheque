@@ -5,12 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.provider.MediaStore;
-
 import java.util.List;
 
-/**
- * Created by dbele on 4/16/2015.
- */
 public class CameraHandler {
 
     public static boolean deviceCanUseCamera(Context context) {
@@ -20,7 +16,6 @@ public class CameraHandler {
     private static boolean hasCamera(Context context){
         return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
     }
-
 
     private static boolean hasCameraApplication(Context context){
         final PackageManager packageManager = context.getPackageManager();

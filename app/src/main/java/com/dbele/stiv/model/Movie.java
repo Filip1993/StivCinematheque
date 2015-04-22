@@ -1,11 +1,7 @@
 package com.dbele.stiv.model;
 
+import android.support.annotation.NonNull;
 
-import java.util.Date;
-
-/**
- * Created by dbele on 3/23/2015.
- */
 public class Movie implements Comparable<Movie> {
 
     public static final String MOVIE_JPG_PREFIX = "movie_";
@@ -158,7 +154,8 @@ public class Movie implements Comparable<Movie> {
     }
 
     @Override
-    public int compareTo(Movie movie) {
+
+    public int compareTo(@NonNull Movie movie) {
         return this.getName().compareTo(movie.getName());
     }
 }

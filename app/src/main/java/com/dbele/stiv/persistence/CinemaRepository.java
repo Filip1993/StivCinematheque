@@ -1,15 +1,10 @@
 package com.dbele.stiv.persistence;
 
 import android.content.Context;
-
 import com.dbele.stiv.json.JSONParser;
 import com.dbele.stiv.model.Cinema;
-
 import java.util.ArrayList;
 
-/**
- * Created by dbele on 4/7/2015.
- */
 public class CinemaRepository {
 
     private static ArrayList<Cinema> cinemas;

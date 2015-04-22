@@ -1,17 +1,13 @@
 package com.dbele.stiv.model;
 
 import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Created by dbele on 4/7/2015.
- */
 public class Cinema {
+
     private String name;
     private String address;
-    private String city;
     private String properties;
     private double lat;
     private double lng;
@@ -22,7 +18,6 @@ public class Cinema {
         try {
             cinema.name = jsonObject.getString("name");
             cinema.address = jsonObject.getString("address");
-            cinema.city = jsonObject.getString("city");
             cinema.properties = jsonObject.getString("properties");
             cinema.properties = jsonObject.getString("properties");
             cinema.lat = jsonObject.getDouble("lat");
@@ -48,10 +43,6 @@ public class Cinema {
 
     public String getAddress() {
         return address;
-    }
-
-    public String getCity() {
-        return city;
     }
 
     public String getProperties() {

@@ -2,27 +2,19 @@ package com.dbele.stiv.persistence;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.util.Log;
-
 import com.dbele.stiv.model.Movie;
 import com.dbele.stiv.utitlities.NotificationHandler;
 import com.dbele.stiv.utitlities.PreferencesHandler;
-
 import java.util.ArrayList;
 
-/**
- * Created by dbele on 3/24/2015.
- */
 public class MovieRepository {
 
     private Context context;
     private static MovieRepository movieRepositoryInstance;
 
-
     public MovieRepository(Context context) {
         this.context = context;
     }
-
 
     public static MovieRepository getInstance(Context context) {
         if (movieRepositoryInstance == null) {
@@ -31,11 +23,8 @@ public class MovieRepository {
         return movieRepositoryInstance;
     }
 
-
     public void loadDatabaseAndNotifyIfNeeded(ArrayList<Movie> movies) {
-
         context.getContentResolver().delete(MoviesContentProvider.CONTENT_URI, MovieDatabaseHelper.DELETE_NOT_WATCHED_NOT_ARCHIVED, null);
-
         for(Movie movie : movies) {
             ContentValues contentValues = new ContentValues();
             contentValues.put(MovieDatabaseHelper.COLUMN_NAME, movie.getName());
@@ -53,14 +42,9 @@ public class MovieRepository {
             contentValues.put(MovieDatabaseHelper.COLUMN_ARCHIVED, movie.getArchived());
             contentValues.put(MovieDatabaseHelper.COLUMN_WATCHED, movie.getWatched());
             contentValues.put(MovieDatabaseHelper.COLUMN_IMPRESSIONS, movie.getImpressions());
-
             context.getContentResolver().insert(MoviesContentProvider.CONTENT_URI, contentValues);
         }
-
-        Log.v("MovieRepository", "movies inserted");
-
         handleDBLoadedStateAndNotifyIfNeeded();
-
     }
 
     private void handleDBLoadedStateAndNotifyIfNeeded() {
@@ -70,5 +54,4 @@ public class MovieRepository {
             NotificationHandler.sendMoviesInsertedNotification(context);
         }
     }
-
 }
