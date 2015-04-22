@@ -11,31 +11,24 @@
     <string name="rss_parsed_content_title">Filmovi su osviježeni</string>
     <string name="rss_parsed_content_text">Molim vas provjerite filmove</string>
     <string name="unable_to_load_data_on_init">Molim vas da se spojite na mrežu kako bi omogućili izmjenu podataka</string>
-
     <string name="drawer_open">Navigacijski Meni Otvoren</string>
     <string name="drawer_close">Navigacijski Meni Zatvoren</string>
-
     <string name="summary_background_music_preference">Želite li pozadinsku muziku?</string>
     <string name="background_music">Pozadinska muzika</string>
     <string name="background_music_key">background_music_key</string>
-
     <string name="summary_only_on_wifi_preference">Želite li osvježavanje filmova samo kada ste na WIFI mreži?</string>
     <string name="only_on_wifi">Osvježavanje filmova</string>
     <string name="only_on_wifi_key">only_on_wifi_key</string>
-
     <string name="about_purpose_key">Svrha</string>
     <string name="about_author_key">Autor</string>
     <string name="about_music_credits_key">Muzika</string>
-
     <string name="about_purpose">Projekt korišten na programu obrazovanja s polaznicima. Pokriva koncepte predstavljene tijekom.</string>
     <string name="about_author">Daniel Bele</string>
     <string name="about_music_credits">Mihael Bele</string>
-
     <string name="search">Pretraga</string>
     <string name="watched">Gledani</string>
     <string name="notwatched">Propušteni</string>
     <string name="all">Svi</string>
-
     <string name="context_menu_delete">Želite li obrisati ovaj film?</string>
     <string name="delete">Obriši</string>
     <string name="cancel">Odustani</string>
@@ -46,21 +39,16 @@
     <string name="insert_impressions">Molim vas unesite dojmove</string>
     <string name="done">Gotovo</string>
     <string name="choose_cinema">Molim vas odaberite kino</string>
-
     <string name="cannot_take_photos">Nažalost, vaš uređaj ne može slikati</string>
     <string name="cannot_use_accelerometer">Nažalost, vaš uređaj nema akcelerometar</string>
     <string name="no_googleplayservices">Nažalost, nemate google play services</string>
-
-
     <string name="drawer_movies">Filmovi</string>
     <string name="drawer_cinemas">Kina</string>
     <string name="drawer_settings">Postavke</string>
     <string name="drawer_about">O nama</string>
-
     <string name="rank_bad">Loš</string>
     <string name="rank_notbad">Nije loš</string>
     <string name="rank_good">Dobar</string>
     <string name="rank_verygood">Vrlo dobar</string>
     <string name="rank_excellent">Odličan</string>
-
 </resources>

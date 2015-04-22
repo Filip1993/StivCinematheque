@@ -4,23 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="com.dbele.stiv.cinematheque.MovieFragment">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <ImageView
                 android:id="@+id/ivMoviePic"
                 android:layout_width="@dimen/movie_jpg_width"
                 android:layout_height="@dimen/movie_jpg_height"
                 android:adjustViewBounds="true"
                 android:padding="5dp"/>
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/movie_jpg_height"
@@ -29,7 +25,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="39dp">
-
                     <TextView
                         android:layout_gravity="center_vertical"
                         android:id="@+id/tvWatched"
@@ -37,7 +32,6 @@
                         android:layout_width="@dimen/movie_left_column"
                         android:layout_height="wrap_content"
                         android:text="@string/watched_movie"/>
-
                     <CheckBox
                         android:layout_gravity="center_vertical"
                         android:id="@+id/cbWatched"
@@ -46,7 +40,6 @@
                         android:layout_height="wrap_content"
                         android:scaleX="1.18"
                         android:scaleY="1.18"/>
-
                     <ImageView
                         android:id="@+id/ivArrow"
                         android:layout_width="wrap_content"
@@ -56,69 +49,56 @@
                         android:src="@drawable/arrow_down"
                         android:visibility="invisible"/>
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
                     <TextView
                         style="@style/Titles"
                         android:layout_width="@dimen/movie_left_column"
                         android:layout_height="wrap_content"
                         android:text="@string/name" />
-
                     <TextView
                         android:id="@+id/tvMovieName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp" />
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
                     <TextView
                         style="@style/Titles"
                         android:layout_width="@dimen/movie_left_column"
                         android:layout_height="wrap_content"
                         android:text="@string/genre" />
-
                     <TextView
                         android:id="@+id/tvMovieGenre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp" />
-
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
                     <TextView
                         style="@style/Titles"
                         android:layout_width="@dimen/movie_left_column"
                         android:layout_height="wrap_content"
                         android:text="@string/director" />
-
                     <TextView
                         android:id="@+id/tvMovieDirector"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp" />
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
                     <TextView
                         style="@style/Titles"
                         android:layout_width="@dimen/movie_left_column"
                         android:layout_height="wrap_content"
                         android:text="@string/actors" />
-
                     <TextView
                         android:id="@+id/tvMovieActors"
                         android:layout_width="wrap_content"
@@ -127,20 +107,17 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
         <TextView
             style="@style/Titles"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
             android:text="@string/description" />
-
         <TextView
             android:id="@+id/tvMovieDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp" />
-
         <LinearLayout
             android:id="@+id/llPersonalDetails"
             android:layout_width="match_parent"
@@ -162,14 +139,12 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/movie_rank"
                     android:clickable="true"/>
-
                 <TextView
                     android:id="@+id/tvRank"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="@string/set_rank"
-                    />
+                    android:text="@string/set_rank"/>
                 <ImageView
                     android:id="@+id/ivRank"
                     android:layout_width="wrap_content"
@@ -181,21 +156,18 @@
                 android:paddingBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <ImageView
                     android:id="@+id/ivWatchedDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/watched_date"
                     android:clickable="true"/>
-
                 <TextView
                     android:id="@+id/tvDateWatched"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="@string/insert_date"
-                    />
+                    android:text="@string/insert_date"/>
             </LinearLayout>
             <LinearLayout
                 android:paddingLeft="10dp"
@@ -208,13 +180,11 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/cinema_popcorn"
                     android:clickable="true"/>
-
                 <Spinner
                     android:id="@+id/spCinemaNames"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"/>
-
             </LinearLayout>
             <LinearLayout
                 android:paddingLeft="10dp"
@@ -222,21 +192,18 @@
                 android:paddingBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <ImageView
                     android:id="@+id/ivImpressions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/impressions"
                     android:clickable="true"/>
-
                 <TextView
                     android:id="@+id/tvImpressions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="@string/insert_impressions"
-                    />
+                    android:text="@string/insert_impressions"/>
             </LinearLayout>
             <LinearLayout
                 android:paddingLeft="10dp"
@@ -244,31 +211,26 @@
                 android:paddingBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <ImageView
                     android:id="@+id/ivTakePhoto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/take_photo"
                     android:clickable="true"/>
-
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp">
-
                     <ImageView
                         android:id="@+id/ivTicket"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="1dp"
                         android:src="@drawable/no_ticket"/>
-
                     <ImageView
                         android:src="@drawable/ticket_frame"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
-
                 </FrameLayout>
             </LinearLayout>
         </LinearLayout>
