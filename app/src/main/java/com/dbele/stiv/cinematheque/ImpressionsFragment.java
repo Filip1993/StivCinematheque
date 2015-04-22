@@ -14,7 +14,6 @@ public class ImpressionsFragment extends DialogFragment {
     private EditText etImpressions;
     private MovieFragment movieFragment;
 
-
     public static ImpressionsFragment newInstance(MovieFragment movieFragment) {
         ImpressionsFragment frag = new ImpressionsFragment();
         frag.movieFragment = movieFragment;
@@ -41,8 +40,7 @@ public class ImpressionsFragment extends DialogFragment {
                 getDialog().dismiss();
             }
         });
-
-        return view;
+       return view;
     }
 
 }

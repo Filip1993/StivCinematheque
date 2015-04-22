@@ -8,14 +8,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.dbele.stiv.model.NavigationItem;
-
 import java.util.ArrayList;
 
-/**
- * Created by dbele on 4/3/2015.
- */
 public class NavDrawerListAdapter extends BaseAdapter {
 
     private Context context;
@@ -48,15 +43,10 @@ public class NavDrawerListAdapter extends BaseAdapter {
                     context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.drawer_list_item, null);
         }
-
         ImageView imgIcon = (ImageView) convertView.findViewById(R.id.icon);
         TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
-
         imgIcon.setImageResource(navDrawerItems.get(position).getIcon());
         txtTitle.setText(navDrawerItems.get(position).getTitle());
-
-
         return convertView;
     }
-
 }

@@ -8,6 +8,4 @@ public class Application extends android.app.Application{
             Foreground.init(this);
         }
     }
-
-
 }

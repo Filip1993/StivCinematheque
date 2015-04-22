@@ -1,6 +1,5 @@
 package com.dbele.stiv.cinematheque;
 
-import android.app.ActionBar;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.ContentValues;
@@ -24,67 +23,29 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.dbele.stiv.persistence.MovieDatabaseHelper;
 import com.dbele.stiv.persistence.MoviesContentProvider;
 
 public class MoviesListFragment extends ListFragment {
 
+    private static final int LOADER_ID = 1;
     private SearchView searchView;
     private MoviesCursorAdapter adapter;
     private LoaderManager loaderManager;
-
     private String selection = null;
     private String[] selectionArgs = null;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().setTitle(getResources().getString(R.string.movie_list_fragment_title));
-
-        ActionBar actionBar = getActivity().getActionBar();
-
-        loaderManager = getLoaderManager();
-
         setHasOptionsMenu(Boolean.TRUE);
-
         selection = MovieDatabaseHelper.SELECTION_ALL_BUT_ARCHIVED;
-
         adapter = new MoviesCursorAdapter(getActivity(), null);
         setListAdapter(adapter);
-
-
-        loaderManager.initLoader(1, null, loaderCallbacks);
-
+        loaderManager = getLoaderManager();
+        loaderManager.initLoader(LOADER_ID, null, loaderCallbacks);
     }
-
-    private LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks = new LoaderManager.LoaderCallbacks<Cursor>() {
-        @Override
-        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-            return new CursorLoader(getActivity(), MoviesContentProvider.CONTENT_URI,
-                    MoviesContentProvider.MOVIES_LIST_PROJECTION,
-                    selection,
-                    selectionArgs, MovieDatabaseHelper.COLUMN_NAME);
-        }
-
-        @Override
-        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-            data.setNotificationUri(getActivity().getContentResolver(), MoviesContentProvider.CONTENT_URI);
-            if(adapter!=null && data!=null) {
-                adapter.swapCursor(data);
-            }
-        }
-
-        @Override
-        public void onLoaderReset(Loader<Cursor> loader) {
-            if(adapter!=null) {
-                adapter.swapCursor(null);
-            }
-        }
-    };
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -97,77 +58,6 @@ public class MoviesListFragment extends ListFragment {
         inflater.inflate(R.menu.menu_list_movies, menu);
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         setupSearchView();
-
-    }
-
-    private void setupSearchView() {
-        searchView.setIconifiedByDefault(true);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                selection = MovieDatabaseHelper.SELECTION_NAME;
-                selectionArgs = new String[] {newText + "%"};
-                loaderManager.restartLoader(1, null, loaderCallbacks);
-                return true;
-            }
-        });
-
-
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        Intent intent = new Intent(getActivity(), MoviePagerActivity.class);
-        intent.putExtra(MovieFragment.EXTRA_MOVIE_ID, id);
-        startActivity(intent);
-    }
-
-
-
-    private static class MoviesCursorAdapter extends CursorAdapter {
-        public MoviesCursorAdapter(Context context, Cursor cursor) {
-            super(context, cursor, 0);
-        }
-        @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            return inflater.inflate(R.layout.movies_list_item, parent, false);
-        }
-        @Override
-        public void bindView(View view, Context context, Cursor cursor) {
-
-            TextView tvMovieListName = (TextView) view.findViewById(R.id.tvMovieListName);
-            tvMovieListName.setText(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_NAME)));
-
-            boolean watched = cursor.getInt(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_WATCHED))==1;
-            ImageView ivWatched = (ImageView) view.findViewById(R.id.ivWatched);
-            if(watched) {
-                ivWatched.setImageResource(R.drawable.watched);
-            } else {
-                ivWatched.setImageResource(android.R.color.transparent);
-            }
-
-
-            ImageView ivMovieListPic = (ImageView) view.findViewById(R.id.ivMovieListPic);
-            String picturePath = cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_PICTURE_PATH));
-            if (picturePath != null) {
-                Uri pictureUri = Uri.parse(picturePath);
-                ivMovieListPic.setImageURI(pictureUri);
-            } else {
-                ivMovieListPic.setImageResource(R.drawable.logo);
-            }
-        }
     }
 
     @Override
@@ -189,8 +79,32 @@ public class MoviesListFragment extends ListFragment {
                 loaderManager.restartLoader(1, null, loaderCallbacks);
                 break;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Intent intent = new Intent(getActivity(), MoviePagerActivity.class);
+        intent.putExtra(MovieFragment.EXTRA_MOVIE_ID, id);
+        startActivity(intent);
+    }
+
+    private void setupSearchView() {
+        searchView.setIconifiedByDefault(true);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                selection = MovieDatabaseHelper.SELECTION_NAME;
+                selectionArgs = new String[] {newText + "%"};
+                loaderManager.restartLoader(1, null, loaderCallbacks);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -214,4 +128,61 @@ public class MoviesListFragment extends ListFragment {
         }
         return true;
     }
+
+    private LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks = new LoaderManager.LoaderCallbacks<Cursor>() {
+        @Override
+        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            return new CursorLoader(getActivity(), MoviesContentProvider.CONTENT_URI,
+                    MoviesContentProvider.MOVIES_LIST_PROJECTION,
+                    selection,
+                    selectionArgs, MovieDatabaseHelper.COLUMN_NAME);
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            data.setNotificationUri(getActivity().getContentResolver(), MoviesContentProvider.CONTENT_URI);
+            if(adapter!=null) {
+                adapter.swapCursor(data);
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Cursor> loader) {
+            if(adapter!=null) {
+                adapter.swapCursor(null);
+            }
+        }
+    };
+
+    private static class MoviesCursorAdapter extends CursorAdapter {
+        public MoviesCursorAdapter(Context context, Cursor cursor) {
+            super(context, cursor, 0);
+        }
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            return inflater.inflate(R.layout.movies_list_item, parent, false);
+        }
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+            TextView tvMovieListName = (TextView) view.findViewById(R.id.tvMovieListName);
+            tvMovieListName.setText(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_NAME)));
+            boolean watched = cursor.getInt(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_WATCHED))==1;
+            ImageView ivWatched = (ImageView) view.findViewById(R.id.ivWatched);
+            if(watched) {
+                ivWatched.setImageResource(R.drawable.watched);
+            } else {
+                ivWatched.setImageResource(android.R.color.transparent);
+            }
+            ImageView ivMovieListPic = (ImageView) view.findViewById(R.id.ivMovieListPic);
+            String picturePath = cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_PICTURE_PATH));
+            if (picturePath != null) {
+                Uri pictureUri = Uri.parse(picturePath);
+                ivMovieListPic.setImageURI(pictureUri);
+            } else {
+                ivMovieListPic.setImageResource(R.drawable.logo);
+            }
+        }
+    }
+
 }

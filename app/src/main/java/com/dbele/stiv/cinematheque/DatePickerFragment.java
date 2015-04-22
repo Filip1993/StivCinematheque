@@ -9,12 +9,11 @@ import android.support.v4.app.DialogFragment;
 
 public class DatePickerFragment extends DialogFragment {
 
-    DatePickerDialog.OnDateSetListener ondateSet;
-
     public static final String DATE_YEAR = "com.dbele.stiv.cinematheque.datepickerfragment.year";
     public static final String DATE_MONTH = "com.dbele.stiv.cinematheque.datepickerfragment.month";
     public static final String DATE_DAY = "com.dbele.stiv.cinematheque.datepickerfragment.day";
 
+    DatePickerDialog.OnDateSetListener ondateSet;
     private int year;
     private int month;
     private int day;

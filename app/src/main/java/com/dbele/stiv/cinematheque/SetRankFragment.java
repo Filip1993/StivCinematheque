@@ -8,38 +8,26 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.dbele.stiv.utitlities.AnimationHandler;
 
 
-/**
- * Created by dbele on 4/15/2015.
- */
 public class SetRankFragment extends DialogFragment implements SensorEventListener {
 
     private TextView tvRankDone;
     private ImageView ivRankDone;
     private MovieFragment movieFragment;
-
     private SensorManager sensorManager;
     private Sensor accelerometer;
-
     private float lastY;
-    private float deltaY = 0;
     float currentDegree = 1;
-
     private String[] ranks;
-    private String rank;
-
     private boolean landscape = false;
 
     public static SetRankFragment newInstance(MovieFragment movieFragment) {
@@ -53,12 +41,9 @@ public class SetRankFragment extends DialogFragment implements SensorEventListen
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_set_rank, container);
         getDialog().setTitle(R.string.set_rank_title);
-
         ivRankDone = (ImageView) view.findViewById(R.id.ivRankDone);
-
         ranks = getResources().getStringArray(R.array.ranks);
-
-        sensorManager = (SensorManager) getActivity().getSystemService(getActivity().SENSOR_SERVICE);
+        sensorManager = (SensorManager) getActivity().getSystemService(FragmentActivity.SENSOR_SERVICE);
         if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
             accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
@@ -69,8 +54,6 @@ public class SetRankFragment extends DialogFragment implements SensorEventListen
         if (movieFragment.getMovieRank()!=null) {
             tvRankDone.setText(movieFragment.getMovieRank());
         }
-
-
         ivRankDone = (ImageView) view.findViewById(R.id.ivRankDone);
         ivRankDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,8 +63,6 @@ public class SetRankFragment extends DialogFragment implements SensorEventListen
                 getDialog().dismiss();
             }
         });
-
-
         return view;
     }
 
@@ -98,7 +79,6 @@ public class SetRankFragment extends DialogFragment implements SensorEventListen
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
             landscape = false;
         }
-
     }
 
     @Override
@@ -110,12 +90,11 @@ public class SetRankFragment extends DialogFragment implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-
         float newY = event.values[1];
         if (!landscape) {
             newY = - event.values[0];
         }
-        deltaY = lastY + newY;
+        float deltaY = lastY + newY;
         lastY = newY;
 
         float nextDegree = currentDegree + deltaY;
@@ -125,19 +104,14 @@ public class SetRankFragment extends DialogFragment implements SensorEventListen
         } else if (nextDegree < 1) {
             nextDegree = 1;
         }
-
         AnimationHandler.startRotatingAnimation(currentDegree, nextDegree, 250, ivRankDone);
-
         currentDegree = nextDegree;
-
         int rankIndex = (int)currentDegree/40;
-        rank = ranks[rankIndex];
+        String rank = ranks[rankIndex];
         tvRankDone.setText(rank);
-
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
+   }
 }

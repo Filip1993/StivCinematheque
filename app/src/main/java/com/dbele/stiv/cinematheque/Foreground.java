@@ -11,7 +11,6 @@ import android.os.Bundle;
 public class Foreground implements Application.ActivityLifecycleCallbacks {
 
     private static Foreground instance;
-
     private boolean foreground = false;
 
     public static Foreground init(Application application){
@@ -33,11 +32,9 @@ public class Foreground implements Application.ActivityLifecycleCallbacks {
         return foreground;
     }
 
-
     @Override
     public void onActivityResumed(Activity activity) {
         foreground = true;
-
     }
 
     @Override

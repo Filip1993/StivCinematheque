@@ -14,7 +14,7 @@ public class AboutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ActionBar actionBar = getActivity().getActionBar();
-        if(actionBar!=null) {
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(Boolean.TRUE);
         }
         return inflater.inflate(R.layout.fragment_about, container, false);
@@ -25,13 +25,12 @@ public class AboutFragment extends Fragment {
         super.onConfigurationChanged(newConfig);
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         ViewGroup viewGroup = (ViewGroup) getView();
-        if(viewGroup!=null) {
+        if (viewGroup != null) {
             viewGroup.removeAllViewsInLayout();
             View view = onCreateView(inflater, viewGroup, null);
-            if (view!=null) {
+            if (view != null) {
                 viewGroup.addView(view);
             }
         }
     }
-
 }

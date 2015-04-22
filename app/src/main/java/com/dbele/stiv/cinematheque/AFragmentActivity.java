@@ -13,14 +13,12 @@ public abstract class AFragmentActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_host);
-
         handleFragment();
     }
 
     private void handleFragment() {
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.container);
-
         if(fragment==null) {
             fragment = createFragment();
             fm.beginTransaction()

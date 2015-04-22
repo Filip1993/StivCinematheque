@@ -13,6 +13,7 @@ import com.dbele.stiv.utitlities.PreferencesHandler;
 public class BackgroundMusicService extends Service {
 
     private MediaPlayer player;
+
     public IBinder onBind(Intent arg0) {
         return null;
     }
@@ -88,5 +89,4 @@ public class BackgroundMusicService extends Service {
             }
         }).start();
     }
-
 }

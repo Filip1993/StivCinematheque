@@ -121,5 +121,4 @@ public class MapFragment extends Fragment {
             map.animateCamera(cameraUpdate);
         }
     }
-
 }

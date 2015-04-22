@@ -94,6 +94,4 @@ public class InitFragment extends Fragment {
             }
         }
     }
-
-
 }
