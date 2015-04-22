@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.dbele.stiv.model.Movie;
 import com.dbele.stiv.persistence.CinemaRepository;
 import com.dbele.stiv.persistence.MovieDatabaseHelper;
@@ -33,7 +33,6 @@ import com.dbele.stiv.utitlities.CameraHandler;
 import com.dbele.stiv.utitlities.ImagesHandler;
 import com.dbele.stiv.utitlities.PreferencesHandler;
 import com.dbele.stiv.utitlities.Utility;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -63,12 +62,8 @@ public class MovieFragment extends Fragment {
     private ImageView ivSetRank;
     private ImageView ivRank;
     private TextView tvRank;
-
     private LinearLayout llPersonalDetails;
-
-    private Bitmap ticketBitmap;
     private ArrayList<String> cinemaSpinnerNames;
-
     private boolean spinnerAvoidSelection = true;
 
     public static MovieFragment createMovieFragment(Movie movie) {
@@ -82,9 +77,13 @@ public class MovieFragment extends Fragment {
         super.onConfigurationChanged(newConfig);
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         ViewGroup viewGroup = (ViewGroup) getView();
-        viewGroup.removeAllViewsInLayout();
-        View view = onCreateView(inflater, viewGroup, null);
-        viewGroup.addView(view);
+        if (viewGroup!=null) {
+            viewGroup.removeAllViewsInLayout();
+            View view = onCreateView(inflater, viewGroup, null);
+            if (view!=null) {
+                viewGroup.addView(view);
+            }
+        }
     }
 
     @Override
@@ -96,9 +95,20 @@ public class MovieFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
         fetchViews(view);
-        fillData(view);
-        setupListeners(view);
+        fillData();
+        setupListeners();
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == TAKE_PHOTO && resultCode == FragmentActivity.RESULT_OK && data != null){
+            Bundle extras = data.getExtras();
+            Bitmap ticketBitmap = (Bitmap) extras.get("data");
+            setTicket(ticketBitmap);
+            getActivity().getContentResolver().delete(data.getData(), null, null);
+        }
+        PreferencesHandler.setContinuePlaying(getActivity(), false);
     }
 
     private void fetchViews(View view) {
@@ -124,10 +134,61 @@ public class MovieFragment extends Fragment {
         ivSetRank = (ImageView) view.findViewById(R.id.ivSetRank);
         ivRank = (ImageView) view.findViewById(R.id.ivRank);
         tvRank = (TextView) view.findViewById(R.id.tvRank);
-
     }
 
-    private void setupListeners(View view) {
+    private void fillData() {
+        cbWatched.setChecked(movie.getWatched() == 1);
+        cbWatched.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                movie.setWatched(cbWatched.isChecked() ? 1 : 0);
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(MovieDatabaseHelper.COLUMN_WATCHED, movie.getWatched());
+                updateMovie(contentValues);
+                showHidePersonalDetails();
+            }
+        });
+        tvMovieName.setText(movie.getName() != null ? movie.getName() : "");
+        tvMovieDesc.setText(movie.getDescription() != null ? movie.getDescription() : "");
+        tvMovieGenre.setText(movie.getGenre() != null ? movie.getGenre() : "");
+        tvMovieDirector.setText(movie.getDirector() != null ? movie.getDirector() : "");
+        tvMovieActors.setText(movie.getActors() != null ? movie.getActors() : "");
+        if (movie.getPicturePath() != null) {
+            Uri pictureUri = Uri.parse(movie.getPicturePath());
+            ivMoviePic.setImageURI(pictureUri);
+        } else {
+            ivMoviePic.setImageResource(R.drawable.logo);
+        }
+        if (movie.getTicketPath() != null) {
+            Uri ticketUri = Uri.parse(movie.getTicketPath());
+            ivTicket.setImageURI(ticketUri);
+        }
+        if (movie.getWatchedDate() != 0) {
+            tvWatchedDate.setText(Utility.getFormattedDate(Utility.DATE_WATCHED_FORMAT, new Date(movie.getWatchedDate())));
+        }
+        if (movie.getImpressions() != null) {
+            tvImpressions.setText(movie.getImpressions());
+        }
+        llPersonalDetails.setVisibility(movie.getWatched() == 1 ? View.VISIBLE : View.INVISIBLE);
+        cinemaSpinnerNames = CinemaRepository.getCinemaNames(getActivity());
+        cinemaSpinnerNames.add(0, getResources().getString(R.string.choose_cinema));
+        ArrayAdapter<String> arrayAdapter =
+                new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, cinemaSpinnerNames);
+        arrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+        spCinemaNames.setAdapter(arrayAdapter);
+        if (movie.getCinemaName()!=null) {
+            spCinemaNames.setSelection(cinemaSpinnerNames.indexOf(movie.getCinemaName()));
+        }
+        if (movie.getRank()!=null) {
+            tvRank.setText(movie.getRank());
+        }
+        if (movie.getDegree()!=0) {
+            ivRank.setImageResource(R.drawable.thumb);
+            AnimationHandler.startRotatingAnimation(0, movie.getDegree(), 250, ivRank);
+        }
+    }
+
+    private void setupListeners() {
         ivWatchedDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +201,6 @@ public class MovieFragment extends Fragment {
                 showDatePicker();
             }
         });
-
         ivImpressions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,7 +213,6 @@ public class MovieFragment extends Fragment {
                 showImpressionsDialog();
             }
         });
-
         ivTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,7 +225,6 @@ public class MovieFragment extends Fragment {
                 takePhoto();
             }
         });
-
         spCinemaNames.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -204,61 +262,20 @@ public class MovieFragment extends Fragment {
                 showRankSetter();
             }
         });
+    }
 
+    private void showHidePersonalDetails() {
+        if(movie.getWatched()==0) {
+            AnimationHandler.startOutAnimation(getActivity(), llPersonalDetails);
+        } else {
+            AnimationHandler.startFadeInAnimation(getActivity(), llPersonalDetails);
+            AnimationHandler.startBlinkAnimation(getActivity(), ivArrow);
+        }
     }
 
     private void showRankSetter() {
         SetRankFragment setRankFragment = SetRankFragment.newInstance(this);
         setRankFragment.show(getFragmentManager(), null);
-    }
-
-    private void setCinemaName(String cinemaName) {
-        movie.setCinemaName(cinemaName);
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(MovieDatabaseHelper.COLUMN_CINEMANAME, movie.getCinemaName());
-        updateMovie(contentValues);
-    }
-
-    private void takePhoto() {
-        if (CameraHandler.deviceCanUseCamera(getActivity())) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, TAKE_PHOTO);
-
-            PreferencesHandler.setContinuePlaying(getActivity(), BackgroundMusicHandler.getShouldPlay());
-        } else {
-            Toast.makeText(getActivity(), R.string.cannot_take_photos, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == TAKE_PHOTO && resultCode == getActivity().RESULT_OK && data != null){
-            Bundle extras = data.getExtras();
-            ticketBitmap = (Bitmap) extras.get("data");
-            setTicket(ticketBitmap);
-            //delete original image
-            getActivity().getContentResolver().delete(data.getData(), null, null);
-        }
-        PreferencesHandler.setContinuePlaying(getActivity(), false);
-
-    }
-
-    private void setTicket(Bitmap ticketBitmap) {
-        String ticketPath = ImagesHandler.storeBitmap(getActivity(), Movie.TICKET_JPG_PREFIX + (movie.getName().hashCode()), ticketBitmap);
-        movie.setTicketPath(ticketPath);
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(MovieDatabaseHelper.COLUMN_TICKET_PATH, movie.getTicketPath());
-        updateMovie(contentValues);
-
-        ivTicket.setImageURI(null);
-        Uri ticketUri = Uri.parse(movie.getTicketPath());
-        ivTicket.setImageURI(ticketUri);
-    }
-
-    private void showImpressionsDialog() {
-        ImpressionsFragment impressionsFragment = ImpressionsFragment.newInstance(this);
-        impressionsFragment.show(getFragmentManager(), null);
     }
 
     private void showDatePicker() {
@@ -282,124 +299,20 @@ public class MovieFragment extends Fragment {
         datePickerFragment.show(getFragmentManager(), "Date picker");
     }
 
-    private void setWatchedDate(int year, int monthOfYear, int dayOfMonth) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, monthOfYear);
-        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-        movie.setWatchedDate(calendar.getTimeInMillis());
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(MovieDatabaseHelper.COLUMN_WATCHED_DATE, movie.getWatchedDate());
-        updateMovie(contentValues);
-
-        tvWatchedDate.setText(Utility.getFormattedDate(Utility.DATE_WATCHED_FORMAT, calendar.getTime()));
+    private void showImpressionsDialog() {
+        ImpressionsFragment impressionsFragment = ImpressionsFragment.newInstance(this);
+        impressionsFragment.show(getFragmentManager(), null);
     }
 
+    private void takePhoto() {
+        if (CameraHandler.deviceCanUseCamera(getActivity())) {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent, TAKE_PHOTO);
 
-    private void fillData(View view) {
-        cbWatched.setChecked(movie.getWatched() == 1);
-        cbWatched.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                movie.setWatched(cbWatched.isChecked() ? 1 : 0);
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(MovieDatabaseHelper.COLUMN_WATCHED, movie.getWatched());
-                updateMovie(contentValues);
-                showHidePersonalDetails();
-            }
-        });
-
-        tvMovieName.setText(movie.getName() != null ? movie.getName() : "");
-
-        tvMovieDesc.setText(movie.getDescription() != null ? movie.getDescription() : "");
-
-        tvMovieGenre.setText(movie.getGenre() != null ? movie.getGenre() : "");
-
-        tvMovieDirector.setText(movie.getDirector() != null ? movie.getDirector() : "");
-
-        tvMovieActors.setText(movie.getActors() != null ? movie.getActors() : "");
-
-        if (movie.getPicturePath() != null) {
-            Uri pictureUri = Uri.parse(movie.getPicturePath());
-            ivMoviePic.setImageURI(pictureUri);
+            PreferencesHandler.setContinuePlaying(getActivity(), BackgroundMusicHandler.getShouldPlay());
         } else {
-            ivMoviePic.setImageResource(R.drawable.logo);
+            Toast.makeText(getActivity(), R.string.cannot_take_photos, Toast.LENGTH_LONG).show();
         }
-
-        if (movie.getTicketPath() != null) {
-            Uri ticketUri = Uri.parse(movie.getTicketPath());
-            ivTicket.setImageURI(ticketUri);
-        }
-
-        if (movie.getWatchedDate() != 0) {
-            tvWatchedDate.setText(Utility.getFormattedDate(Utility.DATE_WATCHED_FORMAT, new Date(movie.getWatchedDate())));
-        }
-
-        if (movie.getImpressions() != null) {
-            tvImpressions.setText(movie.getImpressions());
-        }
-
-        llPersonalDetails.setVisibility(movie.getWatched() == 1 ? View.VISIBLE : View.INVISIBLE);
-
-        cinemaSpinnerNames = CinemaRepository.getCinemaNames(getActivity());
-        cinemaSpinnerNames.add(0, getResources().getString(R.string.choose_cinema));
-
-
-        ArrayAdapter<String> arrayAdapter =
-                new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, cinemaSpinnerNames);
-        arrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
-        spCinemaNames.setAdapter(arrayAdapter);
-
-        if (movie.getCinemaName()!=null) {
-            spCinemaNames.setSelection(cinemaSpinnerNames.indexOf(movie.getCinemaName()));
-        }
-
-
-        if (movie.getRank()!=null) {
-            tvRank.setText(movie.getRank());
-        }
-        if (movie.getDegree()!=0) {
-            ivRank.setImageResource(R.drawable.thumb);
-            AnimationHandler.startRotatingAnimation(0, movie.getDegree(), 250, ivRank);
-        }
-
-
-
-    }
-
-    private void showHidePersonalDetails() {
-        if(movie.getWatched()==0) {
-            AnimationHandler.startOutAnimation(getActivity(), llPersonalDetails);
-        } else {
-            AnimationHandler.startFadeInAnimation(getActivity(), llPersonalDetails);
-            AnimationHandler.startBlinkAnimation(getActivity(), ivArrow);
-
-        }
-    }
-
-    private int updateMovie(ContentValues contentValues) {
-        int rowsUpdated = getActivity().getContentResolver().
-                update(Uri.parse(MoviesContentProvider.CONTENT_URI + "/" + movie.getIdMovie()),
-                        contentValues, null, null);
-        return rowsUpdated;
-
-    }
-
-    public void setMovieImpressions(String impressions) {
-        movie.setImpressions(impressions);
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(MovieDatabaseHelper.COLUMN_IMPRESSIONS, movie.getImpressions());
-        updateMovie(contentValues);
-
-        tvImpressions.setText(movie.getImpressions()!=null ? movie.getImpressions() : getResources().getString(R.string.insert_impressions, ""));
-    }
-
-
-    public String getMovieImpressions() {
-        return movie.getImpressions();
     }
 
     public String getMovieRank() {
@@ -408,25 +321,68 @@ public class MovieFragment extends Fragment {
 
     public void setMovieRank(String rank) {
         movie.setRank(rank);
-
         ContentValues contentValues = new ContentValues();
         contentValues.put(MovieDatabaseHelper.COLUMN_RANK, movie.getRank());
         updateMovie(contentValues);
-
         tvRank.setText(movie.getRank()!=null ? movie.getRank() : getResources().getString(R.string.set_rank, ""));
     }
 
     public void setMovieDegree(float degree) {
         movie.setDegree(degree);
-
         ContentValues contentValues = new ContentValues();
         contentValues.put(MovieDatabaseHelper.COLUMN_DEGREE, movie.getDegree());
         updateMovie(contentValues);
-
         ivRank.setImageResource(R.drawable.thumb);
         AnimationHandler.startRotatingAnimation(0, movie.getDegree(), 250, ivRank);
-
     }
 
+    private void setWatchedDate(int year, int monthOfYear, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, monthOfYear);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        movie.setWatchedDate(calendar.getTimeInMillis());
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MovieDatabaseHelper.COLUMN_WATCHED_DATE, movie.getWatchedDate());
+        updateMovie(contentValues);
+        tvWatchedDate.setText(Utility.getFormattedDate(Utility.DATE_WATCHED_FORMAT, calendar.getTime()));
+    }
+
+    private void setCinemaName(String cinemaName) {
+        movie.setCinemaName(cinemaName);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MovieDatabaseHelper.COLUMN_CINEMANAME, movie.getCinemaName());
+        updateMovie(contentValues);
+    }
+
+    public void setMovieImpressions(String impressions) {
+        movie.setImpressions(impressions);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MovieDatabaseHelper.COLUMN_IMPRESSIONS, movie.getImpressions());
+        updateMovie(contentValues);
+        tvImpressions.setText(movie.getImpressions()!=null ? movie.getImpressions() : getResources().getString(R.string.insert_impressions, ""));
+    }
+
+
+    public String getMovieImpressions() {
+        return movie.getImpressions();
+    }
+
+    private void setTicket(Bitmap ticketBitmap) {
+        String ticketPath = ImagesHandler.storeBitmap(getActivity(), Movie.TICKET_JPG_PREFIX + (movie.getName().hashCode()), ticketBitmap);
+        movie.setTicketPath(ticketPath);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MovieDatabaseHelper.COLUMN_TICKET_PATH, movie.getTicketPath());
+        updateMovie(contentValues);
+        ivTicket.setImageURI(null);
+        Uri ticketUri = Uri.parse(movie.getTicketPath());
+        ivTicket.setImageURI(ticketUri);
+    }
+
+    private int updateMovie(ContentValues contentValues) {
+        return getActivity().getContentResolver().
+                update(Uri.parse(MoviesContentProvider.CONTENT_URI + "/" + movie.getIdMovie()),
+                        contentValues, null, null);
+    }
 
 }
