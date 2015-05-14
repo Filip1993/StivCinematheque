@@ -4,7 +4,7 @@ import android.app.ActionBar;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import com.dbele.stiv.utitlities.BackgroundMusicHandler;
+import com.dbele.stiv.handlers.BackgroundMusicHandler;
 
 public class PreferencesFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
     @Override

@@ -16,7 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import com.dbele.stiv.model.NavigationItem;
-import com.dbele.stiv.utitlities.BackgroundMusicHandler;
+import com.dbele.stiv.handlers.BackgroundMusicHandler;
 import java.util.ArrayList;
 
 public class HostActivity extends Activity {

@@ -12,9 +12,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.dbele.stiv.rss.RssParser;
-import com.dbele.stiv.utitlities.AnimationHandler;
-import com.dbele.stiv.utitlities.ConnectivityHandler;
-import com.dbele.stiv.utitlities.PreferencesHandler;
+import com.dbele.stiv.handlers.AnimationHandler;
+import com.dbele.stiv.handlers.ConnectivityHandler;
+import com.dbele.stiv.handlers.PreferencesHandler;
 
 
 public class InitFragment extends Fragment {

@@ -1,4 +1,4 @@
-package com.dbele.stiv.utitlities;
+package com.dbele.stiv.handlers;
 
 import android.app.ActivityManager;
 import android.content.Context;

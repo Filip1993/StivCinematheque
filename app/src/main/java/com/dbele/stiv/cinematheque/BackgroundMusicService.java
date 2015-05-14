@@ -6,9 +6,9 @@ import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.dbele.stiv.utitlities.ActivityHandler;
-import com.dbele.stiv.utitlities.BackgroundMusicHandler;
-import com.dbele.stiv.utitlities.PreferencesHandler;
+import com.dbele.stiv.handlers.ActivityHandler;
+import com.dbele.stiv.handlers.BackgroundMusicHandler;
+import com.dbele.stiv.handlers.PreferencesHandler;
 
 public class BackgroundMusicService extends Service {
 

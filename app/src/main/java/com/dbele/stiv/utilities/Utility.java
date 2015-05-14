@@ -1,4 +1,4 @@
-package com.dbele.stiv.utitlities;
+package com.dbele.stiv.utilities;
 
 import android.text.format.DateFormat;
 import java.util.Date;

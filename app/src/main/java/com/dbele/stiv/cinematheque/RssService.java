@@ -5,10 +5,10 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.Context;
 import com.dbele.stiv.rss.RssParser;
-import com.dbele.stiv.utitlities.ActivityHandler;
-import com.dbele.stiv.utitlities.AlarmHandler;
-import com.dbele.stiv.utitlities.ConnectivityHandler;
-import com.dbele.stiv.utitlities.PreferencesHandler;
+import com.dbele.stiv.handlers.ActivityHandler;
+import com.dbele.stiv.handlers.AlarmHandler;
+import com.dbele.stiv.handlers.ConnectivityHandler;
+import com.dbele.stiv.handlers.PreferencesHandler;
 import java.util.Calendar;
 
 

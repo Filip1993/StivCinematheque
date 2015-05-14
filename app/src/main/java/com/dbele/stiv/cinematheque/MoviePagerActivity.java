@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import com.dbele.stiv.model.Movie;
 import com.dbele.stiv.persistence.MovieDatabaseHelper;
 import com.dbele.stiv.persistence.MoviesContentProvider;
-import com.dbele.stiv.utitlities.BackgroundMusicHandler;
+import com.dbele.stiv.handlers.BackgroundMusicHandler;
 
 public class MoviePagerActivity extends FragmentActivity {
 

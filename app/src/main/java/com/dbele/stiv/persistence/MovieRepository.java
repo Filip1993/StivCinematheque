@@ -3,8 +3,8 @@ package com.dbele.stiv.persistence;
 import android.content.ContentValues;
 import android.content.Context;
 import com.dbele.stiv.model.Movie;
-import com.dbele.stiv.utitlities.NotificationHandler;
-import com.dbele.stiv.utitlities.PreferencesHandler;
+import com.dbele.stiv.handlers.NotificationHandler;
+import com.dbele.stiv.handlers.PreferencesHandler;
 import java.util.ArrayList;
 
 public class MovieRepository {

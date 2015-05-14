@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.dbele.stiv.utitlities.AnimationHandler;
+import com.dbele.stiv.handlers.AnimationHandler;
 
 
 public class SetRankFragment extends DialogFragment implements SensorEventListener {
