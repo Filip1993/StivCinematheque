@@ -19,7 +19,6 @@ public class Cinema {
             cinema.name = jsonObject.getString("name");
             cinema.address = jsonObject.getString("address");
             cinema.properties = jsonObject.getString("properties");
-            cinema.properties = jsonObject.getString("properties");
             cinema.lat = jsonObject.getDouble("lat");
             cinema.lng = jsonObject.getDouble("lng");
             cinema.picture = jsonObject.getString("picture");
