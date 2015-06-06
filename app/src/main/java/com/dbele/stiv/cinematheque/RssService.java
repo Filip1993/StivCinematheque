@@ -14,7 +14,7 @@ import java.util.Calendar;
 
 public class RssService extends IntentService {
 
-    private static final int SERVICE_INTERVAL = 1000 * 60 * 60 * 12;
+    private static final int SERVICE_INTERVAL = 1000 * 60 * 60 * 24;
 
     public RssService() {
         super("RssService");
