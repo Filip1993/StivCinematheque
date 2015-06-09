@@ -86,7 +86,6 @@ public class MapFragment extends Fragment {
         mapView.onCreate(savedInstanceState);
         if(mapView!=null) {
             GoogleMap map = mapView.getMap();
-            map.getUiSettings().setMyLocationButtonEnabled(false);
             map.setMyLocationEnabled(true);
             for(Cinema cinema : cinemas) {
                 Marker marker =  map.addMarker(new MarkerOptions()

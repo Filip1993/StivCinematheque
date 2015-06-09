@@ -138,16 +138,6 @@ public class MovieFragment extends Fragment {
 
     private void fillData() {
         cbWatched.setChecked(movie.getWatched() == 1);
-        cbWatched.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                movie.setWatched(cbWatched.isChecked() ? 1 : 0);
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(MovieDatabaseHelper.COLUMN_WATCHED, movie.getWatched());
-                updateMovie(contentValues);
-                showHidePersonalDetails();
-            }
-        });
         tvMovieName.setText(movie.getName() != null ? movie.getName() : "");
         tvMovieDesc.setText(movie.getDescription() != null ? movie.getDescription() : "");
         tvMovieGenre.setText(movie.getGenre() != null ? movie.getGenre() : "");
@@ -189,6 +179,17 @@ public class MovieFragment extends Fragment {
     }
 
     private void setupListeners() {
+        cbWatched.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                movie.setWatched(cbWatched.isChecked() ? 1 : 0);
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(MovieDatabaseHelper.COLUMN_WATCHED, movie.getWatched());
+                updateMovie(contentValues);
+                showHidePersonalDetails();
+            }
+        });
+
         ivWatchedDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
