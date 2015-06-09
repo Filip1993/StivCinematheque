@@ -51,4 +51,5 @@
     <string name="rank_good">Dobar</string>
     <string name="rank_verygood">Vrlo dobar</string>
     <string name="rank_excellent">Odličan</string>
+    <string name="date_picker">Izbornik datuma</string>
 </resources>

@@ -51,4 +51,5 @@
     <string name="rank_good">Good</string>
     <string name="rank_verygood">Very good</string>
     <string name="rank_excellent">Excellent</string>
+    <string name="date_picker">Date picker</string>
 </resources>

@@ -297,7 +297,7 @@ public class MovieFragment extends Fragment {
                 setWatchedDate(year, monthOfYear, dayOfMonth);
             }
         });
-        datePickerFragment.show(getFragmentManager(), "Date picker");
+        datePickerFragment.show(getFragmentManager(), getString(R.string.date_picker));
     }
 
     private void showImpressionsDialog() {
