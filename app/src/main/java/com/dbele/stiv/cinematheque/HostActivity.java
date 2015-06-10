@@ -115,7 +115,11 @@ public class HostActivity extends Activity {
         Fragment fragment = null;
         try{
             fragment = (Fragment)Class.forName(className).newInstance();
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+        } catch (InstantiationException e) {
+            Log.e(getClass().getName(), e.getMessage());
+        } catch (IllegalAccessException e) {
+            Log.e(getClass().getName(), e.getMessage());
+        } catch (ClassNotFoundException e) {
             Log.e(getClass().getName(), e.getMessage());
         }
         if (fragment != null) {

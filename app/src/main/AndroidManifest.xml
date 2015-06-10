@@ -34,6 +34,27 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".MoviePagerActivity"
+            android:configChanges="orientation|screenSize">
+        </activity>
+
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:name=".HostActivity">
+        </activity>
+
+        <service
+            android:name=".RssService"
+            android:exported="false" >
+        </service>
+
+        <service
+            android:name=".BackgroundMusicService"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
+
         <receiver android:name=".BootReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -41,32 +62,12 @@
             </intent-filter>
         </receiver>
 
-        <service
-            android:name=".RssService"
-            android:exported="false" >
-        </service>
-
         <provider
             android:name="com.dbele.stiv.persistence.MoviesContentProvider"
             android:authorities="com.dbele.stiv.cinematheque.movies.provider"
             android:enabled="true"
             android:exported="false" >
         </provider>
-
-        <activity
-            android:name=".MoviePagerActivity"
-            android:configChanges="orientation|screenSize">
-        </activity>
-        <activity
-            android:configChanges="orientation|screenSize"
-            android:name=".HostActivity">
-        </activity>
-
-        <service
-            android:name=".BackgroundMusicService"
-            android:enabled="true"
-            android:exported="false" >
-        </service>
     </application>
 
 </manifest>
