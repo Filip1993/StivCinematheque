@@ -25,6 +25,8 @@ public class HostActivity extends Activity {
     private ListView drawerList;
     private ActionBarDrawerToggle drawerToggle;
     private String[] navMenuTitles;
+    TypedArray navMenuIcons;
+    String[] navMenuFragments;
     private ArrayList<NavigationItem> navigationItems;
 
     @Override
@@ -56,16 +58,9 @@ public class HostActivity extends Activity {
     }
 
     private void init() {
-        navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
-        TypedArray navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
-        String[] navMenuFragments = getResources().getStringArray(R.array.nav_fragments);
+        initNavigationItems();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
-        navigationItems = new ArrayList<>();
-        for (int i=0; i<navMenuFragments.length; i++) {
-            navigationItems.add(new NavigationItem(navMenuTitles[i], navMenuIcons.getResourceId(i, -1), navMenuFragments[i]));
-        }
-        navMenuIcons.recycle();
         drawerList.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
@@ -98,6 +93,20 @@ public class HostActivity extends Activity {
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerLayout.setDrawerListener(drawerToggle);
         displayView(0);
+    }
+
+    private void initNavigationItems() {
+        navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
+        navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
+        navMenuFragments = getResources().getStringArray(R.array.nav_fragments);
+        navigationItems = new ArrayList<>();
+        for (int i=0; i<navMenuFragments.length; i++) {
+            navigationItems.add(new NavigationItem(
+                    navMenuTitles[i],
+                    navMenuIcons.getResourceId(i, -1),
+                    navMenuFragments[i]));
+        }
+        navMenuIcons.recycle();
     }
 
     private void displayView(int position) {
