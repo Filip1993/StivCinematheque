@@ -1,6 +1,9 @@
 package com.dbele.stiv.model;
 
+import android.database.Cursor;
 import android.support.annotation.NonNull;
+
+import com.dbele.stiv.persistence.MovieDatabaseHelper;
 
 public class Movie implements Comparable<Movie> {
 
@@ -154,8 +157,29 @@ public class Movie implements Comparable<Movie> {
     }
 
     @Override
-
     public int compareTo(@NonNull Movie movie) {
         return this.getName().compareTo(movie.getName());
+    }
+
+    public static Movie createMovieFromCursor(Cursor cursor, int pos) {
+        cursor.moveToPosition(pos);
+        Movie movie = new Movie();
+        movie.setIdMovie(cursor.getLong(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_ID)));
+        movie.setName(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_NAME)));
+        movie.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_DESCRIPTION)));
+        movie.setDirector(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_DIRECTOR)));
+        movie.setActors(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_ACTORS)));
+        movie.setLength(cursor.getInt(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_LENGTH)));
+        movie.setGenre(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_GENRE)));
+        movie.setPicturePath(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_PICTURE_PATH)));
+        movie.setCinemaName(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_CINEMANAME)));
+        movie.setTicketPath(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_TICKET_PATH)));
+        movie.setWatchedDate(cursor.getLong(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_WATCHED_DATE)));
+        movie.setImpressions(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_IMPRESSIONS)));
+        movie.setRank(cursor.getString(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_RANK)));
+        movie.setDegree(cursor.getFloat(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_DEGREE)));
+        movie.setWatched(cursor.getInt(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_WATCHED)));
+        movie.setArchived(cursor.getInt(cursor.getColumnIndexOrThrow(MovieDatabaseHelper.COLUMN_ARCHIVED)));
+        return movie;
     }
 }
