@@ -91,7 +91,6 @@ public class HostActivity extends Activity {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
             }
-
             public void onDrawerOpened(View view) {
                 super.onDrawerOpened(view);
             }
