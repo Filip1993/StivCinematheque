@@ -1,4 +1,4 @@
-package com.dbele.stiv.json;
+package com.dbele.stiv.utilities;
 
 import android.content.Context;
 import android.util.Log;

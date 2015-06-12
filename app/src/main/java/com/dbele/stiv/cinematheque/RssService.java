@@ -4,7 +4,7 @@ import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.Context;
-import com.dbele.stiv.rss.RssParser;
+import com.dbele.stiv.utilities.RssParser;
 import com.dbele.stiv.handlers.ActivityHandler;
 import com.dbele.stiv.handlers.AlarmHandler;
 import com.dbele.stiv.handlers.ConnectivityHandler;

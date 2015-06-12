@@ -1,4 +1,4 @@
-package com.dbele.stiv.rss;
+package com.dbele.stiv.utilities;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,7 +8,7 @@ import com.dbele.stiv.persistence.MovieDatabaseHelper;
 import com.dbele.stiv.persistence.MovieRepository;
 import com.dbele.stiv.persistence.MoviesContentProvider;
 import com.dbele.stiv.handlers.ImagesHandler;
-import com.dbele.stiv.utilities.Utility;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;

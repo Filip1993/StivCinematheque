@@ -1,7 +1,7 @@
 package com.dbele.stiv.persistence;
 
 import android.content.Context;
-import com.dbele.stiv.json.JSONParser;
+import com.dbele.stiv.utilities.JSONParser;
 import com.dbele.stiv.model.Cinema;
 import java.util.ArrayList;
 

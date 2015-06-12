@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.dbele.stiv.rss.RssParser;
+import com.dbele.stiv.utilities.RssParser;
 import com.dbele.stiv.handlers.AnimationHandler;
 import com.dbele.stiv.handlers.ConnectivityHandler;
 import com.dbele.stiv.handlers.PreferencesHandler;
