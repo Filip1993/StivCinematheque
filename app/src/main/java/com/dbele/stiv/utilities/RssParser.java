@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class RssParser {
+public class RSSParser {
 
     private static final String RSS_URL = "http://www.blitz-cinestar.hr/rss.aspx";
-    private static final String TAG = "RssParser";
+    private static final String TAG = "RSSParser";
     private static final String ITEM = "item";
     private static final String TITLE = "title";
     private static final String DESCRIPTION = "description";
@@ -38,13 +38,13 @@ public class RssParser {
 
     private static ArrayList<String> watched_archived_movies;
 
-    public RssParser(Context context) {
+    public RSSParser(Context context) {
         this.context = context;
     }
 
     public static void upadateDatabaseFromRssFeed(Context context) {
         populateWatchedArchivedMovies(context);
-        RssParser p =  new RssParser(context);
+        RSSParser p =  new RSSParser(context);
         p.run();
     }
 
@@ -59,7 +59,7 @@ public class RssParser {
         cursor.close();
     }
 
-    public void run() {
+    private void run() {
         InputStream stream = null;
         try {
             HttpURLConnection conn = getHttpURLConnection();
@@ -74,7 +74,7 @@ public class RssParser {
                 try {
                     stream.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e(TAG, "unable to close stream", e);
                 }
             }
         }
@@ -99,7 +99,7 @@ public class RssParser {
         return parser;
     }
 
-    public void parse(XmlPullParser parser) {
+    private void parse(XmlPullParser parser) {
         int event;
         String text=null;
         boolean itemsStarted = false;
@@ -108,7 +108,6 @@ public class RssParser {
             Movie movie = null;
             while (event != XmlPullParser.END_DOCUMENT) {
                 String name=parser.getName();
-
                 switch (event){
                     case XmlPullParser.START_TAG:
                         if(ITEM.equals(name)) {
@@ -122,7 +121,7 @@ public class RssParser {
                         }
                         break;
                     case XmlPullParser.END_TAG:
-                        if(itemsStarted && movie!=null) {
+                        if(itemsStarted) {
                             switch (name) {
                                 case(TITLE):
                                     if(text!=null && text.length() > 39) {
@@ -165,7 +164,7 @@ public class RssParser {
                 event = parser.next();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "unable to parse RSS", e);
         }
     }
 }

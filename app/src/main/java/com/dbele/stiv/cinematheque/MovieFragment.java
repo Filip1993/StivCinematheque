@@ -89,6 +89,10 @@ public class MovieFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(movie==null) {
+            Intent intent = new Intent(getActivity(), HostActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
