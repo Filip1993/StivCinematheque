@@ -13,8 +13,9 @@ import java.util.ArrayList;
 
 public class JSONParser {
 
-    private static final String FILENAME = "cinemas_json.txt";
+    private static final String FILENAME = "cinemas.json";
     private static final String ENCODING= "UTF-8";
+    private static final String TAG = "JSONParser";
 
     public static ArrayList<Cinema> getCinemas(Context context) {
         ArrayList<Cinema> cinemas = new ArrayList<>();
@@ -32,13 +33,13 @@ public class JSONParser {
                 cinemas.add(Cinema.createCinema(array.getJSONObject(i)));
             }
         } catch (IOException | JSONException e) {
-            Log.e(JSONParser.class.getName(), "unable to parse JSON", e);
+            Log.e(TAG, "unable to parse JSON", e);
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    Log.e(JSONParser.class.getName(), "unable to parse JSON", e);
+                    Log.e(TAG, "unable to close reader", e);
                 }
             }
         }

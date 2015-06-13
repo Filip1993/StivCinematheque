@@ -4,7 +4,7 @@ import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.Context;
-import com.dbele.stiv.utilities.RssParser;
+import com.dbele.stiv.utilities.RSSParser;
 import com.dbele.stiv.handlers.ActivityHandler;
 import com.dbele.stiv.handlers.AlarmHandler;
 import com.dbele.stiv.handlers.ConnectivityHandler;
@@ -30,7 +30,7 @@ public class RssService extends IntentService {
             return;
         }
         if (ConnectivityHandler.deviceIsConnected(getApplicationContext())){
-            RssParser.upadateDatabaseFromRssFeed(this);
+            RSSParser.upadateDatabaseFromRssFeed(this);
         }
     }
 
