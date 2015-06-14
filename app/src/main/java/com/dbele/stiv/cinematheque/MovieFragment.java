@@ -87,15 +87,6 @@ public class MovieFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if(movie==null) {
-            Intent intent = new Intent(getActivity(), HostActivity.class);
-            startActivity(intent);
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
         fetchViews(view);
@@ -113,6 +104,11 @@ public class MovieFragment extends Fragment {
             getActivity().getContentResolver().delete(data.getData(), null, null);
         }
         PreferencesHandler.setContinuePlaying(getActivity(), false);
+    }
+
+    private void returnToHostActivity() {
+        Intent intent = new Intent(getActivity(), HostActivity.class);
+        startActivity(intent);
     }
 
     private void fetchViews(View view) {
@@ -141,6 +137,11 @@ public class MovieFragment extends Fragment {
     }
 
     private void fillData() {
+        //this bypass is intented for yet unknown reason when either fields from layout are null after inflating or movie instance
+        //to be investigated - most probably after returning to MoviePagerActivity from stack
+        if(movie == null || cbWatched == null) {
+            returnToHostActivity();
+        }
         cbWatched.setChecked(movie.getWatched() == 1);
         tvMovieName.setText(movie.getName() != null ? movie.getName() : "");
         tvMovieDesc.setText(movie.getDescription() != null ? movie.getDescription() : "");
