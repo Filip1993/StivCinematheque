@@ -23,6 +23,7 @@ public class BackgroundMusicService extends Service {
         createPlayer();
     }
 
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (player!=null && !player.isPlaying()) {
             player.start();
