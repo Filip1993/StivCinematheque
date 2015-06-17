@@ -1,5 +1,6 @@
 package com.dbele.stiv.cinematheque;
 
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.hardware.Sensor;
@@ -43,7 +44,7 @@ public class SetRankFragment extends DialogFragment implements SensorEventListen
         getDialog().setTitle(R.string.set_rank_title);
         ivRankDone = (ImageView) view.findViewById(R.id.ivRankDone);
         ranks = getResources().getStringArray(R.array.ranks);
-        sensorManager = (SensorManager) getActivity().getSystemService(FragmentActivity.SENSOR_SERVICE);
+        sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
             accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
