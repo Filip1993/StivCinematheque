@@ -13,6 +13,7 @@
     <string name="unable_to_load_data_on_init">Please connect to network in order to transmit data</string>
     <string name="drawer_open">Navigation Menu Opened</string>
     <string name="drawer_close">Navigation Menu Closed</string>
+    <string name="personal_preferences">Personal preferences</string>
     <string name="summary_background_music_preference">Do you want background music?</string>
     <string name="background_music">Background music</string>
     <string name="background_music_key">background_music_key</string>

@@ -13,6 +13,7 @@
     <string name="unable_to_load_data_on_init">Molim vas da se spojite na mrežu kako bi omogućili izmjenu podataka</string>
     <string name="drawer_open">Navigacijski Meni Otvoren</string>
     <string name="drawer_close">Navigacijski Meni Zatvoren</string>
+    <string name="personal_preferences">Osobne postavke</string>
     <string name="summary_background_music_preference">Želite li pozadinsku muziku?</string>
     <string name="background_music">Pozadinska muzika</string>
     <string name="background_music_key">background_music_key</string>
