@@ -136,7 +136,7 @@ public class RSSParser {
                                     movie.setDescription(Utility.extractDescription(text));
                                     if (movies.contains(movie)) {
                                         String fileUrl = Utility.extractImagePathFromDescription(text);
-                                            String picturePath = ImagesHandler.downloadImageAndStore(context, fileUrl, Movie.MOVIE_JPG_PREFIX + (movie.getName().hashCode()));
+                                        String picturePath = ImagesHandler.downloadImageAndStore(context, fileUrl, Movie.MOVIE_JPG_PREFIX + (movie.getName().hashCode()));
                                         if (picturePath != null) {
                                             movie.setPicturePath(picturePath);
                                         }
